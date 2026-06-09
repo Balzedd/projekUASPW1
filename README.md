@@ -1,0 +1,2 @@
+# projekUASPW1
+BALJED, JOJO, PAGA, AYIN
