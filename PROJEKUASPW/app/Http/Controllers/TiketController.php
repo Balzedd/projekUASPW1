@@ -2,67 +2,68 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Acara;
 use App\Models\Tiket;
 use Illuminate\Http\Request;
-use LDAP\Result;
 
 class TiketController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-     
-    return view('tiket.index');
-    
+        $tikets = Tiket::with('acara')->get();
+
+        return view('layouts.tiket.index', compact('tikets'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $acaras = Acara::all();
+
+        return view('layouts.tiket.create', compact('acaras'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'acara_id'=>'required',
+            'nama_tiket'=>'required',
+            'harga'=>'required',
+            'stok'=>'required',
+            'jenis_tiket'=>'required'
+        ]);
+
+        Tiket::create($request->all());
+
+        return redirect()
+            ->route('tikets.index')
+            ->with('success','Data tiket berhasil ditambahkan');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Tiket $tiket)
+    public function edit($id)
     {
-        //
+        $tiket = Tiket::findOrFail($id);
+        $acaras = Acara::all();
+
+        return view('layouts.tiket.edit', compact('tiket','acaras'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Tiket $tiket)
+    public function update(Request $request, $id)
     {
-        //
+        $tiket = Tiket::findOrFail($id);
+
+        $tiket->update($request->all());
+
+        return redirect()
+            ->route('tikets.index')
+            ->with('success','Data berhasil diupdate');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Tiket $tiket)
+    public function destroy($id)
     {
-        //
-    }
+        Tiket::destroy($id);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Tiket $tiket)
-    {
-        //
+        return redirect()
+            ->route('tikets.index')
+            ->with('success','Data berhasil dihapus');
     }
 }

@@ -30,7 +30,7 @@
           <i class="ti ti-layout-dashboard"></i>
           <span class="nav-label">Dashboard</span>
         </a>
-        <a href="#" class="nav-item" data-page="tiket">
+        <a href="{{ route('tikets.index') }}" class="nav-item" data-page="tiket">
           <i class="ti ti-ticket"></i>
           <span class="nav-label">Tiket</span>
           <span class="nav-badge nav-label">12</span>

@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('pelanggan', function (Blueprint $table) {
+        Schema::table('pelanggans', function (Blueprint $table) {
             $table->date('tanggal_bergabung')->nullable();
         });
-    }   
+    }
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::table('pelanggan', function (Blueprint $table) {
+        Schema::table('pelanggans', function (Blueprint $table) {
             $table->dropColumn('tanggal_bergabung');
         });
     }
