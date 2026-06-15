@@ -4,7 +4,7 @@
 
 <div class="content-top mb-4">
     <div>
-    <h1>halo</h1>
+    
         <h1>Data Tiket</h1>
         <p class="subtitle">Kelola tiket acara dan stok penjualan</p>
     </div>
