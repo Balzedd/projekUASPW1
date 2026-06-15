@@ -26,7 +26,7 @@
       <nav class="nav">
         <p class="nav-label nav-section-title">Menu utama</p>
 
-        <a href="#" class="nav-item active" data-page="dashboard">
+        <a href="{{ route('admin.dashboard') }}" class="nav-item active" data-page="dashboard">
           <i class="ti ti-layout-dashboard"></i>
           <span class="nav-label">Dashboard</span>
         </a>
@@ -39,9 +39,10 @@
           <i class="ti ti-calendar-event"></i>
           <span class="nav-label">Acara</span>
         </a>
-        <a href="#" class="nav-item" data-page="pelanggan">
+        <a href="{{ route('pelanggan.index') }}" class="nav-item" data-page="pelanggan">
           <i class="ti ti-users"></i>
           <span class="nav-label">Pelanggan</span>
+        
         </a>
         <a href="#" class="nav-item" data-page="transaksi">
           <i class="ti ti-receipt"></i>

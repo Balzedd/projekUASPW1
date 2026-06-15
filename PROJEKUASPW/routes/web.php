@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PelangganController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,5 +30,8 @@ Route::get('/user/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'checkRole:U'])
   ->name('user.dashboard');
+
+Route::get('/pelanggan', [PelangganController::class, 'index'])
+    ->name('pelanggan.index');
 
 require __DIR__.'/auth.php';
