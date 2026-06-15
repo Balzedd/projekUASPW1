@@ -54,43 +54,74 @@
 
         <p class="nav-label nav-section-title nav-section-title-second">Lainnya</p>
 
-        <a href="#" class="nav-item" data-page="pengaturan">
-          <i class="ti ti-settings"></i>
-          <span class="nav-label">Pengaturan</span>
-        </a>
-        <a href="#" class="nav-item" data-page="keluar">
-          <i class="ti ti-logout"></i>
-          <span class="nav-label">Keluar</span>
-        </a>
       </nav>
     </aside>
 
+    
     <!-- Main content -->
     <div class="main">
 
       <!-- Header / Navbar atas -->
-      <header class="header">
-        <div class="search-box">
-          <i class="ti ti-search"></i>
-          <input type="text" placeholder="Cari tiket, acara, pelanggan..." />
-        </div>
+     <header class="header">
+    <div class="search-box ">
 
-        <div class="header-right">
-          <button class="icon-btn" aria-label="Notifikasi">
+    </div>
+
+    <div class="header-right">
+
+        <button class="icon-btn" aria-label="Notifikasi">
             <i class="ti ti-bell"></i>
             <span class="notif-dot"></span>
-          </button>
-          <div class="profile">
-            <div class="avatar">AD</div>
-            <div class="profile-info">
-              <p class="profile-name">Admin Tiket</p>
-              <p class="profile-role">Admin Penjualan</p>
-            </div>
-            <i class="ti ti-chevron-down"></i>
-          </div>
-        </div>
-      </header>
+        </button>
 
+        <div class="dropdown">
+            <button class="profile-button dropdown-toggle d-flex align-items-center border-0 bg-transparent"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+
+                <div class="avatar"> {{ strtoupper(substr(Auth::user()->name, 0, 3)) }}</div>
+
+                <div class="profile-info ms-2">
+                    <p class="profile-name mb-0">
+                        {{ Auth::user()->name }}
+                    </p>
+                    <p class="profile-role mb-0">
+                        Admin 
+                    </p>
+                </div>
+            </button>
+
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                    <a class="dropdown-item" href="#">
+                        Profile
+                    </a>
+                </li>
+
+                <li>
+                    <a class="dropdown-item" href="#">
+                        Account Settings
+                    </a>
+                </li>
+
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+
+                <li>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="dropdown-item">
+                            Sign Out
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</header>
       <!-- Content -->
       <main class="content">
         <div class="content-top">
