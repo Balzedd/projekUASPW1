@@ -12,14 +12,14 @@ class TiketController extends Controller
     {
         $tikets = Tiket::with('acara')->get();
 
-        return view('layouts.tiket.index', compact('tikets'));
+        return view('tiket.index', compact('tikets'));
     }
 
     public function create()
     {
         $acaras = Acara::all();
 
-        return view('layouts.tiket.create', compact('acaras'));
+        return view('tiket.create', compact('acaras'));
     }
 
     public function store(Request $request)
@@ -44,7 +44,7 @@ class TiketController extends Controller
         $tiket = Tiket::findOrFail($id);
         $acaras = Acara::all();
 
-        return view('layouts.tiket.edit', compact('tiket','acaras'));
+        return view('tiket.edit', compact('tiket','acaras'));
     }
 
     public function update(Request $request, $id)
@@ -54,7 +54,7 @@ class TiketController extends Controller
         $tiket->update($request->all());
 
         return redirect()
-            ->route('tikets.index')
+            ->route('tiket.index')
             ->with('success','Data berhasil diupdate');
     }
 
@@ -63,7 +63,7 @@ class TiketController extends Controller
         Tiket::destroy($id);
 
         return redirect()
-            ->route('tikets.index')
+            ->route('tiket.index')
             ->with('success','Data berhasil dihapus');
     }
 }
