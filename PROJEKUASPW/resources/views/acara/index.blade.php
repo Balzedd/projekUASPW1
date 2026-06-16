@@ -1,4 +1,4 @@
-@extends('tiket.admin')
+@extends('acara.admin')
 
 @section('content')
 
