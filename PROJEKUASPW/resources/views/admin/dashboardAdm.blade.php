@@ -164,16 +164,19 @@
             <p class="stat-value">8</p>
             <p class="stat-sub">2 acara minggu ini</p>
           </div>
+          
 
-          <div class="stat-card stat-neutral">
-            <div class="stat-top">
-              <p>Pelanggan baru</p>
-              <i class="ti ti-users"></i>
-            </div>
-            <p class="stat-value">312</p>
-            <p class="stat-sub">+24 hari ini</p>
-          </div>
-        </div>
+         <!-- Pelanggan baru -->
+<!-- Sesudah (benar) -->
+<div class="stat-card stat-neutral">
+    <div class="stat-top">
+        <p>Pelanggan baru</p>
+        <i class="ti ti-users"></i>
+    </div>
+    <p class="stat-value">{{ $pelangganBaru }}</p>
+    <p class="stat-sub">+{{ $totalPelanggan }} total pelanggan</p>
+</div>
+  </div>
 
         <!-- Bottom grid -->
         <div class="bottom-grid">
