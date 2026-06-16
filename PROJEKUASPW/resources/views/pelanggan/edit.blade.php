@@ -11,43 +11,10 @@
 <body>
   <div class="layout">
 
-    <!-- Sidebar -->
-    <aside id="sidebar" class="sidebar">
-      <div class="sidebar-header">
-        <div class="brand">
-          <div class="brand-icon"><i class="ti ti-ticket"></i></div>
-          <span id="logoText" class="nav-label brand-text">Pelanggan</span>
-        </div>
-        <button id="toggleBtn" class="toggle-btn" aria-label="Toggle sidebar">
-          <i class="ti ti-menu-2"></i>
-        </button>
-      </div>
-      <nav class="nav">
-        <p class="nav-label nav-section-title">Menu utama</p>
-        <a href="{{ route('dashboard') }}" class="nav-item active" data-page="dashboard">
-          <i class="ti ti-layout-dashboard"></i>
-          <span class="nav-label">Dashboard</span>
-        </a>
-        <a href="{{ route('tikets.index') }}" class="nav-item" data-page="tiket">
-          <i class="ti ti-ticket"></i>
-          <span class="nav-label">Tiket</span>
-          <span class="nav-badge nav-label">12</span>
-        </a>
-        <a href="{{ route('acara.index') }}" class="nav-item" data-page="acara">
-          <i class="ti ti-calendar-event"></i>
-          <span class="nav-label">Acara</span>
-        </a>
-        <a href="#" class="nav-item" data-page="pelanggan">
-          <i class="ti ti-users"></i>
-          <span class="nav-label">Pelanggan</span>
-        </a>
-        <a href="#" class="nav-item" data-page="transaksi">
-          <i class="ti ti-receipt"></i>
-          <span class="nav-label">Transaksi</span>
-
+    
     
     <!-- Main content -->
-
+    <div class="main">
       <!-- Header / Navbar atas -->
      <header class="header">
     <div class="search-box ">
