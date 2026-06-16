@@ -105,14 +105,7 @@
     </div>
 
 
-                    <button type="submit" class="btn btn-warning">Perbarui Data</button>
-                    <a href="{{ route('pelanggan.index') }}" class="btn btn-secondary">Kembali</a>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
+  
         
 
 <script src="{{ asset('assets3/main.js') }}"></script>
