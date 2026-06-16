@@ -37,12 +37,14 @@ Route::get('/user/dashboard', function () {
 Route::get('/pelanggan', [PelangganController::class, 'index'])
     ->name('pelanggan.index');
     
-    Route::get('/pelanggan/{id}/edit', [PelangganController::class, 'edit'])
-        ->name('pelanggan.edit');
+
 
 Route::get('/pelanggan/{id}/edit', [PelangganController::class, 'edit'])
     ->name('pelanggan.edit');
-    Route::get('/pelanggan/{id}/delete', [PelangganController::class, 'destroy'])
+
+Route::get('/pelanggan/{id}/delete', [PelangganController::class, 'destroy'])
     ->name('pelanggan.destroy');
+    Route::put('/pelanggan/{id}', [PelangganController::class, 'update'])
+    ->name('pelanggan.update');
 
 require __DIR__.'/auth.php';
