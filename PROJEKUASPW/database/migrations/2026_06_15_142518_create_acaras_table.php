@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('nama_acara');
             $table->text('deskripsi')->nullable();
+            $table->date('tanggal');
+            $table->string('lokasi');
+            $table->string('gambar')->nullable();
             $table->timestamps();
         });
     }
