@@ -4,10 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard Admin Pelanggan</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/tabler-icons.min.css" />
+ <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
   <link rel="stylesheet" href="{{ asset('assets3/style.css') }}">
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
+
+<style>
+    .main
+    {
+        width: 100%;
+    }
+</style>
 <body>
   <div class="layout">
 
@@ -15,6 +23,7 @@
     
     <!-- Main content -->
     <div class="main">
+
       <!-- Header / Navbar atas -->
      <header class="header">
     <div class="search-box ">
@@ -70,11 +79,68 @@
         </div>
     </div>
 </header>
-     <div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card shadow-sm">
-            <div class="card-header bg-white">
-                <h5 class="mb-0">Edit Data Pelanggan</h5>
+
+    <main class="content">
+
+    <div class="row justify-content-center">
+        <div class="">
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">Edit Data Pelanggan</h5>
+                </div>
+
+                <div class="card-body">
+                    <form action="{{ route('pelanggan.update', $pelanggan->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+
+                        <div class="mb-3">
+                            <label class="form-label">Nama Pelanggan</label>
+                            <input type="text"
+                                   name="nama_pelanggan"
+                                   class="form-control @error('nama_pelanggan') is-invalid @enderror"
+                                   value="{{ old('nama_pelanggan', $pelanggan->nama_pelanggan) }}">
+
+                            @error('nama_pelanggan')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email"
+                                   name="email"
+                                   class="form-control @error('email') is-invalid @enderror"
+                                   value="{{ old('email', $pelanggan->email) }}">
+
+                            @error('email')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">No. Telepon</label>
+                            <input type="text"
+                                   name="no_telepon"
+                                   class="form-control @error('no_telepon') is-invalid @enderror"
+                                   value="{{ old('no_telepon', $pelanggan->no_telepon) }}">
+
+                            @error('no_telepon')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <button type="submit" class="btn btn-warning">
+                            Perbarui Data
+                        </button>
+
+                        <a href="{{ route('pelanggan.index') }}"
+                           class="btn btn-secondary">
+                            Kembali
+                        </a>
+                    </form>
+                </div>
             </div>
             <div class="card-body">
                 <form action="{{ route('pelanggan.update', $pelanggan->id) }}" method="POST">
@@ -95,28 +161,14 @@
     @enderror
 </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email', $pelanggan->email) }}">
-                        @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">No. Telepon</label>
-                        <input type="text" name="no_telepon" class="form-control @error('no_telepon') is-invalid @enderror" value="{{ old('no_telepon', $pelanggan->no_telepon) }}">
-                        @error('no_telepon') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                    </div>
-
-                    <button type="submit" class="btn btn-warning">Perbarui Data</button>
-                    <a href="{{ route('pelanggan.index') }}" class="btn btn-secondary">Kembali</a>
-                </form>
-            </div>
         </div>
     </div>
 
+</main>
 
-  
-        
+</div> <!-- main -->
+</div> <!-- layout -->
+
 
 <script src="{{ asset('assets3/main.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
