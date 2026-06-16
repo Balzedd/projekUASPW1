@@ -54,12 +54,13 @@ class PelangganController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+public function update(Request $request, $id)
 {
     $pelanggan = User::findOrFail($id);
 
-    $pelanggan->name = $request->name;
+    $pelanggan->name = $request->nama_pelanggan;
     $pelanggan->email = $request->email;
+
     $pelanggan->save();
 
     return redirect()

@@ -187,6 +187,24 @@
                     </form>
                 </div>
             </div>
+            <div class="card-body">
+                <form action="{{ route('pelanggan.update', $pelanggan->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    
+                    <div class="mb-3">
+    <label class="form-label">Nama Pelanggan</label>
+    <input type="text"
+           name="name"
+           class="form-control @error('name') is-invalid @enderror"
+           value="{{ old('name', $pelanggan->name) }}">
+
+    @error('name')
+        <div class="invalid-feedback">
+            {{ $message }}
+        </div>
+    @enderror
+</div>
 
         </div>
     </div>
