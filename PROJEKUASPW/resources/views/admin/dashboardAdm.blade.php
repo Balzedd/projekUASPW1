@@ -35,7 +35,7 @@
           <span class="nav-label">Tiket</span>
           <span class="nav-badge nav-label">12</span>
         </a>
-        <a href="#" class="nav-item" data-page="acara">
+        <a href="{{ route('acara.index') }}" class="nav-item" data-page="acara">
           <i class="ti ti-calendar-event"></i>
           <span class="nav-label">Acara</span>
         </a>

@@ -12,7 +12,9 @@ class AcaraController extends Controller
      */
     public function index()
     {
-       return view('acara.index');
+        $acaras = Acara::all();
+
+        return view('acara.index', compact('acaras'));
     }
 
     /**
@@ -20,7 +22,7 @@ class AcaraController extends Controller
      */
     public function create()
     {
-        //
+        return view('acara.create');
     }
 
     /**
@@ -28,7 +30,27 @@ class AcaraController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $gambar = null;
+
+        if($request->hasFile('gambar')){
+
+            $gambar = time().'.'.$request->gambar->extension();
+
+            $request->gambar->move(public_path('gambar_acara'), $gambar);
+
+        }
+
+        Acara::create([
+
+            'nama_acara' => $request->nama_acara,
+            'deskripsi' => $request->deskripsi,
+            'tanggal' => $request->tanggal,
+            'lokasi' => $request->lokasi,
+            'gambar' => $gambar
+
+        ]);
+
+        return redirect('/acara');
     }
 
     /**
@@ -42,24 +64,41 @@ class AcaraController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Acara $acara)
+    public function edit($id)
     {
-        //
+        $acara = Acara::findOrFail($id);
+
+        return view('acara.edit', compact('acara'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Acara $acara)
+    public function update(Request $request, $id)
     {
-        //
+        $acara = Acara::findOrFail($id);
+
+        $acara->update([
+
+            'nama_acara' => $request->nama_acara,
+            'deskripsi' => $request->deskripsi,
+            'tanggal' => $request->tanggal,
+            'lokasi' => $request->lokasi,
+
+        ]);
+
+        return redirect('/acara');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Acara $acara)
+    public function destroy($id)
     {
-        //
+        $acara = Acara::findOrFail($id);
+
+        $acara->delete();
+
+        return redirect('/acara');
     }
 }
