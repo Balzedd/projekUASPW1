@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
+   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard Admin Pelanggan</title>
+  <title>Dashboard Admin Penjualan Tiket</title>
  <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
   <link rel="stylesheet" href="{{ asset('assets3/style.css') }}">
  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -19,6 +19,52 @@
 <body>
   <div class="layout">
 
+    <!-- Sidebar -->
+     <aside id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand">
+          <div class="brand-icon"><i class="bi bi-ticket-fill"></i></div>
+          <span id="logoText" class="nav-label brand-text">Tiketin Admin</span>
+        </div>
+        <button id="toggleBtn" class="toggle-btn" aria-label="Toggle sidebar">
+          <i class="bi bi-list "></i>
+        </button>
+      </div>
+
+      <nav class="nav">
+        <p class="nav-label nav-section-title">Menu utama</p>
+
+        <a href="{{ route('admin.dashboard') }}" class="nav-item " data-page="dashboard">
+          <i class="ti ti-layout-dashboard"></i>
+          <span class="nav-label">Dashboard</span>
+        </a>
+        <a href="{{ route('tikets.index') }}" class="nav-item" data-page="tiket">
+          <i class="ti ti-ticket"></i>
+          <span class="nav-label">Tiket</span>
+          <span class="nav-badge nav-label">12</span>
+        </a>
+        <a href="{{ route('acara.index') }}" class="nav-item" data-page="acara">
+          <i class="ti ti-calendar-event"></i>
+          <span class="nav-label">Acara</span>
+        </a>
+        <a href="{{ route('pelanggan.index') }}" class="nav-item active" data-page="pelanggan">
+          <i class="ti ti-users"></i>
+          <span class="nav-label">Pelanggan</span>
+        
+        </a>
+        <a href="#" class="nav-item" data-page="transaksi">
+          <i class="ti ti-receipt"></i>
+          <span class="nav-label">Transaksi</span>
+        </a>
+        <a href="#" class="nav-item" data-page="laporan">
+          <i class="ti ti-chart-bar"></i>
+          <span class="nav-label">Laporan</span>
+        </a>
+
+        <p class="nav-label nav-section-title nav-section-title-second">Lainnya</p>
+
+      </nav>
+    </aside>
     
     
     <!-- Main content -->
@@ -101,7 +147,6 @@
                                    name="nama_pelanggan"
                                    class="form-control @error('nama_pelanggan') is-invalid @enderror"
                                    value="{{ old('nama_pelanggan', $pelanggan->nama_pelanggan) }}">
-
                             @error('nama_pelanggan')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -147,19 +192,7 @@
                     @csrf
                     @method('PUT')
                     
-                    <div class="mb-3">
-    <label class="form-label">Nama Pelanggan</label>
-    <input type="text"
-           name="name"
-           class="form-control @error('name') is-invalid @enderror"
-           value="{{ old('name', $pelanggan->name) }}">
-
-    @error('name')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
-    @enderror
-</div>
+                   
 
         </div>
     </div>
