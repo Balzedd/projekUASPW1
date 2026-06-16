@@ -4,6 +4,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PelangganController;
+use App\Http\Controllers\TiketController;
+
+Route::resource('tikets', TiketController::class);
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,6 +36,9 @@ Route::get('/user/dashboard', function () {
 
 Route::get('/pelanggan', [PelangganController::class, 'index'])
     ->name('pelanggan.index');
+    
+    Route::get('/pelanggan/{id}/edit', [PelangganController::class, 'edit'])
+        ->name('pelanggan.edit');
 
 Route::get('/pelanggan/{id}/edit', [PelangganController::class, 'edit'])
     ->name('pelanggan.edit');

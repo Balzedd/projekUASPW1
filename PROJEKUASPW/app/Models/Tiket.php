@@ -6,5 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tiket extends Model
 {
-    //
+    protected $table = 'tikets';
+
+    protected $fillable = [
+        'event_id',
+        'nama_tiket',
+        'deskripsi',
+        'harga',
+        'stok',
+        'jenis_tiket'
+    ];
+
+    public function acara()
+    {
+        return $this->belongsTo(Acara::class);
+    }
 }

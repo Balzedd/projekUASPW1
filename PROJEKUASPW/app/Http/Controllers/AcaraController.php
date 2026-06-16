@@ -12,7 +12,7 @@ class AcaraController extends Controller
      */
     public function index()
     {
-        //
+       return view('acara.index');
     }
 
     /**
