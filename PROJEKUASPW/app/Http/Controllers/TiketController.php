@@ -54,7 +54,7 @@ class TiketController extends Controller
         $tiket->update($request->all());
 
         return redirect()
-            ->route('tiket.index')
+            ->route('tikets.index')
             ->with('success','Data berhasil diupdate');
     }
 
@@ -63,7 +63,7 @@ class TiketController extends Controller
         Tiket::destroy($id);
 
         return redirect()
-            ->route('tiket.index')
+            ->route('tikets.index')
             ->with('success','Data berhasil dihapus');
     }
 }
