@@ -9,7 +9,7 @@ class Tiket extends Model
     protected $table = 'tikets';
 
     protected $fillable = [
-        'event_id',
+        'acara_id',
         'nama_tiket',
         'deskripsi',
         'harga',
