@@ -131,7 +131,11 @@
         </div>
         <div class="hero-stats">
           <div class="hstat"><div class="hstat-num">98<span>%</span></div><div class="hstat-lbl">Kepuasan Pembeli</div></div>
-          <div class="hstat"><div class="hstat-num">7<span>+</span></div><div class="hstat-lbl">Event Yang Sedang Aktif</div></div>
+         <div class="hstat">
+          <div class="hstat-num">
+              {{ \App\Models\Acara::count() }}<span>+</span>
+          </div>
+           <div class="hstat-lbl">Event Yang Sedang Aktif</div></div>
           <div class="hstat"><div class="hstat-num">50<span>+</span></div><div class="hstat-lbl">Kota di Indonesia</div></div>
         </div>
       </div>
@@ -170,14 +174,21 @@
     <div class="mq-item"><i class="fas fa-music"></i>Dewa 19 Reunion Concert</div>
     <div class="mq-item"><i class="fas fa-music"></i>Euphoria life festival 2026</div>
    <div class="mq-item"><i class="fas fa-music"></i>Egsclusive Festival 2026</div>
+   <div class="mq-item"><i class="fas fa-car"></i>World Rally Championship</div>
+    <div class="mq-item"><i class="fas fa-user-tie"></i>The Power of Personal Branding</div>
     <div class="mq-item"><i class="fas fa-microphone"></i>Singphoria Lampung 2026 Vol.5</div>
     <div class="mq-item"><i class="fas fa-microphone"></i>Mantra In Summer</div>
      <div class="mq-item"><i class="fas fa-microphone"></i>MotionIme Fest</div>
+    
+
+
 
     <div class="mq-item"><i class="fas fa-gamepad"></i>MPL Indonesia Season 18</div>
      <div class="mq-item"><i class="fas fa-music"></i>Dewa 19 Reunion Concert</div>
     <div class="mq-item"><i class="fas fa-music"></i>Euphoria life festival 2026</div>
    <div class="mq-item"><i class="fas fa-music"></i>Egsclusive Festival 2026</div>
+     <div class="mq-item"><i class="fas fa-car"></i>World Rally Championship</div>
+    <div class="mq-item"><i class="fas fa-user-tie"></i>The Power of Personal Branding</div>
     <div class="mq-item"><i class="fas fa-microphone"></i>Singphoria Lampung 2026 Vol.5</div>
      <div class="mq-item"><i class="fas fa-microphone"></i>Mantra In Summer</div>
       <div class="mq-item"><i class="fas fa-microphone"></i>MotionIme Fest</div>
@@ -193,11 +204,43 @@
       <div class="sec-line"></div>
     </div>
     <div class="cat-grid">
-      <div class="catcard active" onclick="filterEvents('all',this)"><span class="cat-icon">🎫</span><div class="cat-name">Semua Event</div><div class="cat-count">7 event</div></div>
-      <div class="catcard" onclick="filterEvents('esports',this)"><span class="cat-icon">🎮</span><div class="cat-name">Esports</div><div class="cat-count">1 event</div></div>
-      <div class="catcard" onclick="filterEvents('concert',this)"><span class="cat-icon">🎵</span><div class="cat-name">Konser</div><div class="cat-count">5 event</div></div>
-      <div class="catcard" onclick="filterEvents('sport',this)"><span class="cat-icon">⚽</span><div class="cat-name">Olahraga</div><div class="cat-count">15 event</div></div>
-      <div class="catcard" onclick="filterEvents('seminar',this)"><span class="cat-icon">🎤</span><div class="cat-name">Seminar</div><div class="cat-count">12 event</div></div>
+     <div class="catcard active" onclick="filterEvents('all',this)">
+    <span class="cat-icon">🎫</span>
+    <div class="cat-name">Semua Event</div>
+    <div class="cat-count">{{ \App\Models\Acara::count() }} event</div>
+</div>
+
+<div class="catcard" onclick="filterEvents('esports',this)">
+    <span class="cat-icon">🎮</span>
+    <div class="cat-name">Esports</div>
+    <div class="cat-count">
+        {{ \App\Models\Acara::where('kategori','Esports')->count() }} event
+    </div>
+</div>
+
+<div class="catcard" onclick="filterEvents('concert',this)">
+    <span class="cat-icon">🎵</span>
+    <div class="cat-name">Konser</div>
+    <div class="cat-count">
+        {{ \App\Models\Acara::where('kategori','Konser')->count() }} event
+    </div>
+</div>
+
+<div class="catcard" onclick="filterEvents('sport',this)">
+    <span class="cat-icon">⚽</span>
+    <div class="cat-name">Olahraga</div>
+    <div class="cat-count">
+        {{ \App\Models\Acara::where('kategori','Olahraga')->count() }} event
+    </div>
+</div>
+
+<div class="catcard" onclick="filterEvents('seminar',this)">
+    <span class="cat-icon">🎤</span>
+    <div class="cat-name">Seminar</div>
+    <div class="cat-count">
+        {{ \App\Models\Acara::where('kategori','Seminar')->count() }} event
+    </div>
+</div>
     </div>
   </div>
 </section>
@@ -210,7 +253,6 @@
         <span class="sec-label">Jadwal Terdekat</span>
         <h2 class="sec-title" style="margin-bottom:0;">Event <span>Mendatang</span></h2>
       </div>
-      <a href="#" class="btn-ghost">Lihat Semua <i class="fas fa-arrow-right" style="margin-left:5px;"></i></a>
     </div>
     <div class="filter-row" style="margin-top:24px;">
       <button class="filtbtn active" onclick="filterEv('all',this)">Semua</button>
@@ -230,9 +272,9 @@
         </div>
         <div class="ecard-body">
           <div class="ecat">⚡ Esports</div>
-          <div class="etitle">MPL ID Season 16 Grand Finals</div>
+          <div class="etitle">MPL ID Season 18 Grand Finals</div>
           <div class="emeta">
-            <span><i class="fas fa-calendar-alt"></i>28 Jul 2026</span>
+            <span><i class="fas fa-calendar-alt"></i>28 September 2026</span>
             <span><i class="fas fa-map-marker-alt"></i>Jakarta International Expo</span>
           </div>
           <div class="efoot">

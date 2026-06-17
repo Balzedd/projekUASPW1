@@ -40,15 +40,14 @@ class AcaraController extends Controller
 
         }
 
-        Acara::create([
-
-            'nama_acara' => $request->nama_acara,
-            'deskripsi' => $request->deskripsi,
-            'tanggal' => $request->tanggal,
-            'lokasi' => $request->lokasi,
-            'gambar' => $gambar
-
-        ]);
+       Acara::create([
+    'nama_acara' => $request->nama_acara,
+    'kategori' => $request->kategori,
+    'deskripsi' => $request->deskripsi,
+    'tanggal' => $request->tanggal,
+    'lokasi' => $request->lokasi,
+    'gambar' => $gambar
+]);
 
         return redirect('/acara');
     }
@@ -78,14 +77,13 @@ class AcaraController extends Controller
     {
         $acara = Acara::findOrFail($id);
 
-        $acara->update([
-
-            'nama_acara' => $request->nama_acara,
-            'deskripsi' => $request->deskripsi,
-            'tanggal' => $request->tanggal,
-            'lokasi' => $request->lokasi,
-
-        ]);
+       $acara->update([
+    'nama_acara' => $request->nama_acara,
+    'kategori' => $request->kategori,
+    'deskripsi' => $request->deskripsi,
+    'tanggal' => $request->tanggal,
+    'lokasi' => $request->lokasi,
+]);
 
         return redirect('/acara');
     }

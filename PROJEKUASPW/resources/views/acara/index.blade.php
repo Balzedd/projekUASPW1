@@ -45,6 +45,7 @@
                     <th>No</th>
                     <th>Poster</th>
                     <th>Nama Acara</th>
+                    <th>Kategori</th>
                     <th>Tanggal</th>
                     <th>Lokasi</th>
                     <th>Aksi</th>
@@ -71,6 +72,8 @@
                     </td>
 
                     <td>{{ $acara->nama_acara }}</td>
+                    
+                    <td>{{ $acara->kategori }}</td>
 
                     <td>{{ $acara->tanggal }}</td>
 

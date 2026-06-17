@@ -84,6 +84,18 @@
             </div>
 
             <div class="mb-3">
+    <label>Kategori</label>
+    <select name="kategori" class="form-control">
+        <option value="Musik" {{ $acara->kategori == 'Musik' ? 'selected' : '' }}>Musik</option>
+        <option value="Olahraga" {{ $acara->kategori == 'Olahraga' ? 'selected' : '' }}>Olahraga</option>
+        <option value="Seminar" {{ $acara->kategori == 'Seminar' ? 'selected' : '' }}>Seminar</option>
+        <option value="Workshop" {{ $acara->kategori == 'Workshop' ? 'selected' : '' }}>Workshop</option>
+        <option value="Festival" {{ $acara->kategori == 'Festival' ? 'selected' : '' }}>Festival</option>
+        <option value="Esports" {{ $acara->kategori == 'Esports' ? 'selected' : '' }}>Esports</option>
+    </select>
+</div>
+
+            <div class="mb-3">
 
                 <label>Deskripsi</label>
 
