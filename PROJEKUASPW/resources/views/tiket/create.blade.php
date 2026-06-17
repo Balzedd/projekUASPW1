@@ -46,7 +46,11 @@
 
 <input type="text"
        name="nama_tiket"
-       class="form-control">
+  class="form-control"
+  value="{{ old('nama_tiket') }}">
+@error('nama_tiket')
+<div class="text-danger small">{{ $message }}</div>
+@enderror
 
 </div>
 
@@ -56,7 +60,11 @@
 
 <input type="number"
        name="harga"
-       class="form-control">
+  class="form-control"
+  value="{{ old('harga') }}">
+@error('harga')
+<div class="text-danger small">{{ $message }}</div>
+@enderror
 
 </div>
 
@@ -66,7 +74,11 @@
 
 <input type="number"
        name="stok"
-       class="form-control">
+  class="form-control"
+  value="{{ old('stok') }}">
+@error('stok')
+<div class="text-danger small">{{ $message }}</div>
+@enderror
 
 </div>
 
@@ -77,9 +89,13 @@
 <select name="jenis_tiket"
         class="form-control">
 
-<option value="Regular">Regular</option>
-<option value="VIP">VIP</option>
-<option value="VVIP">VVIP</option>
+<option value="Regular" {{ old('jenis_tiket') == 'Regular' ? 'selected' : '' }}>Regular</option>
+<option value="VIP" {{ old('jenis_tiket') == 'VIP' ? 'selected' : '' }}>VIP</option>
+<option value="VVIP" {{ old('jenis_tiket') == 'VVIP' ? 'selected' : '' }}>VVIP</option>
+
+@error('jenis_tiket')
+<div class="text-danger small">{{ $message }}</div>
+@enderror
 
 </select>
 
@@ -92,12 +108,15 @@
 <textarea
 name="deskripsi"
 class="form-control"></textarea>
+@error('deskripsi')
+<div class="text-danger small">{{ $message }}</div>
+@enderror
 
 </div>
 
 <div class="d-flex justify-content-end mt-3">
     <a href="{{ route('tikets.index') }}" class="btn btn-secondary me-2">Batal</a>
-    <button class="btn btn-success">Simpan</button>
+    <button type="submit" class="btn btn-success">Simpan</button>
 </div>
 
 </form>

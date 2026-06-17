@@ -44,8 +44,8 @@
         <li><a href="#contact">Kontak</a></li>
       </ul>
       <div class="nav-actions">
-        <button class="btn-ghost">Masuk</button>
-        <a href="#events" class="btn-primary"><i class="fas fa-ticket-alt"></i>Beli Tiket</a>
+       <a href="https://tiket.in/login" target="_blank"> <button class="btn-ghost">Masuk</button></a>
+        <a href="https://tiket.in" class="btn-primary" target="_blank"><i class="fas fa-ticket-alt"></i>Beli Tiket</a>
         <button class="hamburger" onclick="document.getElementById('mobile-nav').classList.add('open')"><i class="fas fa-bars"></i></button>
       </div>
     </div>
