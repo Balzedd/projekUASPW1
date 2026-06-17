@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Acara;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 
 class AcaraController extends Controller
@@ -30,9 +31,19 @@ class AcaraController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'nama_acara' => ['required', 'string', 'max:255'],
+            'deskripsi' => ['nullable', 'string'],
+            'tanggal' => ['required', 'date'],
+            'lokasi' => ['required', 'string', 'max:255'],
+            'gambar' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+        ]);
+
         $gambar = null;
 
         if($request->hasFile('gambar')){
+
+            File::ensureDirectoryExists(public_path('gambar_acara'));
 
             $gambar = time().'.'.$request->gambar->extension();
 
@@ -42,15 +53,15 @@ class AcaraController extends Controller
 
         Acara::create([
 
-            'nama_acara' => $request->nama_acara,
-            'deskripsi' => $request->deskripsi,
-            'tanggal' => $request->tanggal,
-            'lokasi' => $request->lokasi,
+            'nama_acara' => $validated['nama_acara'],
+            'deskripsi' => $validated['deskripsi'] ?? null,
+            'tanggal' => $validated['tanggal'],
+            'lokasi' => $validated['lokasi'],
             'gambar' => $gambar
 
         ]);
 
-        return redirect('/acara');
+        return redirect('/acara')->with('success', 'Acara berhasil ditambahkan.');
     }
 
     /**
@@ -78,16 +89,36 @@ class AcaraController extends Controller
     {
         $acara = Acara::findOrFail($id);
 
+        $validated = $request->validate([
+            'nama_acara' => ['required', 'string', 'max:255'],
+            'deskripsi' => ['nullable', 'string'],
+            'tanggal' => ['required', 'date'],
+            'lokasi' => ['required', 'string', 'max:255'],
+            'gambar' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+        ]);
+
+        $gambar = $acara->gambar;
+
+        if ($request->hasFile('gambar')) {
+
+            File::ensureDirectoryExists(public_path('gambar_acara'));
+
+            $gambar = time().'.'.$request->gambar->extension();
+
+            $request->gambar->move(public_path('gambar_acara'), $gambar);
+        }
+
         $acara->update([
 
-            'nama_acara' => $request->nama_acara,
-            'deskripsi' => $request->deskripsi,
-            'tanggal' => $request->tanggal,
-            'lokasi' => $request->lokasi,
+            'nama_acara' => $validated['nama_acara'],
+            'deskripsi' => $validated['deskripsi'] ?? null,
+            'tanggal' => $validated['tanggal'],
+            'lokasi' => $validated['lokasi'],
+            'gambar' => $gambar,
 
         ]);
 
-        return redirect('/acara');
+        return redirect('/acara')->with('success', 'Acara berhasil diperbarui.');
     }
 
     /**
