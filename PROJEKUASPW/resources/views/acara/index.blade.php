@@ -6,7 +6,7 @@
 
     <div>
 
-        <h2>Data Acara</h2>
+        <h1>Data Acara</h1>
 
         <p class="subtitle">
             Kelola data acara dan event
