@@ -9,11 +9,18 @@
  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
+
+<style>
+    .main
+    {
+        width: 100%;
+    }
+</style>
 <body>
   <div class="layout">
 
-       <!-- Sidebar -->
-    <aside id="sidebar" class="sidebar">
+    <!-- Sidebar -->
+     <aside id="sidebar" class="sidebar">
       <div class="sidebar-header">
         <div class="brand">
           <div class="brand-icon"><i class="bi bi-ticket-fill"></i></div>
@@ -27,7 +34,7 @@
       <nav class="nav">
         <p class="nav-label nav-section-title">Menu utama</p>
 
-        <a href="{{ route('admin.dashboard') }}" class="nav-item" data-page="dashboard">
+        <a href="{{ route('admin.dashboard') }}" class="nav-item " data-page="dashboard">
           <i class="ti ti-layout-dashboard"></i>
           <span class="nav-label">Dashboard</span>
         </a>
@@ -40,7 +47,7 @@
           <i class="ti ti-calendar-event"></i>
           <span class="nav-label">Acara</span>
         </a>
-        <a href="{{ route('pelanggan.index') }}" class="nav-item  active  " data-page="pelanggan">
+        <a href="{{ route('pelanggan.index') }}" class="nav-item active" data-page="pelanggan">
           <i class="ti ti-users"></i>
           <span class="nav-label">Pelanggan</span>
         
@@ -58,8 +65,11 @@
 
       </nav>
     </aside>
+    
+    
     <!-- Main content -->
     <div class="main">
+
       <!-- Header / Navbar atas -->
      <header class="header">
     <div class="search-box ">
@@ -115,69 +125,83 @@
         </div>
     </div>
 </header>
-     <!-- Content -->
-      <main class="content">
-        <div class="content-top">
-          <div>
-            <h1>Dashboard Pelanggan</h1>
-            <p class="subtitle">Ringkasan aktivitas pelanggan hari ini, 15 Juni 2026</p>
-          </div>
-          <button class="btn-primary">
-            <i class="ti ti-plus"></i> Pelanggan baru
-          </button>
+
+    <main class="content">
+
+    <div class="row justify-content-center">
+        <div class="">
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">Edit Data Pelanggan</h5>
+                </div>
+
+                <div class="card-body">
+                    <form action="{{ route('pelanggan.update', $pelanggan->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+
+                        <div class="mb-3">
+                            <label class="form-label">Nama Pelanggan</label>
+                            <input type="text"
+                                   name="nama_pelanggan"
+                                   class="form-control @error('nama_pelanggan') is-invalid @enderror"
+                                   value="{{ old('nama_pelanggan', $pelanggan->nama_pelanggan) }}">
+                            @error('nama_pelanggan')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email"
+                                   name="email"
+                                   class="form-control @error('email') is-invalid @enderror"
+                                   value="{{ old('email', $pelanggan->email) }}">
+
+                            @error('email')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">No. Telepon</label>
+                            <input type="text"
+                                   name="no_telepon"
+                                   class="form-control @error('no_telepon') is-invalid @enderror"
+                                   value="{{ old('no_telepon', $pelanggan->no_telepon) }}">
+
+                            @error('no_telepon')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <button type="submit" class="btn btn-warning">
+                            Perbarui Data
+                        </button>
+
+                        <a href="{{ route('pelanggan.index') }}"
+                           class="btn btn-secondary">
+                            Kembali
+                        </a>
+                    </form>
+                </div>
+            </div>
+            <div class="card-body">
+                <form action="{{ route('pelanggan.update', $pelanggan->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    
+                   
+
         </div>
-        <!-- Stat cards -->
-        <!-- Bottom grid -->
-<div class="card">
-    <div class="card-header">
-        <h3>Daftar Pelanggan</h3>
     </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Nama</th>
-                <th>Email</th>
-                <th>Tanggal Bergabung</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
+</main>
 
-<tbody>
-@foreach ($pelanggan as $p)
-<tr>
-    <td>{{ $loop->iteration }}</td>
-    <td>{{ $p->name }}</td>
-    <td>{{ $p->email }}</td>
-    <td>{{ $p->created_at->format('d-m-Y') }}</td>
-    <td>
-        <a href="{{ route('pelanggan.edit', $p->id) }}"
-           class="btn btn-warning btn-sm">
-            <i class="ti ti-edit"></i>
-            Edit
-        </a>
+</div> <!-- main -->
+</div> <!-- layout -->
 
-        <form action="{{ route('pelanggan.destroy', $p->id) }}"
-              method="POST"
-              style="display:inline;">
-            @csrf
-            @method('DELETE')
-
-            <button type="submit"
-                    class="btn btn-danger btn-sm"
-                    onclick="return confirm('Yakin ingin menghapus pelanggan ini?')">
-                <i class="ti ti-trash"></i>
-                Hapus
-            </button>
-        </form>
-    </td>
-</tr>
-@endforeach
-</tbody>
-    </table>
-</div>
-        
 
 <script src="{{ asset('assets3/main.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>

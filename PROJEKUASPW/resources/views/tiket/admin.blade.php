@@ -4,30 +4,34 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard Admin</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/tabler-icons.min.css" />
+ <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
   <link rel="stylesheet" href="{{ asset('assets3/style.css') }}">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 <body>
   <div class="layout">
+
+    <!-- Sidebar -->
     <aside id="sidebar" class="sidebar">
       <div class="sidebar-header">
         <div class="brand">
-          <div class="brand-icon"><i class="ti ti-ticket"></i></div>
-          <span id="logoText" class="nav-label brand-text">Tiket Admin</span>
+          <div class="brand-icon"><i class="bi bi-ticket-fill"></i></div>
+          <span id="logoText" class="nav-label brand-text">Tiketin Admin</span>
         </div>
         <button id="toggleBtn" class="toggle-btn" aria-label="Toggle sidebar">
-          <i class="ti ti-menu-2"></i>
+          <i class="bi bi-list "></i>
         </button>
       </div>
 
       <nav class="nav">
         <p class="nav-label nav-section-title">Menu utama</p>
-        <a href="{{ route('admin.dashboard') }}" class="nav-item active" data-page="dashboard">
+
+        <a href="{{ route('admin.dashboard') }}" class="nav-item" data-page="dashboard">
           <i class="ti ti-layout-dashboard"></i>
           <span class="nav-label">Dashboard</span>
         </a>
-        <a href="{{ route('tikets.index') }}" class="nav-item" data-page="tiket">
+        <a href="{{ route('tikets.index') }}" class="nav-item active " data-page="tiket">
           <i class="ti ti-ticket"></i>
           <span class="nav-label">Tiket</span>
           <span class="nav-badge nav-label">12</span>
@@ -36,9 +40,10 @@
           <i class="ti ti-calendar-event"></i>
           <span class="nav-label">Acara</span>
         </a>
-        <a href="{{ route('pelanggan.index') }}" class="nav-item" data-page="pelanggan">
+        <a href="{{ route('pelanggan.index') }}" class="nav-item " data-page="pelanggan">
           <i class="ti ti-users"></i>
           <span class="nav-label">Pelanggan</span>
+        
         </a>
         <a href="#" class="nav-item" data-page="transaksi">
           <i class="ti ti-receipt"></i>
@@ -48,9 +53,12 @@
           <i class="ti ti-chart-bar"></i>
           <span class="nav-label">Laporan</span>
         </a>
+
         <p class="nav-label nav-section-title nav-section-title-second">Lainnya</p>
+
       </nav>
     </aside>
+
 
     <div class="main">
       <header class="header">

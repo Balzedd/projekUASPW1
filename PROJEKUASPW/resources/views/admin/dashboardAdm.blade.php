@@ -4,8 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard Admin Penjualan Tiket</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.44.0/tabler-icons.min.css" />
+ <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
   <link rel="stylesheet" href="{{ asset('assets3/style.css') }}">
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 <body>
@@ -15,11 +16,11 @@
     <aside id="sidebar" class="sidebar">
       <div class="sidebar-header">
         <div class="brand">
-          <div class="brand-icon"><i class="ti ti-ticket"></i></div>
-          <span id="logoText" class="nav-label brand-text">Tiket Admin</span>
+          <div class="brand-icon"><i class="bi bi-ticket-fill"></i></div>
+          <span id="logoText" class="nav-label brand-text">Tiketin Admin</span>
         </div>
         <button id="toggleBtn" class="toggle-btn" aria-label="Toggle sidebar">
-          <i class="ti ti-menu-2"></i>
+          <i class="bi bi-list "></i>
         </button>
       </div>
 
@@ -163,16 +164,19 @@
             <p class="stat-value">8</p>
             <p class="stat-sub">2 acara minggu ini</p>
           </div>
+          
 
-          <div class="stat-card stat-neutral">
-            <div class="stat-top">
-              <p>Pelanggan baru</p>
-              <i class="ti ti-users"></i>
-            </div>
-            <p class="stat-value">312</p>
-            <p class="stat-sub">+24 hari ini</p>
-          </div>
-        </div>
+         <!-- Pelanggan baru -->
+<!-- Sesudah (benar) -->
+<div class="stat-card stat-neutral">
+    <div class="stat-top">
+        <p>Pelanggan baru</p>
+        <i class="ti ti-users"></i>
+    </div>
+    <p class="stat-value">{{ $pelangganBaru }}</p>
+    <p class="stat-sub">+{{ $totalPelanggan }} total pelanggan</p>
+</div>
+  </div>
 
         <!-- Bottom grid -->
         <div class="bottom-grid">
