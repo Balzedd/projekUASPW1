@@ -85,3 +85,21 @@ window.addEventListener('scroll',()=>{
     if(a.getAttribute('href')==='#'+cur) a.classList.add('active');
   });
 });
+
+function toggleProfileMenu() {
+    document
+        .getElementById("profileMenu")
+        .classList.toggle("show");
+}
+
+window.onclick = function(event) {
+
+    if (!event.target.closest('.profile-dropdown')) {
+
+        let menu = document.getElementById("profileMenu");
+
+        if (menu.classList.contains("show")) {
+            menu.classList.remove("show");
+        }
+    }
+}

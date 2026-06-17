@@ -54,7 +54,7 @@
           <span class="nav-label">Laporan</span>
         </a>
 
-        <p class="nav-label nav-section-title nav-section-title-second">Lainnya</p>
+       
 
       </nav>
     </aside>

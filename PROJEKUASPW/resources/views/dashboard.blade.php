@@ -3,10 +3,12 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>TicketWave – Tiket Event & Turnamen Indonesia</title>
+<title>TicketIn – Platform Tiket Event & Turnamen MPL Indonesia</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <link rel="stylesheet" href="{{ asset('assets2/style.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+ 
 
 </head>
 <body>
@@ -15,12 +17,12 @@
 <div id="topbar">
   <div class="container">
     <div class="tb-left">
-      <span><i class="fas fa-bolt"></i>PROMO: Diskon 20% tiket early bird MPL Season 16!</span>
+      <span><i class="fas fa-bolt"></i>PROMO: Diskon 20% tiket early bird MPL Season 18!</span>
     </div>
     <div class="tb-right">
-      <a href="#"><i class="fab fa-instagram"></i></a>
-      <a href="#"><i class="fab fa-tiktok"></i></a>
-      <a href="#"><i class="fab fa-youtube"></i></a>
+      <a href="https://www.instagram.com/yancikk_11?igsh=dDQ3NTR5ZXltNDhm"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.tiktok.com/@adriaannnn30?_r=1&_t=ZS-97HiqNyEDYd"><i class="fab fa-tiktok"></i></a>
+      <a href="https://youtube.com/@jonanathn?si=xOiyGmBS0_k6MdzX"><i class="fab fa-youtube"></i></a>
     </div>
   </div>
 </div>
@@ -32,7 +34,7 @@
       <a href="#" class="logo">
         <div class="logo-icon"><i class="fas fa-ticket-alt"></i></div>
         <div>
-          <div class="logo-name">Ticket<span>Wave</span></div>
+          <div class="logo-name">TicketIn</div>
           <div class="logo-sub">Platform Tiket Indonesia</div>
         </div>
       </a>
@@ -44,9 +46,55 @@
         <li><a href="#contact">Kontak</a></li>
       </ul>
       <div class="nav-actions">
-        <button class="btn-ghost">Masuk</button>
-        <a href="#events" class="btn-primary"><i class="fas fa-ticket-alt"></i>Beli Tiket</a>
+         <a href="#orders" class="btn-primary"><i class="fas fa-ticket-alt"></i>Beli Tiket</a>
         <button class="hamburger" onclick="document.getElementById('mobile-nav').classList.add('open')"><i class="fas fa-bars"></i></button>
+      <div class="profile-dropdown " style="margin-left:40px;">
+
+    <button class="profile-button" onclick="toggleProfileMenu()">
+
+        <div class="avatar">
+            {{ strtoupper(substr(Auth::user()->name,0,3)) }}
+        </div>
+
+        <div class="profile-info">
+            <div class="profile-name">
+                {{ Auth::user()->name }}
+            </div>
+            <div class="profile-role">
+                Halo,  {{ Auth::user()->name }}
+            </div>
+        </div>
+
+        <i class="fas fa-chevron-down"></i>
+
+    </button>
+
+    <div class="profile-menu" id="profileMenu">
+
+        <a href="#">
+            <i class="fas fa-user"></i>
+            Profile
+        </a>
+
+        <a href="#">
+            <i class="fas fa-cog"></i>
+            Account Settings
+        </a>
+
+        <hr>
+
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit">
+                <i class="fas fa-sign-out-alt"></i>
+                Sign Out
+            </button>
+        </form>
+
+    </div>
+
+</div>
+       
       </div>
     </div>
   </div>
@@ -73,40 +121,38 @@
         <div class="hero-badge"><i class="fas fa-star"></i>#1 Platform Tiket Event Indonesia</div>
         <h1 class="hero-title">
           TIKET<br/>
-          <span class="line2">TURNAMEN</span><br/>
+          <span class="line2">MPL</span><br/>
           <span class="line3">&amp; KONSER</span>
         </h1>
-        <p class="hero-desc">Dapatkan tiket MPL, konser, pertandingan olahraga, dan seminar terbaik Indonesia. Aman, mudah, dan langsung di tangan kamu.</p>
+        <p class="hero-desc">Dapatkan tiket MPL dan Konser terbaik Indonesia. Aman, mudah, cepat, dan langsung di tangan kamu.</p>
         <div class="hero-btns">
           <a href="#events" class="btn-primary btn-lg"><i class="fas fa-search"></i>Cari Event</a>
           <button class="btn-outline"><i class="fas fa-play"></i>Cara Beli</button>
         </div>
         <div class="hero-stats">
-          <div class="hstat"><div class="hstat-num">250<span>K+</span></div><div class="hstat-lbl">Tiket Terjual</div></div>
-          <div class="hstat"><div class="hstat-num">1<span>,200+</span></div><div class="hstat-lbl">Event Aktif</div></div>
           <div class="hstat"><div class="hstat-num">98<span>%</span></div><div class="hstat-lbl">Kepuasan Pembeli</div></div>
+          <div class="hstat"><div class="hstat-num">7<span>+</span></div><div class="hstat-lbl">Event Yang Sedang Aktif</div></div>
           <div class="hstat"><div class="hstat-num">50<span>+</span></div><div class="hstat-lbl">Kota di Indonesia</div></div>
         </div>
       </div>
       <div style="position:relative;">
-        <div class="fbadge f1"><i class="fas fa-fire"></i><span><strong>Hot</strong>&nbsp;MPL S16 — Tiket Hampir Habis!</span></div>
+        <div class="fbadge f1" style="z-index: 10;"><i class="fas fa-fire"></i><span><strong>Hot</strong>&nbsp;MPL S18 — Tiket Hampir Habis!</span></div>
         <div class="hero-card">
           <div class="hero-card-img">
             <div class="event-label">🔴 LIVE SOON</div>
             <span class="hero-card-img-icon">🏆</span>
-            <div style="position:absolute;inset:0;background:url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 300 220\"><circle cx=\"150\" cy=\"110\" r=\"90\" fill=\"none\" stroke=\"%236C2FF2\" stroke-width=\"1\" opacity=\"0.4\"/><circle cx=\"150\" cy=\"110\" r=\"60\" fill=\"none\" stroke=\"%2300F5FF\" stroke-width=\"0.5\" opacity=\"0.5\"/></svg>') center/cover no-repeat;"></div>
             <span style="font-size:5rem;position:relative;z-index:2;">🏆</span>
           </div>
           <div class="hero-card-body">
             <div class="hero-card-tag">⚡ Esports · MPL Indonesia</div>
-            <div class="hero-card-title">MPL ID Season 16 — Grand Finals</div>
+            <div class="hero-card-title">MPL ID Season 18 — Grand Finals</div>
             <div class="hero-card-meta">
-              <span class="meta-item"><i class="fas fa-calendar-alt"></i>28 Juli 2026</span>
+              <span class="meta-item"><i class="fas fa-calendar-alt"></i>28 September 2026</span>
               <span class="meta-item"><i class="fas fa-map-marker-alt"></i>Jakarta International Expo</span>
               <span class="meta-item"><i class="fas fa-users"></i>15,000 Kursi</span>
             </div>
             <div class="hero-card-price">
-              <div class="price-tag"><small>Mulai dari</small>Rp 150.000</div>
+              <div class="price-tag"><small>Mulai dari</small>Rp 180.000</div>
               <a href="#spotlight" class="btn-primary btn-sm">Pesan Sekarang</a>
             </div>
           </div>
@@ -120,20 +166,21 @@
 <!-- MARQUEE -->
 <div class="marquee-sec">
   <div class="marquee-track">
-    <div class="mq-item"><i class="fas fa-gamepad"></i>MPL Indonesia Season 16</div>
+    <div class="mq-item"><i class="fas fa-gamepad"></i>MPL Indonesia Season 18</div>
     <div class="mq-item"><i class="fas fa-music"></i>Dewa 19 Reunion Concert</div>
-    <div class="mq-item"><i class="fas fa-trophy"></i>PUBG Mobile World Invitational</div>
-    <div class="mq-item"><i class="fas fa-futbol"></i>Piala Presiden 2026</div>
-    <div class="mq-item"><i class="fas fa-microphone"></i>Viva La Vida Festival</div>
-    <div class="mq-item"><i class="fas fa-chess-knight"></i>Valorant Champions Tour</div>
-    <div class="mq-item"><i class="fas fa-basketball-ball"></i>IBL Finals Jakarta</div>
-    <div class="mq-item"><i class="fas fa-gamepad"></i>MPL Indonesia Season 16</div>
-    <div class="mq-item"><i class="fas fa-music"></i>Dewa 19 Reunion Concert</div>
-    <div class="mq-item"><i class="fas fa-trophy"></i>PUBG Mobile World Invitational</div>
-    <div class="mq-item"><i class="fas fa-futbol"></i>Piala Presiden 2026</div>
-    <div class="mq-item"><i class="fas fa-microphone"></i>Viva La Vida Festival</div>
-    <div class="mq-item"><i class="fas fa-chess-knight"></i>Valorant Champions Tour</div>
-    <div class="mq-item"><i class="fas fa-basketball-ball"></i>IBL Finals Jakarta</div>
+    <div class="mq-item"><i class="fas fa-music"></i>Euphoria life festival 2026</div>
+   <div class="mq-item"><i class="fas fa-music"></i>Egsclusive Festival 2026</div>
+    <div class="mq-item"><i class="fas fa-microphone"></i>Singphoria Lampung 2026 Vol.5</div>
+    <div class="mq-item"><i class="fas fa-microphone"></i>Mantra In Summer</div>
+     <div class="mq-item"><i class="fas fa-microphone"></i>MotionIme Fest</div>
+
+    <div class="mq-item"><i class="fas fa-gamepad"></i>MPL Indonesia Season 18</div>
+     <div class="mq-item"><i class="fas fa-music"></i>Dewa 19 Reunion Concert</div>
+    <div class="mq-item"><i class="fas fa-music"></i>Euphoria life festival 2026</div>
+   <div class="mq-item"><i class="fas fa-music"></i>Egsclusive Festival 2026</div>
+    <div class="mq-item"><i class="fas fa-microphone"></i>Singphoria Lampung 2026 Vol.5</div>
+     <div class="mq-item"><i class="fas fa-microphone"></i>Mantra In Summer</div>
+      <div class="mq-item"><i class="fas fa-microphone"></i>MotionIme Fest</div>
   </div>
 </div>
 
@@ -146,9 +193,9 @@
       <div class="sec-line"></div>
     </div>
     <div class="cat-grid">
-      <div class="catcard active" onclick="filterEvents('all',this)"><span class="cat-icon">🎫</span><div class="cat-name">Semua Event</div><div class="cat-count">99 event</div></div>
-      <div class="catcard" onclick="filterEvents('esports',this)"><span class="cat-icon">🎮</span><div class="cat-name">Esports</div><div class="cat-count">24 event</div></div>
-      <div class="catcard" onclick="filterEvents('concert',this)"><span class="cat-icon">🎵</span><div class="cat-name">Konser</div><div class="cat-count">18 event</div></div>
+      <div class="catcard active" onclick="filterEvents('all',this)"><span class="cat-icon">🎫</span><div class="cat-name">Semua Event</div><div class="cat-count">7 event</div></div>
+      <div class="catcard" onclick="filterEvents('esports',this)"><span class="cat-icon">🎮</span><div class="cat-name">Esports</div><div class="cat-count">1 event</div></div>
+      <div class="catcard" onclick="filterEvents('concert',this)"><span class="cat-icon">🎵</span><div class="cat-name">Konser</div><div class="cat-count">5 event</div></div>
       <div class="catcard" onclick="filterEvents('sport',this)"><span class="cat-icon">⚽</span><div class="cat-name">Olahraga</div><div class="cat-count">15 event</div></div>
       <div class="catcard" onclick="filterEvents('seminar',this)"><span class="cat-icon">🎤</span><div class="cat-name">Seminar</div><div class="cat-count">12 event</div></div>
     </div>
