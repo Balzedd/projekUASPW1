@@ -2,6 +2,13 @@
 
 @section('content')
 
+<style>
+    .main
+    {
+        width: 100%;
+    }
+</style>
+
 <div class="content-top mb-4">
     <div>
         <h1>Tambah Tiket</h1>
