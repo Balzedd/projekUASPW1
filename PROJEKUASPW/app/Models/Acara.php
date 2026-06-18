@@ -16,4 +16,9 @@ class Acara extends Model
     'gambar'
 
     ];
+
+    public function tikets()
+{
+    return $this->hasMany(Tiket::class);
+}
 }

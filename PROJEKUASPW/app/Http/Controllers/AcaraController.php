@@ -57,7 +57,19 @@ class AcaraController extends Controller
      */
     public function show(Acara $acara)
     {
-        //
+          $deskripsi = $acara->deskripsi;
+
+    preg_match('/Waktu:\s*(.+)/i', $deskripsi, $waktu);
+    preg_match('/Kapasitas:\s*(.+)/i', $deskripsi, $kapasitas);
+
+    $waktu = trim($waktu[1] ?? '-');
+    $kapasitas = trim($kapasitas[1] ?? '-');
+
+    return view('acara.show', compact(
+        'acara',
+        'waktu',
+        'kapasitas'
+    ));
     }
 
     /**

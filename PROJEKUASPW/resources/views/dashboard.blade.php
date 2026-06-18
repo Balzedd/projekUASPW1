@@ -1,3 +1,14 @@
+@php
+preg_match('/Waktu:\s*(.+)/i', $acara->deskripsi, $waktu);
+preg_match('/Kapasitas:\s*(.+)/i', $acara->deskripsi, $kapasitas);
+
+$waktu = $waktu[1] ?? '-';
+$kapasitas = $kapasitas[1] ?? '-';
+@endphp
+
+
+
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -42,7 +53,6 @@
         <li><a href="#hero" class="active">Beranda</a></li>
         <li><a href="#events">Event</a></li>
         <li><a href="#spotlight">Featured</a></li>
-        <li><a href="#teams">Tim</a></li>
         <li><a href="#contact">Kontak</a></li>
       </ul>
       <div class="nav-actions">
@@ -120,14 +130,16 @@
       <div>
         <div class="hero-badge"><i class="fas fa-star"></i>#1 Platform Tiket Event Indonesia</div>
         <h1 class="hero-title">
-          TIKET<br/>
-          <span class="line2">MPL</span><br/>
-          <span class="line3">&amp; KONSER</span>
+          TEMUKAN<br/>
+          <span class="line2">& CARI</span><br/>
+          <span class="line2">EVENT</span>
+          <span class="line1">DI TIKETIN</span>
         </h1>
-        <p class="hero-desc">Dapatkan tiket MPL dan Konser terbaik Indonesia. Aman, mudah, cepat, dan langsung di tangan kamu.</p>
+        <p class="hero-desc">Temukan tiket konser, esports, festival, olahraga, dan seminar terbaik dengan mudah dan cepat.</p>
         <div class="hero-btns">
           <a href="#events" class="btn-primary btn-lg"><i class="fas fa-search"></i>Cari Event</a>
-          <button class="btn-outline"><i class="fas fa-play"></i>Cara Beli</button>
+          <a href="#how" class="btn-primary btn-lg">
+          <i class="fas fa-play"></i>Cara Beli</a>
         </div>
         <div class="hero-stats">
           <div class="hstat"><div class="hstat-num">98<span>%</span></div><div class="hstat-lbl">Kepuasan Pembeli</div></div>
@@ -140,30 +152,75 @@
         </div>
       </div>
       <div style="position:relative;">
-        <div class="fbadge f1" style="z-index: 10;"><i class="fas fa-fire"></i><span><strong>Hot</strong>&nbsp;MPL S18 — Tiket Hampir Habis!</span></div>
-        <div class="hero-card">
-          <div class="hero-card-img">
-            <div class="event-label">🔴 LIVE SOON</div>
-            <span class="hero-card-img-icon">🏆</span>
-            <span style="font-size:5rem;position:relative;z-index:2;">🏆</span>
-          </div>
-          <div class="hero-card-body">
-            <div class="hero-card-tag">⚡ Esports · MPL Indonesia</div>
-            <div class="hero-card-title">MPL ID Season 18 — Grand Finals</div>
-            <div class="hero-card-meta">
-              <span class="meta-item"><i class="fas fa-calendar-alt"></i>28 September 2026</span>
-              <span class="meta-item"><i class="fas fa-map-marker-alt"></i>Jakarta International Expo</span>
-              <span class="meta-item"><i class="fas fa-users"></i>15,000 Kursi</span>
-            </div>
-            <div class="hero-card-price">
-              <div class="price-tag"><small>Mulai dari</small>Rp 180.000</div>
-              <a href="#spotlight" class="btn-primary btn-sm">Pesan Sekarang</a>
-            </div>
-          </div>
-        </div>
-        <div class="fbadge f2"><i class="fas fa-star"></i><span><strong>4.9/5</strong>&nbsp;· 8.500+ ulasan</span></div>
-      </div>
+
+    <div class="fbadge f1" style="top:-15px; z-index:9999;">
+        <i class="fas fa-fire"></i>
+        <span>
+            <strong>Hot</strong>&nbsp;{{ $acara->nama_acara }} — Tiket Hampir Habis!
+        </span>
     </div>
+
+    <div class="hero-card">
+
+        <div class="hero-card-img"   style="
+        position:relative;
+        overflow:hidden;
+        z-index:1;
+     ">
+            <div class="event-label">🔴 LIVE SOON</div>
+
+            <img src="{{ asset('gambar_acara/'.$acara->gambar) }}"
+         alt="{{ $acara->nama_acara }}"
+         style="
+            width:100%; height:100%;
+            object-fit:cover; display:block;">
+        </div>
+
+        <div class="hero-card-body">
+
+            <div class="hero-card-tag">
+                {{ $acara->kategori }}
+            </div>
+
+            <div class="hero-card-title">
+                {{ $acara->nama_acara }}
+            </div>
+
+            <div class="hero-card-meta">
+                <span class="meta-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    {{ \Carbon\Carbon::parse($acara->tanggal)->translatedFormat('d F Y') }}
+                </span>
+
+                <span class="meta-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    {{ $acara->lokasi }}
+                </span>
+
+                <span class="meta-item">
+                    <i class="fas fa-users"></i>
+                    {{ $kapasitas }}
+                </span>
+            </div>
+
+            <div class="hero-card-price">
+                <div class="price-tag">
+                    <small>Mulai dari</small>
+                     Rp {{ number_format($acara->tikets->min('harga') ?? 0,0,',','.') }}
+                </div>
+
+                <a href="#spotlight" class="btn-primary btn-sm">
+                    Pesan Sekarang
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
   </div>
 </section>
 
@@ -226,6 +283,14 @@
     </div>
 </div>
 
+<div class="catcard" onclick="filterEvents('festival',this)">
+    <span class="cat-icon">🎸</span>
+    <div class="cat-name">Festival</div>
+    <div class="cat-count">
+        {{ \App\Models\Acara::where('kategori','Festival')->count() }} event
+    </div>
+</div>
+
 <div class="catcard" onclick="filterEvents('sport',this)">
     <span class="cat-icon">⚽</span>
     <div class="cat-name">Olahraga</div>
@@ -258,162 +323,59 @@
       <button class="filtbtn active" onclick="filterEv('all',this)">Semua</button>
       <button class="filtbtn" onclick="filterEv('esports',this)">Esports</button>
       <button class="filtbtn" onclick="filterEv('concert',this)">Konser</button>
+       <button class="filtbtn" onclick="filterEv('festival',this)">Festival</button>
       <button class="filtbtn" onclick="filterEv('sport',this)">Olahraga</button>
       <button class="filtbtn" onclick="filterEv('seminar',this)">Seminar</button>
+      
     </div>
-    <div class="events-grid" id="events-grid">
+   <div class="events-grid" id="events-grid">
 
-      <div class="ecard" data-cat="esports">
-        <div class="ecard-img esports">
-          <div class="ecard-img-glow v" style="left:30%;top:20%;"></div>
-          <div class="ecard-img-icon">🏆</div>
-          <div class="ebdg hot">🔥 Hot</div>
-          <div class="efav"><i class="far fa-heart"></i></div>
-        </div>
-        <div class="ecard-body">
-          <div class="ecat">⚡ Esports</div>
-          <div class="etitle">MPL ID Season 18 Grand Finals</div>
-          <div class="emeta">
-            <span><i class="fas fa-calendar-alt"></i>28 September 2026</span>
-            <span><i class="fas fa-map-marker-alt"></i>Jakarta International Expo</span>
-          </div>
-          <div class="efoot">
-            <div><div class="eprice"><small>Mulai</small>Rp 150.000</div></div>
-            <a href="#spotlight" class="btn-primary btn-sm">Beli Tiket</a>
-          </div>
-          <div class="esold-bar">
-            <div class="esold-bar-label"><span>Tiket Terjual</span><span>87%</span></div>
-            <div class="esold-bar-track"><div class="esold-bar-fill" style="width:87%;background:var(--rose);"></div></div>
-          </div>
-        </div>
-      </div>
+@foreach($acaras as $acara)
 
-      <div class="ecard" data-cat="concert">
-        <div class="ecard-img concert">
-          <div class="ecard-img-glow c" style="left:20%;top:30%;"></div>
-          <div class="ecard-img-icon">🎤</div>
-          <div class="ebdg new">✨ Baru</div>
-          <div class="efav"><i class="far fa-heart"></i></div>
-        </div>
-        <div class="ecard-body">
-          <div class="ecat">🎵 Konser</div>
-          <div class="etitle">Dewa 19 Reunion Tour 2026</div>
-          <div class="emeta">
-            <span><i class="fas fa-calendar-alt"></i>5 Agu 2026</span>
-            <span><i class="fas fa-map-marker-alt"></i>GBK, Jakarta</span>
-          </div>
-          <div class="efoot">
-            <div><div class="eprice"><small>Mulai</small>Rp 350.000</div></div>
-            <button class="btn-primary btn-sm">Beli Tiket</button>
-          </div>
-          <div class="esold-bar">
-            <div class="esold-bar-label"><span>Tiket Terjual</span><span>62%</span></div>
-            <div class="esold-bar-track"><div class="esold-bar-fill" style="width:62%;"></div></div>
-          </div>
-        </div>
-      </div>
+<div class="ecard" data-cat="{{ strtolower($acara->kategori) }}">
+    <div class="ecard-body"
+         style="display:flex;flex-direction:column;height:100%;min-height:220px;">
 
-      <div class="ecard" data-cat="esports">
-        <div class="ecard-img esports">
-          <div class="ecard-img-glow v" style="right:20%;top:15%;"></div>
-          <div class="ecard-img-icon">🎯</div>
-          <div class="ebdg hot">🔥 Hot</div>
-          <div class="efav"><i class="far fa-heart"></i></div>
-        </div>
-        <div class="ecard-body">
-          <div class="ecat">⚡ Esports</div>
-          <div class="etitle">Valorant Champions Tour — Indonesia Qualifier</div>
-          <div class="emeta">
-            <span><i class="fas fa-calendar-alt"></i>12 Agu 2026</span>
-            <span><i class="fas fa-map-marker-alt"></i>Bali Nusa Dua Convention</span>
-          </div>
-          <div class="efoot">
-            <div><div class="eprice"><small>Mulai</small>Rp 75.000</div></div>
-            <button class="btn-primary btn-sm">Beli Tiket</button>
-          </div>
-          <div class="esold-bar">
-            <div class="esold-bar-label"><span>Tiket Terjual</span><span>45%</span></div>
-            <div class="esold-bar-track"><div class="esold-bar-fill" style="width:45%;"></div></div>
-          </div>
-        </div>
-      </div>
+        <div class="ecat">{{ strtoupper($acara->kategori) }}</div>
 
-      <div class="ecard" data-cat="sport">
-        <div class="ecard-img sport">
-          <div class="ecard-img-glow s" style="left:40%;top:25%;"></div>
-          <div class="ecard-img-icon">⚽</div>
-          <div class="ebdg new">⚡ Baru</div>
-          <div class="efav"><i class="far fa-heart"></i></div>
+        <div class="etitle">
+            {{ $acara->nama_acara }}
         </div>
-        <div class="ecard-body">
-          <div class="ecat">⚽ Sepak Bola</div>
-          <div class="etitle">Piala Presiden 2026 — Final</div>
-          <div class="emeta">
-            <span><i class="fas fa-calendar-alt"></i>20 Agu 2026</span>
-            <span><i class="fas fa-map-marker-alt"></i>Stadion GBK, Jakarta</span>
-          </div>
-          <div class="efoot">
-            <div><div class="eprice"><small>Mulai</small>Rp 100.000</div></div>
-            <button class="btn-primary btn-sm">Beli Tiket</button>
-          </div>
-          <div class="esold-bar">
-            <div class="esold-bar-label"><span>Tiket Terjual</span><span>71%</span></div>
-            <div class="esold-bar-track"><div class="esold-bar-fill" style="width:71%;background:#00cc55;"></div></div>
-          </div>
-        </div>
-      </div>
 
-      <div class="ecard" data-cat="concert">
-        <div class="ecard-img concert">
-          <div class="ecard-img-glow c" style="left:30%;top:20%;"></div>
-          <div class="ecard-img-icon">🎸</div>
-          <div class="ebdg free">🎁 Ada Free</div>
-          <div class="efav"><i class="far fa-heart"></i></div>
-        </div>
-        <div class="ecard-body">
-          <div class="ecat">🎵 Konser</div>
-          <div class="etitle">Viva La Vida Music Festival</div>
-          <div class="emeta">
-            <span><i class="fas fa-calendar-alt"></i>2–3 Sep 2026</span>
-            <span><i class="fas fa-map-marker-alt"></i>Ancol Beach City</span>
-          </div>
-          <div class="efoot">
-            <div><div class="eprice"><small>Mulai</small>Rp 500.000</div></div>
-            <button class="btn-primary btn-sm">Beli Tiket</button>
-          </div>
-          <div class="esold-bar">
-            <div class="esold-bar-label"><span>Tiket Terjual</span><span>39%</span></div>
-            <div class="esold-bar-track"><div class="esold-bar-fill" style="width:39%;"></div></div>
-          </div>
-        </div>
-      </div>
+        <div class="emeta">
+            <span>
+                <i class="fas fa-calendar-alt"></i>
+                {{ \Carbon\Carbon::parse($acara->tanggal)->translatedFormat('d F Y') }}
+            </span>
 
-      <div class="ecard" data-cat="seminar">
-        <div class="ecard-img seminar">
-          <div class="ecard-img-glow y" style="left:35%;top:20%;"></div>
-          <div class="ecard-img-icon">💡</div>
-          <div class="ebdg sold">📌 Hampir Habis</div>
-          <div class="efav"><i class="far fa-heart"></i></div>
+            <span>
+                <i class="fas fa-map-marker-alt"></i>
+                {{ $acara->lokasi }}
+            </span>
         </div>
-        <div class="ecard-body">
-          <div class="ecat">🎤 Seminar</div>
-          <div class="etitle">Indonesia Startup Summit 2026</div>
-          <div class="emeta">
-            <span><i class="fas fa-calendar-alt"></i>15 Sep 2026</span>
-            <span><i class="fas fa-map-marker-alt"></i>ICE BSD, Tangerang</span>
-          </div>
-          <div class="efoot">
-            <div><div class="eprice"><small>Mulai</small>Rp 250.000</div></div>
-            <button class="btn-primary btn-sm">Beli Tiket</button>
-          </div>
-          <div class="esold-bar">
-            <div class="esold-bar-label"><span>Tiket Terjual</span><span>93%</span></div>
-            <div class="esold-bar-track"><div class="esold-bar-fill" style="width:93%;background:var(--gold);"></div></div>
-          </div>
-        </div>
-      </div>
 
+        <div class="efoot"
+             style="margin-top:auto;display:flex;justify-content:space-between;align-items:center;">
+
+            <div class="eprice">
+                <small>Mulai</small><br>
+                Rp {{ number_format($acara->tikets->min('harga') ?? 0,0,',','.') }}
+            </div>
+
+            <button class="btn-primary btn-sm">
+                Beli Tiket
+            </button>
+
+        </div>
     </div>
+</div>
+
+@endforeach
+
+</div>
+
+
+
   </div>
 </section>
 
@@ -422,23 +384,32 @@
   <div class="container">
     <div class="spotlight-wrap">
       <div>
-        <div class="spotlight-img">
-          <div class="spotlight-img-glow"></div>
-          <span class="spotlight-img-icon">🏆</span>
-        </div>
-      </div>
+    <div class="spotlight-img"
+         style="position:relative;overflow:hidden;border-radius:24px;height:500px;">
+
+
+        <img src="{{ asset('gambar_acara/'.$acara->gambar) }}"
+             alt="{{ $acara->nama_acara }}"
+             style="
+                width:100%;
+                height:100%;
+                object-fit:cover;
+                display:block;
+                border-radius:24px;
+             ">
+    </div>
+</div>
       <div>
         <div class="spotlight-tag"><i class="fas fa-star"></i>Event Pilihan Mingguan</div>
         <span class="sec-label">Featured Event</span>
-        <h2 class="sec-title" style="text-align:left;">MPL ID Season 16<br/><span>Grand Finals</span></h2>
+        <h2 class="sec-title" style="text-align:left;">{{ $acara->nama_acara }}<br/></h2>
         <div class="sec-line left"></div>
-        <p class="sec-desc" style="margin-bottom:0;">Saksikan pertarungan tim-tim terbaik Mobile Legends Indonesia di panggung terbesar sepanjang sejarah MPL. Ratusan juta rupiah hadiah, ribuan penonton, dan aksi yang tidak akan terlupakan.</p>
+        <p class="sec-desc" style="margin-bottom:0;">  {{ $acara->deskripsi }}</p>
         <div class="spotlight-info">
-          <div class="si-row"><span class="si-label"><i class="fas fa-calendar-alt" style="color:var(--violet2);margin-right:6px;"></i>Tanggal</span><span class="si-val">Sabtu, 28 Juli 2026</span></div>
-          <div class="si-row"><span class="si-label"><i class="fas fa-clock" style="color:var(--violet2);margin-right:6px;"></i>Waktu</span><span class="si-val">13:00 – 22:00 WIB</span></div>
-          <div class="si-row"><span class="si-label"><i class="fas fa-map-marker-alt" style="color:var(--violet2);margin-right:6px;"></i>Venue</span><span class="si-val">Jakarta International Expo</span></div>
-          <div class="si-row"><span class="si-label"><i class="fas fa-users" style="color:var(--violet2);margin-right:6px;"></i>Kapasitas</span><span class="si-val">15,000 Penonton</span></div>
-          <div class="si-row"><span class="si-label"><i class="fas fa-trophy" style="color:var(--violet2);margin-right:6px;"></i>Prize Pool</span><span class="si-val" style="color:var(--gold);">Rp 1.5 Miliar</span></div>
+          <div class="si-row"><span class="si-label"><i class="fas fa-calendar-alt" style="color:var(--violet2);margin-right:6px;"></i>Tanggal</span><span class="si-val"> {{ \Carbon\Carbon::parse($acara->tanggal)->translatedFormat('d F Y') }}</span></div>
+          <div class="si-row"><span class="si-label"><i class="fas fa-clock" style="color:var(--violet2);margin-right:6px;"></i>Waktu</span><span class="si-val">{{ $waktu }}</span></div>
+          <div class="si-row"><span class="si-label"><i class="fas fa-map-marker-alt" style="color:var(--violet2);margin-right:6px;"></i>Venue</span><span class="si-val">{{ $acara->lokasi }}</span></div>
+          <div class="si-row"><span class="si-label"><i class="fas fa-users" style="color:var(--violet2);margin-right:6px;"></i>Kapasitas</span><span class="si-val">{{ $kapasitas }}</span></div>
         </div>
         <h6 style="font-size:.82rem;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px;">Pilih Kategori Tiket</h6>
         <div class="ticket-types">
@@ -477,73 +448,43 @@
   <div class="container">
     <div style="text-align:center;">
       <span class="sec-label">Jangan Sampai Ketinggalan</span>
-      <div class="cd-event-name">🏆 MPL ID Season 16 Grand Finals</div>
+      <div class="cd-event-name"> 🎫 {{ $acara->nama_acara }}</div>
       <div class="cd-sub">Dimulai dalam:</div>
-      <div class="cd-wrap">
-        <div class="cd-box"><span class="cd-num" id="cdD">00</span><div class="cd-lbl">Hari</div></div>
-        <div class="cd-box"><span class="cd-num" id="cdH">00</span><div class="cd-lbl">Jam</div></div>
-        <div class="cd-box"><span class="cd-num" id="cdM">00</span><div class="cd-lbl">Menit</div></div>
-        <div class="cd-box"><span class="cd-num" id="cdS">00</span><div class="cd-lbl">Detik</div></div>
-      </div>
-      <a href="#spotlight" class="btn-primary btn-lg"><i class="fas fa-ticket-alt"></i>Dapatkan Tiket Sekarang</a>
+     <div class="cd-wrap">
+    <div class="cd-box">
+        <span class="cd-num" id="cdD">00</span>
+        <div class="cd-lbl">Hari</div>
     </div>
+
+    <div class="cd-box">
+        <span class="cd-num" id="cdH">00</span>
+        <div class="cd-lbl">Jam</div>
+    </div>
+
+    <div class="cd-box">
+        <span class="cd-num" id="cdM">00</span>
+        <div class="cd-lbl">Menit</div>
+    </div>
+
+    <div class="cd-box">
+        <span class="cd-num" id="cdS">00</span>
+        <div class="cd-lbl">Detik</div>
+    </div>
+</div>
+
+ <input type="hidden"
+             id="eventDate"
+             value="{{ \Carbon\Carbon::parse($acara->tanggal)->format('Y-m-d') }}">
+
+<div style="margin-top:30px;">
+    <a href="#spotlight" class="btn-primary btn-lg">
+        <i class="fas fa-ticket-alt"></i>
+        Dapatkan Tiket Sekarang
+    </a>
+</div>
   </div>
 </section>
 
-<!-- TEAMS -->
-<section id="teams">
-  <div class="container">
-    <div style="text-align:center;">
-      <span class="sec-label">Turnamen MPL S16</span>
-      <h2 class="sec-title">Tim yang <span>Bertanding</span></h2>
-      <div class="sec-line"></div>
-      <p class="sec-desc" style="max-width:500px;margin:0 auto;">8 tim terbaik Indonesia akan berjuang memperebutkan gelar juara dan prize pool Rp 1.5 Miliar.</p>
-    </div>
-    <div class="teams-grid">
-      <div class="team-card"><div class="team-icon">🔵</div><div class="team-name">ONIC Esports</div><div class="team-region">Jakarta</div><div class="team-rank">🥇 Juara Bertahan</div></div>
-      <div class="team-card"><div class="team-icon">🔴</div><div class="team-name">RRQ Hoshi</div><div class="team-region">Surabaya</div><div class="team-rank">Unggulan #2</div></div>
-      <div class="team-card"><div class="team-icon">🟡</div><div class="team-name">Evos Legends</div><div class="team-region">Jakarta</div><div class="team-rank">Unggulan #3</div></div>
-      <div class="team-card"><div class="team-icon">🟢</div><div class="team-name">Alter Ego</div><div class="team-region">Bandung</div><div class="team-rank">Unggulan #4</div></div>
-      <div class="team-card"><div class="team-icon">⚪</div><div class="team-name">Rebellion Zion</div><div class="team-region">Yogyakarta</div><div class="team-rank">Unggulan #5</div></div>
-      <div class="team-card"><div class="team-icon">🟣</div><div class="team-name">Aura Esports</div><div class="team-region">Medan</div><div class="team-rank">Unggulan #6</div></div>
-      <div class="team-card"><div class="team-icon">🟤</div><div class="team-name">Bigetron Alpha</div><div class="team-region">Bali</div><div class="team-rank">Unggulan #7</div></div>
-      <div class="team-card"><div class="team-icon">🔶</div><div class="team-name">Geek Fam ID</div><div class="team-region">Surabaya</div><div class="team-rank">Unggulan #8</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section id="testimonials">
-  <div class="container">
-    <div style="text-align:center;">
-      <span class="sec-label">Kata Mereka</span>
-      <h2 class="sec-title">Ulasan <span>Pembeli</span></h2>
-      <div class="sec-line"></div>
-    </div>
-    <div class="tes-grid">
-      <div class="tes-card">
-        <div class="tes-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-        <p class="tes-text">"Beli tiket MPL Season 15 di sini prosesnya super gampang, bayar QRIS langsung jadi. Tiket digital langsung masuk WA. Recommended banget!"</p>
-        <div class="tes-auth"><div class="tes-avatar">AR</div><div><div class="tes-name">Ahmad Rizky</div><div class="tes-role">MPL Fan · Jakarta</div></div></div>
-      </div>
-      <div class="tes-card">
-        <div class="tes-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-        <p class="tes-text">"Beli tiket konser Dewa 19 VIP, tempat duduk strategis banget. Aplikasinya smooth, ga ada gangguan. Pasti beli lagi untuk event selanjutnya!"</p>
-        <div class="tes-auth"><div class="tes-avatar" style="background:var(--rose);">SD</div><div><div class="tes-name">Sari Dewi</div><div class="tes-role">Konser Lover · Surabaya</div></div></div>
-      </div>
-      <div class="tes-card">
-        <div class="tes-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-        <p class="tes-text">"Beli buat grup 20 orang, customer service responsif banget. Ada diskon early bird juga. Kursi VIP section kami semua berdekatan. 10/10!"</p>
-        <div class="tes-auth"><div class="tes-avatar" style="background:#00aa88;">BW</div><div><div class="tes-name">Budi Wicaksono</div><div class="tes-role">Group Buyer · Bandung</div></div></div>
-      </div>
-      <div class="tes-card">
-        <div class="tes-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-        <p class="tes-text">"Pertama kali nonton langsung MPL via TicketWave. Antri e-ticket lancar, venue MPL luar biasa. Udah daftar waiting list buat Season 17!"</p>
-        <div class="tes-auth"><div class="tes-avatar" style="background:var(--gold);color:#050A1F;">NF</div><div><div class="tes-name">Nanda Fitri</div><div class="tes-role">Esports Enthusiast · Bali</div></div></div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- HOW IT WORKS -->
 <section id="how">
@@ -558,23 +499,6 @@
       <div class="step-card"><div class="step-num">02</div><div class="step-icon"><i class="fas fa-chair"></i></div><div class="step-title">Pilih Kursi &amp; Kategori</div><div class="step-desc">Pilih kategori tiket sesuai budget dan posisi terbaik. Lihat peta venue secara interaktif.</div></div>
       <div class="step-card"><div class="step-num">03</div><div class="step-icon"><i class="fas fa-credit-card"></i></div><div class="step-title">Bayar Mudah</div><div class="step-desc">Bayar via transfer bank, QRIS, GoPay, OVO, dan berbagai metode lainnya. 100% aman.</div></div>
       <div class="step-card"><div class="step-num">04</div><div class="step-icon"><i class="fas fa-ticket-alt"></i></div><div class="step-title">Terima E-Tiket</div><div class="step-desc">Tiket digital langsung dikirim ke email & WhatsApp. Scan QR code di pintu masuk. Selesai!</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA NEWSLETTER -->
-<section id="cta">
-  <div class="container">
-    <div class="cta-box">
-      <span class="sec-label" style="color:var(--cyan);">Notifikasi Event</span>
-      <h2 class="cta-title">Jangan Ketinggalan<br/>Event <span>Favoritmu</span></h2>
-      <p class="cta-sub">Daftar sekarang dan dapatkan notifikasi event terbaru + diskon eksklusif 15% untuk pembelian pertama.</p>
-      <div class="nl-form">
-        <input type="email" class="nl-input" id="nlEmail" placeholder="Masukkan alamat email kamu..."/>
-        <button class="btn-primary" id="nlBtn" onclick="submitNL()"><i class="fas fa-bell"></i>Daftar</button>
-      </div>
-      <div class="sucmsg" id="nlOk" style="display:none;justify-content:center;margin-top:14px;"><i class="fas fa-check-circle"></i><span>Berhasil! Cek email kamu untuk konfirmasi.</span></div>
-      <p style="color:var(--muted);font-size:.76rem;margin-top:12px;"><i class="fas fa-lock" style="margin-right:4px;"></i>Tidak ada spam. Berhenti kapan saja.</p>
     </div>
   </div>
 </section>

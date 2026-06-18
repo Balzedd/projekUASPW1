@@ -171,7 +171,7 @@
         <i class="ti ti-users"></i>
     </div>
     <p class="stat-value">{{ $pelangganBaru }}</p>
-    <p class="stat-sub">+{{ $totalPelanggan }} total pelanggan</p>
+    <p class="stat-sub">{{ $totalPelanggan }} total pelanggan</p>
 </div>
   </div>
 
