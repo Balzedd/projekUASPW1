@@ -495,10 +495,10 @@ $kapasitas = $kapasitas[1] ?? '-';
       <div class="sec-line"></div>
     </div>
     <div class="steps-grid">
-      <div class="step-card"><div class="step-num">01</div><div class="step-icon"><i class="fas fa-search"></i></div><div class="step-title">Cari Event</div><div class="step-desc">Jelajahi ratusan event dari turnamen esports, konser, olahraga, dan seminar di seluruh Indonesia.</div></div>
-      <div class="step-card"><div class="step-num">02</div><div class="step-icon"><i class="fas fa-chair"></i></div><div class="step-title">Pilih Kursi &amp; Kategori</div><div class="step-desc">Pilih kategori tiket sesuai budget dan posisi terbaik. Lihat peta venue secara interaktif.</div></div>
-      <div class="step-card"><div class="step-num">03</div><div class="step-icon"><i class="fas fa-credit-card"></i></div><div class="step-title">Bayar Mudah</div><div class="step-desc">Bayar via transfer bank, QRIS, GoPay, OVO, dan berbagai metode lainnya. 100% aman.</div></div>
-      <div class="step-card"><div class="step-num">04</div><div class="step-icon"><i class="fas fa-ticket-alt"></i></div><div class="step-title">Terima E-Tiket</div><div class="step-desc">Tiket digital langsung dikirim ke email & WhatsApp. Scan QR code di pintu masuk. Selesai!</div></div>
+      <div class="step-card"><div class="step-num">01</div><div class="step-icon"><i class="fas fa-search"></i></div><div class="step-title">Cari Event</div><div class="step-desc">Jelajahi puluhan acara dari turnamen esports, konser, olahraga, festival, dan seminar di seluruh Indonesia.</div></div>
+      <div class="step-card"><div class="step-num">02</div><div class="step-icon"><i class="fas fa-chair"></i></div><div class="step-title">Pilih Kursi &amp; Kategori</div><div class="step-desc">Pilih kategori tiket sesuai budget dan posisi terbaik.</div></div>
+      <div class="step-card"><div class="step-num">03</div><div class="step-icon"><i class="fas fa-credit-card"></i></div><div class="step-title">Bayar Mudah</div><div class="step-desc">Bayar via transfer bank, QRIS, GoPay, OVO, dan berbagai metode lainnya. Dijamin 100% aman.</div></div>
+      <div class="step-card"><div class="step-num">04</div><div class="step-icon"><i class="fas fa-ticket-alt"></i></div><div class="step-title">Terima E-Tiket</div><div class="step-desc">Tiket digital langsung dikirim ke notifikasi pengguna. Scan QR code di pintu masuk. Selesai!</div></div>
     </div>
   </div>
 </section>
