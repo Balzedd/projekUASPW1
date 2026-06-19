@@ -101,11 +101,7 @@
                     </a>
                 </li>
 
-                <li>
-                    <a class="dropdown-item" href="#">
-                        Account Settings
-                    </a>
-                </li>
+      
 
                 <li>
                     <hr class="dropdown-divider">

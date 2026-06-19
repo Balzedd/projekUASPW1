@@ -1,9 +1,22 @@
 @php
-preg_match('/Waktu:\s*(.+)/i', $acara->deskripsi, $waktu);
-preg_match('/Kapasitas:\s*(.+)/i', $acara->deskripsi, $kapasitas);
+$featured = $acaras->get(1); 
 
-$waktu = $waktu[1] ?? '-';
-$kapasitas = $kapasitas[1] ?? '-';
+if (!$featured) {
+    $featured = (object)[
+        'nama_acara' => 'Tidak ada event',
+        'gambar' => '',
+        'kategori' => '',
+        'tanggal' => now(),
+        'lokasi' => '-',
+        'deskripsi' => ''
+    ];
+}
+
+preg_match('/Waktu:\s*(.+)/i', $featured->deskripsi ?? '', $waktu);
+preg_match('/Kapasitas:\s*(.+)/i', $featured->deskripsi ?? '', $kapasitas);
+
+$waktu = trim($waktu[1] ?? '-');
+$kapasitas = trim($kapasitas[1] ?? '-');
 @endphp
 
 
@@ -85,12 +98,6 @@ $kapasitas = $kapasitas[1] ?? '-';
     <i class="fas fa-user"></i>
     Profile
 </a>
-
-<a href="{{ route('profile.edit') }}">
-    <i class="fas fa-cog"></i>
-    Account Settings
-</a>
-
         <hr>
 
         <form method="POST" action="{{ route('logout') }}">
@@ -156,7 +163,7 @@ $kapasitas = $kapasitas[1] ?? '-';
     <div class="fbadge f1" style="top:-15px; z-index:9999;">
         <i class="fas fa-fire"></i>
         <span>
-            <strong>Hot</strong>&nbsp;{{ $acara->nama_acara }} — Tiket Hampir Habis!
+            <strong>Hot</strong>&nbsp;{{ $featured->nama_acara }} — Tiket Hampir Habis!
         </span>
     </div>
 
@@ -169,8 +176,8 @@ $kapasitas = $kapasitas[1] ?? '-';
      ">
             <div class="event-label">🔴 LIVE SOON</div>
 
-            <img src="{{ asset('gambar_acara/'.$acara->gambar) }}"
-         alt="{{ $acara->nama_acara }}"
+            <img src="{{ asset('gambar_acara/'.$featured->gambar) }}"
+         alt="{{ $featured->nama_acara }}"
          style="
             width:100%; height:100%;
             object-fit:cover; display:block;">
@@ -179,22 +186,22 @@ $kapasitas = $kapasitas[1] ?? '-';
         <div class="hero-card-body">
 
             <div class="hero-card-tag">
-                {{ $acara->kategori }}
+                {{ $featured->kategori }}
             </div>
 
             <div class="hero-card-title">
-                {{ $acara->nama_acara }}
+                {{ $featured->nama_acara }}
             </div>
 
             <div class="hero-card-meta">
                 <span class="meta-item">
                     <i class="fas fa-calendar-alt"></i>
-                    {{ \Carbon\Carbon::parse($acara->tanggal)->translatedFormat('d F Y') }}
+                    {{ \Carbon\Carbon::parse($featured->tanggal)->translatedFormat('d F Y') }}
                 </span>
 
                 <span class="meta-item">
                     <i class="fas fa-map-marker-alt"></i>
-                    {{ $acara->lokasi }}
+                    {{ $featured->lokasi }}
                 </span>
 
                 <span class="meta-item">
@@ -206,7 +213,7 @@ $kapasitas = $kapasitas[1] ?? '-';
             <div class="hero-card-price">
                 <div class="price-tag">
                     <small>Mulai dari</small>
-                     Rp {{ number_format($acara->tikets->min('harga') ?? 0,0,',','.') }}
+                     Rp {{ number_format($featured->tikets->min('harga') ?? 0,0,',','.') }}
                 </div>
 
                 <a href="#spotlight" class="btn-primary btn-sm">
@@ -388,8 +395,8 @@ $kapasitas = $kapasitas[1] ?? '-';
          style="position:relative;overflow:hidden;border-radius:24px;height:500px;">
 
 
-        <img src="{{ asset('gambar_acara/'.$acara->gambar) }}"
-             alt="{{ $acara->nama_acara }}"
+        <img src="{{ asset('gambar_acara/'.$featured->gambar) }}"
+             alt="{{ $featured->nama_acara }}"
              style="
                 width:100%;
                 height:100%;
@@ -402,13 +409,13 @@ $kapasitas = $kapasitas[1] ?? '-';
       <div>
         <div class="spotlight-tag"><i class="fas fa-star"></i>Event Pilihan Mingguan</div>
         <span class="sec-label">Featured Event</span>
-        <h2 class="sec-title" style="text-align:left;">{{ $acara->nama_acara }}<br/></h2>
+        <h2 class="sec-title" style="text-align:left;">{{ $featured->nama_acara }}<br/></h2>
         <div class="sec-line left"></div>
-        <p class="sec-desc" style="margin-bottom:0;">  {{ $acara->deskripsi }}</p>
+        <p class="sec-desc" style="margin-bottom:0;">  {{ $featured->deskripsi }}</p>
         <div class="spotlight-info">
-          <div class="si-row"><span class="si-label"><i class="fas fa-calendar-alt" style="color:var(--violet2);margin-right:6px;"></i>Tanggal</span><span class="si-val"> {{ \Carbon\Carbon::parse($acara->tanggal)->translatedFormat('d F Y') }}</span></div>
+          <div class="si-row"><span class="si-label"><i class="fas fa-calendar-alt" style="color:var(--violet2);margin-right:6px;"></i>Tanggal</span><span class="si-val"> {{ \Carbon\Carbon::parse($featured->tanggal ?? now())->translatedFormat('d F Y') }}</span></div>
           <div class="si-row"><span class="si-label"><i class="fas fa-clock" style="color:var(--violet2);margin-right:6px;"></i>Waktu</span><span class="si-val">{{ $waktu }}</span></div>
-          <div class="si-row"><span class="si-label"><i class="fas fa-map-marker-alt" style="color:var(--violet2);margin-right:6px;"></i>Venue</span><span class="si-val">{{ $acara->lokasi }}</span></div>
+          <div class="si-row"><span class="si-label"><i class="fas fa-map-marker-alt" style="color:var(--violet2);margin-right:6px;"></i>Venue</span><span class="si-val">{{ $featured->lokasi }}</span></div>
           <div class="si-row"><span class="si-label"><i class="fas fa-users" style="color:var(--violet2);margin-right:6px;"></i>Kapasitas</span><span class="si-val">{{ $kapasitas }}</span></div>
         </div>
         <h6 style="font-size:.82rem;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px;">Pilih Kategori Tiket</h6>
@@ -448,7 +455,7 @@ $kapasitas = $kapasitas[1] ?? '-';
   <div class="container">
     <div style="text-align:center;">
       <span class="sec-label">Jangan Sampai Ketinggalan</span>
-      <div class="cd-event-name"> 🎫 {{ $acara->nama_acara }}</div>
+      <div class="cd-event-name"> 🎫 {{ $featured->nama_acara }}</div>
       <div class="cd-sub">Dimulai dalam:</div>
      <div class="cd-wrap">
     <div class="cd-box">
@@ -474,7 +481,7 @@ $kapasitas = $kapasitas[1] ?? '-';
 
  <input type="hidden"
              id="eventDate"
-             value="{{ \Carbon\Carbon::parse($acara->tanggal)->format('Y-m-d') }}">
+             value="{{ \Carbon\Carbon::parse($featured->tanggal)->format('Y-m-d') }}">
 
 <div style="margin-top:30px;">
     <a href="#spotlight" class="btn-primary btn-lg">
@@ -527,26 +534,50 @@ $kapasitas = $kapasitas[1] ?? '-';
         </div>
       </div>
       <div class="cform">
-        <div class="frow">
-          <div><label class="flbl">Nama Lengkap *</label><input type="text" class="fctrl" placeholder="Nama kamu"/></div>
-          <div><label class="flbl">Email *</label><input type="email" class="fctrl" placeholder="email@kamu.com"/></div>
-        </div>
-        <div class="frow">
-          <div><label class="flbl">Nomor HP</label><input type="tel" class="fctrl" placeholder="+62 8xx-xxxx-xxxx"/></div>
-          <div><label class="flbl">Topik *</label>
-            <select class="fctrl">
-              <option>Pembelian Tiket</option>
-              <option>Keluhan / Refund</option>
-              <option>Kerjasama Event Organizer</option>
-              <option>Sponsorship</option>
-              <option>Pertanyaan Umum</option>
-            </select>
-          </div>
-        </div>
-        <div style="margin-bottom:14px;"><label class="flbl">Pesan *</label><textarea class="fctrl" rows="5" placeholder="Tulis pesanmu di sini..."></textarea></div>
-        <button class="btn-primary" id="ctcBtn" onclick="submitContact()"><i class="fas fa-paper-plane"></i>Kirim Pesan</button>
-        <div class="sucmsg" id="ctcOk" style="display:none;"><i class="fas fa-check-circle"></i><span>Pesan terkirim! Kami akan membalas dalam 2 jam.</span></div>
-      </div>
+<form method="POST" action="{{ route('laporan.store') }}">
+@csrf
+
+<div class="frow">
+  <div>
+    <label class="flbl">Nama Lengkap *</label>
+    <input type="text" name="nama" class="fctrl" placeholder="Nama kamu" required/>
+  </div>
+
+  <div>
+    <label class="flbl">Email *</label>
+    <input type="email" name="email" class="fctrl" placeholder="email@kamu.com" required/>
+  </div>
+</div>
+
+<div class="frow">
+  <div>
+    <label class="flbl">Nomor HP</label>
+    <input type="tel" name="no_hp" class="fctrl" placeholder="+62 8xx-xxxx-xxxx"/>
+  </div>
+
+  <div>
+    <label class="flbl">Topik *</label>
+    <select name="topik" class="fctrl" required>
+      <option>Pembelian Tiket</option>
+      <option>Keluhan / Refund</option>
+      <option>Kerjasama Event Organizer</option>
+      <option>Sponsorship</option>
+      <option>Pertanyaan Umum</option>
+    </select>
+  </div>
+</div>
+
+<div style="margin-bottom:14px;">
+  <label class="flbl">Pesan *</label>
+  <textarea name="pesan" class="fctrl" rows="5" placeholder="Tulis pesanmu di sini..." required></textarea>
+</div>
+
+<button type="submit" class="btn-primary">
+  <i class="fas fa-paper-plane"></i> Kirim Pesan
+</button>
+
+</form>
+</div>
     </div>
   </div>
 </section>

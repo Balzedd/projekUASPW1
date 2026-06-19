@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\TiketController;
 use App\Http\Controllers\AcaraController;
+use App\Http\Controllers\LaporanController;
 use App\Models\Acara;
 
 Route::resource('tikets', TiketController::class);
@@ -84,5 +85,17 @@ Route::get('/pelanggan/{id}/delete', [PelangganController::class, 'destroy'])
 
 Route::put('/pelanggan/{id}', [PelangganController::class, 'update'])
     ->name('pelanggan.update');
+
+
+
+
+Route::post('/laporan', [LaporanController::class, 'store'])
+    ->name('laporan.store');
+
+    Route::get('/laporan', [LaporanController::class, 'index'])
+    ->name('laporan.index');
+
+Route::delete('/laporan/{id}', [LaporanController::class, 'destroy'])
+    ->name('laporan.destroy');
 
 require __DIR__.'/auth.php';

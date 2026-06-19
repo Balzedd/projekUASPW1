@@ -13,8 +13,9 @@ class AcaraController extends Controller
     public function index()
     {
         $acaras = Acara::all();
+        $featured = Acara::latest()->first();
 
-        return view('acara.index', compact('acaras'));
+        return view('acara.index', compact('acaras','featured'));
     }
 
     /**

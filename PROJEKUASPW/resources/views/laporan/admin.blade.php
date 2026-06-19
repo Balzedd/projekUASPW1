@@ -31,7 +31,7 @@
           <i class="ti ti-layout-dashboard"></i>
           <span class="nav-label">Dashboard</span>
         </a>
-        <a href="{{ route('tikets.index') }}" class="nav-item active " data-page="tiket">
+        <a href="{{ route('tikets.index') }}" class="nav-item  " data-page="tiket">
           <i class="ti ti-ticket"></i>
           <span class="nav-label">Tiket</span>
         
@@ -49,7 +49,7 @@
           <i class="ti ti-receipt"></i>
           <span class="nav-label">Transaksi</span>
         </a>
-        <a href="{{route('laporan.index')}}" class="nav-item" data-page="laporan">
+        <a href="{{route('laporan.index')}}" class="nav-item active" data-page="laporan">
           <i class="ti ti-chart-bar"></i>
           <span class="nav-label">Laporan</span>
         </a>

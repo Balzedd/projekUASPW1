@@ -51,7 +51,7 @@
           <i class="ti ti-receipt"></i>
           <span class="nav-label">Transaksi</span>
         </a>
-        <a href="#" class="nav-item" data-page="laporan">
+        <a href="{{route('laporan.index')}}" class="nav-item" data-page="laporan">
           <i class="ti ti-chart-bar"></i>
           <span class="nav-label">Laporan</span>
         </a>
@@ -76,7 +76,7 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="#">Profile</a></li>
-              <li><a class="dropdown-item" href="#">Account Settings</a></li>
+            
               <li><hr class="dropdown-divider"></li>
               <li>
                 <form method="POST" action="{{ route('logout') }}">@csrf<button type="submit" class="dropdown-item">Sign Out</button></form>
