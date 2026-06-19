@@ -19,6 +19,10 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 
 Route::middleware('auth')->group(function () {
 
+    Route::get('/profile-user', function () {
+        return view('profile.index');
+    })->name('profile.user');
+
     Route::get('/profile', [ProfileController::class, 'edit'])
         ->name('profile.edit');
 
@@ -45,7 +49,6 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/acara/delete/{id}', [AcaraController::class, 'destroy'])
         ->name('acara.destroy');
-
 });
 
 Route::get('/admin/dashboard', [DashboardController::class, 'index'])
@@ -59,15 +62,14 @@ Route::get('/user/dashboard', function () {
 
 Route::get('/pelanggan', [PelangganController::class, 'index'])
     ->name('pelanggan.index');
-    
-
 
 Route::get('/pelanggan/{id}/edit', [PelangganController::class, 'edit'])
     ->name('pelanggan.edit');
 
 Route::get('/pelanggan/{id}/delete', [PelangganController::class, 'destroy'])
     ->name('pelanggan.destroy');
-    Route::put('/pelanggan/{id}', [PelangganController::class, 'update'])
+
+Route::put('/pelanggan/{id}', [PelangganController::class, 'update'])
     ->name('pelanggan.update');
 
 require __DIR__.'/auth.php';

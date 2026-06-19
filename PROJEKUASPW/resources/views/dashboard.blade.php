@@ -71,15 +71,15 @@
 
     <div class="profile-menu" id="profileMenu">
 
-        <a href="#">
-            <i class="fas fa-user"></i>
-            Profile
-        </a>
+        <a href="{{ route('profile.user') }}">
+    <i class="fas fa-user"></i>
+    Profile
+</a>
 
-        <a href="#">
-            <i class="fas fa-cog"></i>
-            Account Settings
-        </a>
+<a href="{{ route('profile.edit') }}">
+    <i class="fas fa-cog"></i>
+    Account Settings
+</a>
 
         <hr>
 
