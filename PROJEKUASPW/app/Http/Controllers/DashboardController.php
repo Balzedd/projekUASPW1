@@ -1,13 +1,18 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+
 use app\Models\User;
 class DashboardController extends Controller
 {
     public function index()
     {
+
+    
+
        if (Auth::user()->role == 'A') {
             // Hitung pelanggan baru (role bukan Admin)
             $pelangganBaru = User::where('role', '!=', 'A')

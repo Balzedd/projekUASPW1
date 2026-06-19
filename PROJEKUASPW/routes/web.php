@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\TiketController;
 use App\Http\Controllers\AcaraController;
+use App\Models\Acara;
 
 Route::resource('tikets', TiketController::class);
 
@@ -56,10 +57,22 @@ Route::get('/admin/dashboard', [DashboardController::class, 'index'])
     ->name('admin.dashboard');
 
 Route::get('/user/dashboard', function () {
-    return view('dashboard');
+
+    $acara = Acara::where('kategori', 'Esports')
+                  ->latest()
+                  ->first();
+
+    $acaras = Acara::with('tikets')
+                   ->latest()
+                   ->get();
+
+    return view('dashboard', compact(
+        'acara',
+        'acaras'
+    ));
+
 })->middleware(['auth', 'checkRole:U'])
   ->name('user.dashboard');
-
 Route::get('/pelanggan', [PelangganController::class, 'index'])
     ->name('pelanggan.index');
 

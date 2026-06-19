@@ -34,7 +34,7 @@
         <a href="{{ route('tikets.index') }}" class="nav-item" data-page="tiket">
           <i class="ti ti-ticket"></i>
           <span class="nav-label">Tiket</span>
-          <span class="nav-badge nav-label">12</span>
+        
         </a>
         <a href="{{ route('acara.index') }}" class="nav-item" data-page="acara">
           <i class="ti ti-calendar-event"></i>
@@ -129,11 +129,8 @@
         <div class="content-top">
           <div>
             <h1>Dashboard penjualan tiket</h1>
-            <p class="subtitle">Ringkasan aktivitas penjualan hari ini, 15 Juni 2026</p>
+            <p class="subtitle">{{ \Carbon\Carbon::now()->locale('id')->translatedFormat('d F Y') }}</p>
           </div>
-          <button class="btn-primary">
-            <i class="ti ti-plus"></i> Acara baru
-          </button>
         </div>
 
         <!-- Stat cards -->
@@ -161,8 +158,8 @@
               <p>Acara aktif</p>
               <i class="ti ti-calendar-event"></i>
             </div>
-            <p class="stat-value">8</p>
-            <p class="stat-sub">2 acara minggu ini</p>
+            <p class="stat-value">{{ \App\Models\Acara::count() }}</p>
+            <p class="stat-sub">{{ \App\Models\Acara::count() }} acara minggu ini</p>
           </div>
           
 
@@ -174,7 +171,7 @@
         <i class="ti ti-users"></i>
     </div>
     <p class="stat-value">{{ $pelangganBaru }}</p>
-    <p class="stat-sub">+{{ $totalPelanggan }} total pelanggan</p>
+    <p class="stat-sub">{{ $totalPelanggan }} total pelanggan</p>
 </div>
   </div>
 

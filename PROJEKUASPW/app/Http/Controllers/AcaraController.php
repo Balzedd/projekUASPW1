@@ -40,15 +40,14 @@ class AcaraController extends Controller
 
         }
 
-        Acara::create([
-
-            'nama_acara' => $request->nama_acara,
-            'deskripsi' => $request->deskripsi,
-            'tanggal' => $request->tanggal,
-            'lokasi' => $request->lokasi,
-            'gambar' => $gambar
-
-        ]);
+       Acara::create([
+    'nama_acara' => $request->nama_acara,
+    'kategori' => $request->kategori,
+    'deskripsi' => $request->deskripsi,
+    'tanggal' => $request->tanggal,
+    'lokasi' => $request->lokasi,
+    'gambar' => $gambar
+]);
 
         return redirect('/acara');
     }
@@ -58,7 +57,19 @@ class AcaraController extends Controller
      */
     public function show(Acara $acara)
     {
-        //
+          $deskripsi = $acara->deskripsi;
+
+    preg_match('/Waktu:\s*(.+)/i', $deskripsi, $waktu);
+    preg_match('/Kapasitas:\s*(.+)/i', $deskripsi, $kapasitas);
+
+    $waktu = trim($waktu[1] ?? '-');
+    $kapasitas = trim($kapasitas[1] ?? '-');
+
+    return view('acara.show', compact(
+        'acara',
+        'waktu',
+        'kapasitas'
+    ));
     }
 
     /**
@@ -78,14 +89,13 @@ class AcaraController extends Controller
     {
         $acara = Acara::findOrFail($id);
 
-        $acara->update([
-
-            'nama_acara' => $request->nama_acara,
-            'deskripsi' => $request->deskripsi,
-            'tanggal' => $request->tanggal,
-            'lokasi' => $request->lokasi,
-
-        ]);
+       $acara->update([
+    'nama_acara' => $request->nama_acara,
+    'kategori' => $request->kategori,
+    'deskripsi' => $request->deskripsi,
+    'tanggal' => $request->tanggal,
+    'lokasi' => $request->lokasi,
+]);
 
         return redirect('/acara');
     }

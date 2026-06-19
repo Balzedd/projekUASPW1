@@ -91,6 +91,19 @@
                 </div>
 
                 <div class="mb-3">
+    <label>Kategori</label>
+    <select name="kategori" class="form-control">
+        <option value="">Pilih Kategori</option>
+        <option value="Musik">Musik</option>
+        <option value="Olahraga">Olahraga</option>
+        <option value="Seminar">Seminar</option>
+        <option value="Workshop">Workshop</option>
+        <option value="Festival">Festival</option>
+        <option value="Esports">Esports</option>
+    </select>
+</div>
+
+                <div class="mb-3">
 
                     <label>Deskripsi</label>
 

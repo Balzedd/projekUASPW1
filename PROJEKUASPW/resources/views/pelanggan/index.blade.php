@@ -34,7 +34,7 @@
         <a href="{{ route('tikets.index') }}" class="nav-item" data-page="tiket">
           <i class="ti ti-ticket"></i>
           <span class="nav-label">Tiket</span>
-          <span class="nav-badge nav-label">12</span>
+        
         </a>
         <a href="{{ route('acara.index') }}" class="nav-item" data-page="acara">
           <i class="ti ti-calendar-event"></i>
