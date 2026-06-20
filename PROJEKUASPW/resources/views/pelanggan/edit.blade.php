@@ -61,7 +61,6 @@
           <span class="nav-label">Laporan</span>
         </a>
 
-        <p class="nav-label nav-section-title nav-section-title-second">Lainnya</p>
 
       </nav>
     </aside>
@@ -105,11 +104,7 @@
                         Profile
                     </a>
                 </li>
-                <li>
-                    <a class="dropdown-item" href="#">
-                        Account Settings
-                    </a>
-                </li>
+               
                 <li>
                     <hr class="dropdown-divider">
                 </li>

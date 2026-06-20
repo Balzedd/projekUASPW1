@@ -9,10 +9,16 @@ class Acara extends Model
     protected $fillable = [
 
         'nama_acara',
-        'deskripsi',
-        'tanggal',
-        'lokasi',
-        'gambar'
+    'kategori',
+    'deskripsi',
+    'tanggal',
+    'lokasi',
+    'gambar'
 
     ];
+
+    public function tikets()
+{
+    return $this->hasMany(Tiket::class);
+}
 }

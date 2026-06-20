@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\TiketController;
 use App\Http\Controllers\AcaraController;
+use App\Http\Controllers\LaporanController;
+use App\Models\Acara;
 
 Route::resource('tikets', TiketController::class);
 
@@ -18,6 +20,10 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+
+    Route::get('/profile-user', function () {
+        return view('profile.index');
+    })->name('profile.user');
 
     Route::get('/profile', [ProfileController::class, 'edit'])
         ->name('profile.edit');
@@ -45,7 +51,6 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/acara/delete/{id}', [AcaraController::class, 'destroy'])
         ->name('acara.destroy');
-
 });
 
 Route::get('/admin/dashboard', [DashboardController::class, 'index'])
@@ -53,21 +58,44 @@ Route::get('/admin/dashboard', [DashboardController::class, 'index'])
     ->name('admin.dashboard');
 
 Route::get('/user/dashboard', function () {
-    return view('dashboard');
+
+    $acara = Acara::where('kategori', 'Esports')
+                  ->latest()
+                  ->first();
+
+    $acaras = Acara::with('tikets')
+                   ->latest()
+                   ->get();
+
+    return view('dashboard', compact(
+        'acara',
+        'acaras'
+    ));
+
 })->middleware(['auth', 'checkRole:U'])
   ->name('user.dashboard');
-
 Route::get('/pelanggan', [PelangganController::class, 'index'])
     ->name('pelanggan.index');
-    
-
 
 Route::get('/pelanggan/{id}/edit', [PelangganController::class, 'edit'])
     ->name('pelanggan.edit');
 
 Route::get('/pelanggan/{id}/delete', [PelangganController::class, 'destroy'])
     ->name('pelanggan.destroy');
-    Route::put('/pelanggan/{id}', [PelangganController::class, 'update'])
+
+Route::put('/pelanggan/{id}', [PelangganController::class, 'update'])
     ->name('pelanggan.update');
+
+
+
+
+Route::post('/laporan', [LaporanController::class, 'store'])
+    ->name('laporan.store');
+
+    Route::get('/laporan', [LaporanController::class, 'index'])
+    ->name('laporan.index');
+
+Route::delete('/laporan/{id}', [LaporanController::class, 'destroy'])
+    ->name('laporan.destroy');
 
 require __DIR__.'/auth.php';

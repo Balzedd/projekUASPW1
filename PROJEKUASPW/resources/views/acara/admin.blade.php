@@ -36,7 +36,7 @@
         <a href="{{ route('tikets.index') }}" class="nav-item " data-page="tiket">
           <i class="ti ti-ticket"></i>
           <span class="nav-label">Tiket</span>
-          <span class="nav-badge nav-label">12</span>
+        
         </a>
         <a href="{{ route('acara.index') }}" class="nav-item active" data-page="acara">
           <i class="ti ti-calendar-event"></i>
@@ -51,12 +51,12 @@
           <i class="ti ti-receipt"></i>
           <span class="nav-label">Transaksi</span>
         </a>
-        <a href="#" class="nav-item" data-page="laporan">
+        <a href="{{route('laporan.index')}}" class="nav-item" data-page="laporan">
           <i class="ti ti-chart-bar"></i>
           <span class="nav-label">Laporan</span>
         </a>
 
-        <p class="nav-label nav-section-title nav-section-title-second">Lainnya</p>
+      
 
       </nav>
     </aside>
@@ -76,7 +76,7 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="#">Profile</a></li>
-              <li><a class="dropdown-item" href="#">Account Settings</a></li>
+            
               <li><hr class="dropdown-divider"></li>
               <li>
                 <form method="POST" action="{{ route('logout') }}">@csrf<button type="submit" class="dropdown-item">Sign Out</button></form>

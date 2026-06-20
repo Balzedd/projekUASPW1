@@ -37,23 +37,27 @@
         <h3 class="mb-0">
             Daftar Acara
         </h3>
+        <span class="link" style="cursor:default;">{{ $acaras->count() }} acara</span>
 
     </div>
 
-    <div class="card-body">
+    <div class="card-body p-0">
 
-        <table class="table align-middle mb-0">
+        @if($acaras->count() > 0)
+
+        <table class="table table-data align-middle mb-0">
 
             <thead>
 
                 <tr>
 
-                    <th>No</th>
-                    <th>Poster</th>
+                    <th style="width:50px;">No</th>
+                    <th style="width:110px;">Poster</th>
                     <th>Nama Acara</th>
+                    <th>Kategori</th>
                     <th>Tanggal</th>
                     <th>Lokasi</th>
-                    <th>Aksi</th>
+                    <th class="text-end">Aksi</th>
 
                 </tr>
 
@@ -61,28 +65,34 @@
 
             <tbody>
 
-                @forelse($acaras as $acara)
+                @foreach($acaras as $acara)
 
                 <tr>
 
-                    <td>{{ $loop->iteration }}</td>
+                    <td>
+                        <span class="row-number">{{ $loop->iteration }}</span>
+                    </td>
 
                     <td>
 
                         <img src="{{ asset('gambar_acara/' . $acara->gambar) }}"
-                             width="100"
-                             height="70"
-                             style="object-fit:cover; border-radius:10px;">
+                             width="80"
+                             height="56"
+                             style="object-fit:cover; border-radius:8px; border:1px solid var(--border-color);">
 
                     </td>
 
-                    <td>{{ $acara->nama_acara }}</td>
+                    <td class="cell-strong">{{ $acara->nama_acara }}</td>
 
-                    <td>{{ $acara->tanggal }}</td>
+                    <td>
+                        <span class="type-badge">{{ $acara->kategori }}</span>
+                    </td>
 
-                    <td>{{ $acara->lokasi }}</td>
+                    <td class="cell-muted">{{ $acara->tanggal }}</td>
 
-                    <td class="text-nowrap">
+                    <td class="cell-muted">{{ $acara->lokasi }}</td>
+
+                    <td class="text-end text-nowrap">
 
                         <a href="{{ route('acara.edit', $acara->id) }}"
                            class="btn btn-warning btn-sm me-1">
@@ -113,23 +123,19 @@
 
                 </tr>
 
-                @empty
-
-                <tr>
-
-                    <td colspan="6" class="text-center">
-
-                        Belum ada data acara
-
-                    </td>
-
-                </tr>
-
-                @endforelse
+                @endforeach
 
             </tbody>
 
         </table>
+
+        @else
+        <div class="table-empty">
+            <i class="ti ti-calendar-event"></i>
+            <p class="mb-1">Belum ada data acara</p>
+            <a href="{{ route('acara.create') }}" class="link">Tambah acara pertama</a>
+        </div>
+        @endif
 
     </div>
 

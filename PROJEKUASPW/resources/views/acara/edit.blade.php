@@ -1,71 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Acara</title>
+@extends('acara.admin')
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+@section('content')
 
-    <style>
+<div class="content-top mb-4">
 
-        body{
-            background: #f5f7fb;
-            font-family: Arial, Helvetica, sans-serif;
-        }
+```
+<div>
 
-        .container-box{
-            background: white;
-            padding: 35px;
-            border-radius: 18px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            margin-top: 40px;
-        }
+    <h1>Edit Acara</h1>
 
-        .title{
-            font-size: 30px;
-            font-weight: bold;
-            color: #312e81;
-            margin-bottom: 25px;
-        }
+    <p class="subtitle">
+        Kelola dan perbarui data acara
+    </p>
 
-        label{
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
+</div>
+```
 
-        .form-control{
-            border-radius: 10px;
-            padding: 10px;
-        }
+</div>
 
-        .btn-update{
-            background: #f59e0b;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            padding: 10px 20px;
-            font-weight: bold;
-        }
+<div class="card">
 
-        .btn-update:hover{
-            background: #d97706;
-            color: white;
-        }
+```
+<div class="card-header">
 
-    </style>
+    <h3 class="mb-0">
+        Form Edit Acara
+    </h3>
 
-</head>
-<body>
+</div>
 
-<div class="container">
+<div class="card-body">
 
-    <div class="container-box">
+    <form action="{{ route('acara.update', $acara->id) }}"
+          method="POST">
 
-        <h2 class="title">
-            Edit Acara
-        </h2>
+        @csrf
+        @method('PUT')
 
+<<<<<<< HEAD
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul class="mb-0 ps-3">
@@ -78,13 +50,15 @@
 
         <form action="{{ route('acara.update', $acara->id) }}"
               method="POST">
+=======
+        <div class="row">
+>>>>>>> b2c1da3af79d3212981d6e4df00060c69f0f052e
 
-            @csrf
-            @method('PUT')
+            <div class="col-md-6 mb-3">
 
-            <div class="mb-3">
-
-                <label>Nama Acara</label>
+                <label class="form-label">
+                    Nama Acara
+                </label>
 
                 <input type="text"
                        name="nama_acara"
@@ -93,30 +67,11 @@
 
             </div>
 
-            <div class="mb-3">
+            <div class="col-md-6 mb-3">
 
-                <label>Deskripsi</label>
-
-                <textarea name="deskripsi"
-                          class="form-control"
-                          rows="5">{{ $acara->deskripsi }}</textarea>
-
-            </div>
-
-            <div class="mb-3">
-
-                <label>Tanggal</label>
-
-                <input type="date"
-                       name="tanggal"
-                       class="form-control"
-                       value="{{ $acara->tanggal }}">
-
-            </div>
-
-            <div class="mb-3">
-
-                <label>Lokasi</label>
+                <label class="form-label">
+                    Lokasi
+                </label>
 
                 <input type="text"
                        name="lokasi"
@@ -125,25 +80,57 @@
 
             </div>
 
-            <button type="submit"
-                    class="btn btn-update">
+        </div>
 
+        <div class="mb-3">
+
+            <label class="form-label">
+                Tanggal
+            </label>
+
+            <input type="date"
+                   name="tanggal"
+                   class="form-control"
+                   value="{{ $acara->tanggal }}">
+
+        </div>
+
+        <div class="mb-4">
+
+            <label class="form-label">
+                Deskripsi
+            </label>
+
+            <textarea name="deskripsi"
+                      rows="5"
+                      class="form-control">{{ $acara->deskripsi }}</textarea>
+
+        </div>
+
+        <div class="d-flex gap-2">
+
+            <button type="submit"
+                    class="btn btn-warning">
+
+                <i class="ti ti-device-floppy"></i>
                 Update
 
             </button>
 
-            <a href="/acara"
+            <a href="{{ route('acara.index') }}"
                class="btn btn-secondary">
 
                 Kembali
 
             </a>
 
-        </form>
+        </div>
 
-    </div>
+    </form>
+
+</div>
+```
 
 </div>
 
-</body>
-</html>
+@endsection

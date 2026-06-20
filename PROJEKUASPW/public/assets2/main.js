@@ -1,27 +1,4 @@
 
-// Countdown Timer — target: 28 Jul 2026
-function runCountdown(){
-  const target = new Date('2026-07-28T13:00:00+07:00').getTime();
-  function tick(){
-    const now = Date.now();
-    const diff = target - now;
-    if(diff <= 0){
-      ['cdD','cdH','cdM','cdS'].forEach(id=>document.getElementById(id).textContent='00');
-      return;
-    }
-    const d = Math.floor(diff/86400000);
-    const h = Math.floor((diff%86400000)/3600000);
-    const m = Math.floor((diff%3600000)/60000);
-    const s = Math.floor((diff%60000)/1000);
-    document.getElementById('cdD').textContent = String(d).padStart(2,'0');
-    document.getElementById('cdH').textContent = String(h).padStart(2,'0');
-    document.getElementById('cdM').textContent = String(m).padStart(2,'0');
-    document.getElementById('cdS').textContent = String(s).padStart(2,'0');
-  }
-  tick();
-  setInterval(tick,1000);
-}
-runCountdown();
 
 // Filter events
 function filterEv(cat, btn){
@@ -85,3 +62,67 @@ window.addEventListener('scroll',()=>{
     if(a.getAttribute('href')==='#'+cur) a.classList.add('active');
   });
 });
+
+function toggleProfileMenu() {
+    document
+        .getElementById("profileMenu")
+        .classList.toggle("show");
+}
+
+window.onclick = function(event) {
+
+    if (!event.target.closest('.profile-dropdown')) {
+
+        let menu = document.getElementById("profileMenu");
+
+        if (menu.classList.contains("show")) {
+            menu.classList.remove("show");
+        }
+    }
+}
+
+const eventDate = document.getElementById('eventDate');
+
+if(eventDate){
+
+    const targetDate = new Date(eventDate.value).getTime();
+
+    function updateCountdown(){
+
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        if(distance <= 0){
+
+            document.getElementById("cdD").textContent = "00";
+            document.getElementById("cdH").textContent = "00";
+            document.getElementById("cdM").textContent = "00";
+            document.getElementById("cdS").textContent = "00";
+
+            return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24))
+                    / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60))
+                    / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60))
+                    / 1000);
+
+        document.getElementById("cdD").textContent =
+            String(days).padStart(2,'0');
+
+        document.getElementById("cdH").textContent =
+            String(hours).padStart(2,'0');
+
+        document.getElementById("cdM").textContent =
+            String(minutes).padStart(2,'0');
+
+        document.getElementById("cdS").textContent =
+            String(seconds).padStart(2,'0');
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+}

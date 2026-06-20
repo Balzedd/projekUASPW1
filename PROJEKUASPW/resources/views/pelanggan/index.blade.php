@@ -34,13 +34,13 @@
         <a href="{{ route('tikets.index') }}" class="nav-item" data-page="tiket">
           <i class="ti ti-ticket"></i>
           <span class="nav-label">Tiket</span>
-          <span class="nav-badge nav-label">12</span>
+        
         </a>
         <a href="{{ route('acara.index') }}" class="nav-item" data-page="acara">
           <i class="ti ti-calendar-event"></i>
           <span class="nav-label">Acara</span>
         </a>
-        <a href="{{ route('pelanggan.index') }}" class="nav-item  active  " data-page="pelanggan">
+        <a href="{{ route('pelanggan.index') }}" class="nav-item active" data-page="pelanggan">
           <i class="ti ti-users"></i>
           <span class="nav-label">Pelanggan</span>
         
@@ -49,12 +49,12 @@
           <i class="ti ti-receipt"></i>
           <span class="nav-label">Transaksi</span>
         </a>
-        <a href="#" class="nav-item" data-page="laporan">
+        <a href="{{route('laporan.index')}}" class="nav-item" data-page="laporan">
           <i class="ti ti-chart-bar"></i>
           <span class="nav-label">Laporan</span>
         </a>
 
-        <p class="nav-label nav-section-title nav-section-title-second">Lainnya</p>
+       
 
       </nav>
     </aside>
@@ -95,11 +95,7 @@
                         Profile
                     </a>
                 </li>
-                <li>
-                    <a class="dropdown-item" href="#">
-                        Account Settings
-                    </a>
-                </li>
+                
                 <li>
                     <hr class="dropdown-divider">
                 </li>
@@ -126,60 +122,75 @@
             <i class="ti ti-plus"></i> Pelanggan baru
           </button>
         </div>
-        <!-- Stat cards -->
-        <!-- Bottom grid -->
-<div class="card">
-    <div class="card-header">
-        <h3>Daftar Pelanggan</h3>
+
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="mb-0">Daftar Pelanggan</h3>
+                <span class="link" style="cursor:default;">{{ $pelanggan->count() }} pelanggan</span>
+            </div>
+
+            <div class="card-body p-0">
+
+                @if($pelanggan->count() > 0)
+                <table class="table table-data align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th style="width:50px;">No</th>
+                            <th>Nama</th>
+                            <th>Email</th>
+                            <th>Tanggal Bergabung</th>
+                            <th class="text-end">Aksi</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    @foreach ($pelanggan as $p)
+                    <tr>
+                        <td>
+                            <span class="row-number">{{ $loop->iteration }}</span>
+                        </td>
+                        <td class="cell-strong">{{ $p->name }}</td>
+                        <td class="cell-muted">{{ $p->email }}</td>
+                        <td class="cell-muted">{{ $p->created_at->format('d-m-Y') }}</td>
+                        <td class="text-end text-nowrap">
+                            <a href="{{ route('pelanggan.edit', $p->id) }}"
+                               class="btn btn-warning btn-sm me-1">
+                                <i class="ti ti-edit"></i> Edit
+                            </a>
+
+                            <form action="{{ route('pelanggan.destroy', $p->id) }}"
+                                  method="POST"
+                                  style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit"
+                                        class="btn btn-danger btn-sm"
+                                        onclick="return confirm('Yakin ingin menghapus pelanggan ini?')">
+                                    <i class="ti ti-trash"></i> Hapus
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+
+                @else
+                <div class="table-empty">
+                    <i class="ti ti-users"></i>
+                    <p class="mb-0">Belum ada data pelanggan</p>
+                </div>
+                @endif
+
+            </div>
+        </div>
+
+      </main>
     </div>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Nama</th>
-                <th>Email</th>
-                <th>Tanggal Bergabung</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-
-<tbody>
-@foreach ($pelanggan as $p)
-<tr>
-    <td>{{ $loop->iteration }}</td>
-    <td>{{ $p->name }}</td>
-    <td>{{ $p->email }}</td>
-    <td>{{ $p->created_at->format('d-m-Y') }}</td>
-    <td>
-        <a href="{{ route('pelanggan.edit', $p->id) }}"
-           class="btn btn-warning btn-sm">
-            <i class="ti ti-edit"></i>
-            Edit
-        </a>
-
-        <form action="{{ route('pelanggan.destroy', $p->id) }}"
-              method="POST"
-              style="display:inline;">
-            @csrf
-            @method('DELETE')
-
-            <button type="submit"
-                    class="btn btn-danger btn-sm"
-                    onclick="return confirm('Yakin ingin menghapus pelanggan ini?')">
-                <i class="ti ti-trash"></i>
-                Hapus
-            </button>
-        </form>
-    </td>
-</tr>
-@endforeach
-</tbody>
-    </table>
-</div>
-        
+  </div>
 
 <script src="{{ asset('assets3/main.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
-</html> 
+</html>

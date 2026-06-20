@@ -14,8 +14,9 @@ class AcaraController extends Controller
     public function index()
     {
         $acaras = Acara::all();
+        $featured = Acara::latest()->first();
 
-        return view('acara.index', compact('acaras'));
+        return view('acara.index', compact('acaras','featured'));
     }
 
     /**
@@ -51,6 +52,7 @@ class AcaraController extends Controller
 
         }
 
+<<<<<<< HEAD
         Acara::create([
 
             'nama_acara' => $validated['nama_acara'],
@@ -60,6 +62,16 @@ class AcaraController extends Controller
             'gambar' => $gambar
 
         ]);
+=======
+       Acara::create([
+    'nama_acara' => $request->nama_acara,
+    'kategori' => $request->kategori,
+    'deskripsi' => $request->deskripsi,
+    'tanggal' => $request->tanggal,
+    'lokasi' => $request->lokasi,
+    'gambar' => $gambar
+]);
+>>>>>>> b2c1da3af79d3212981d6e4df00060c69f0f052e
 
         return redirect('/acara')->with('success', 'Acara berhasil ditambahkan.');
     }
@@ -69,7 +81,19 @@ class AcaraController extends Controller
      */
     public function show(Acara $acara)
     {
-        //
+          $deskripsi = $acara->deskripsi;
+
+    preg_match('/Waktu:\s*(.+)/i', $deskripsi, $waktu);
+    preg_match('/Kapasitas:\s*(.+)/i', $deskripsi, $kapasitas);
+
+    $waktu = trim($waktu[1] ?? '-');
+    $kapasitas = trim($kapasitas[1] ?? '-');
+
+    return view('acara.show', compact(
+        'acara',
+        'waktu',
+        'kapasitas'
+    ));
     }
 
     /**
@@ -89,6 +113,7 @@ class AcaraController extends Controller
     {
         $acara = Acara::findOrFail($id);
 
+<<<<<<< HEAD
         $validated = $request->validate([
             'nama_acara' => ['required', 'string', 'max:255'],
             'deskripsi' => ['nullable', 'string'],
@@ -117,6 +142,15 @@ class AcaraController extends Controller
             'gambar' => $gambar,
 
         ]);
+=======
+       $acara->update([
+    'nama_acara' => $request->nama_acara,
+    'kategori' => $request->kategori,
+    'deskripsi' => $request->deskripsi,
+    'tanggal' => $request->tanggal,
+    'lokasi' => $request->lokasi,
+]);
+>>>>>>> b2c1da3af79d3212981d6e4df00060c69f0f052e
 
         return redirect('/acara')->with('success', 'Acara berhasil diperbarui.');
     }
