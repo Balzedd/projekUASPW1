@@ -65,22 +65,20 @@
                     </td>
 
                     <td class="text-end text-nowrap">
+    <button type="button" 
+            onclick="showDeleteModal({{ $l->id }}, '{{ addslashes($l->nama) }}')"
+            class="btn btn-danger btn-sm">
+        <i class="ti ti-trash"></i> Hapus
+    </button>
 
-                        <form action="{{ route('laporan.destroy', $l->id) }}"
-                              method="POST"
-                              class="d-inline-block">
-
-                            @csrf
-                            @method('DELETE')
-
-                            <button onclick="return confirm('Hapus laporan ini?')"
-                                    class="btn btn-danger btn-sm">
-                                <i class="ti ti-trash"></i> Hapus
-                            </button>
-
-                        </form>
-
-                    </td>
+    <form id="delete-form-{{ $l->id }}" 
+          action="{{ route('laporan.destroy', $l->id) }}" 
+          method="POST" 
+          style="display: none;">
+        @csrf
+        @method('DELETE')
+    </form>
+</td>
 
                 </tr>
 
@@ -97,6 +95,30 @@
         </div>
         @endif
 
+    </div>
+</div>
+
+<!-- Modal Konfirmasi Hapus Laporan -->
+<div id="deleteModal" class="custom-modal" style="display: none;">
+    <div class="custom-modal-content">
+        <div class="warning-icon">
+            <i class="ti ti-alert-triangle"></i>
+        </div>
+        
+        <h2>Yakin Hapus Laporan?</h2>
+        
+        <p class="modal-message" id="deleteMessage">
+            Apakah Anda yakin ingin menghapus laporan ini?
+        </p>
+        
+        <div class="modal-actions">
+            <button onclick="closeDeleteModal()" class="btn-secondary-modal">
+                Batal
+            </button>
+            <button onclick="confirmDelete()" class="btn-danger-modal">
+                <i class="ti ti-trash"></i> Hapus
+            </button>
+        </div>
     </div>
 </div>
 

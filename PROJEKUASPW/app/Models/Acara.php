@@ -26,4 +26,9 @@ public function pesanans()
 {
     return $this->hasMany(Pesanan::class);
 }
+
+public function transaksis()
+{
+    return $this->hasMany(Transaksi::class);
+}
 }

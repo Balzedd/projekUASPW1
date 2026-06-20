@@ -4,15 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>@yield('title', 'Dashboard Admin')</title>
-
+  <!-- Theme baru: dark gold -->
+ 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
-  <!-- Theme baru: dark gold -->
-  <link rel="stylesheet" href="{{ asset('assets/admin.css') }}">
+
+<link rel="stylesheet" href="{{ asset('assets/admin.css') }}">
 
   @stack('styles')
+
+  
 </head>
 <body>
   <div class="layout">
@@ -24,9 +27,7 @@
           <div class="brand-icon"><i class="bi bi-ticket-fill"></i></div>
           <span id="logoText" class="nav-label brand-text">Tiketin Admin</span>
         </div>
-        <button id="toggleBtn" class="toggle-btn" aria-label="Toggle sidebar">
-          <i class="bi bi-list"></i>
-        </button>
+       
       </div>
 
       <nav class="nav">
@@ -60,7 +61,14 @@
           <span class="nav-label">Pelanggan</span>
         </a>
 
-        <a href="{{ route('transaksi.index') }}"
+        <a href="{{ route('pesanan.index') }}"
+   class="nav-item {{ request()->routeIs('pesanan.*') ? 'active' : '' }}"
+   data-page="pesanan">
+  <i class="ti ti-clock-dollar"></i>
+  <span class="nav-label">Pesanan</span>
+</a>
+
+         <a href="{{ route('transaksi.index') }}"
            class="nav-item {{ request()->routeIs('transaksi.*') ? 'active' : '' }}"
            data-page="transaksi">
           <i class="ti ti-receipt"></i>
@@ -132,7 +140,8 @@
     </div>
   </div>
 
-  <script src="{{ asset('assets3/main.js') }}"></script>
+  <script src="{{ asset('assets/admin.js') }}"></script>
+  <script src="{{ asset('assets/main.js') }}"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 
   @stack('scripts')

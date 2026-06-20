@@ -1,4 +1,4 @@
- @extends('layout.admin')
+@extends('layout.admin')
 
 @section('content')
 
@@ -93,33 +93,25 @@
                     <td class="cell-muted">{{ $acara->lokasi }}</td>
 
                     <td class="text-end text-nowrap">
+    <a href="{{ route('acara.edit', $acara->id) }}"
+       class="btn btn-warning btn-sm me-1">
+        <i class="ti ti-edit"></i> Edit
+    </a>
 
-                        <a href="{{ route('acara.edit', $acara->id) }}"
-                           class="btn btn-warning btn-sm me-1">
+    <button type="button" 
+            onclick="showDeleteModal({{ $acara->id }}, '{{ addslashes($acara->nama_acara) }}')"
+            class="btn btn-danger btn-sm">
+        <i class="ti ti-trash"></i> Hapus
+    </button>
 
-                            <i class="ti ti-edit"></i>
-                            Edit
-
-                        </a>
-
-                        <form action="{{ route('acara.destroy', $acara->id) }}"
-                              method="POST"
-                              class="d-inline-block">
-
-                            @csrf
-                            @method('DELETE')
-
-                            <button onclick="return confirm('Yakin hapus acara?')"
-                                    class="btn btn-danger btn-sm">
-
-                                <i class="ti ti-trash"></i>
-                                Hapus
-
-                            </button>
-
-                        </form>
-
-                    </td>
+    <form id="delete-form-{{ $acara->id }}" 
+          action="{{ route('acara.destroy', $acara->id) }}" 
+          method="POST" 
+          style="display: none;">
+        @csrf
+        @method('DELETE')
+    </form>
+</td>
 
                 </tr>
 
@@ -139,6 +131,30 @@
 
     </div>
 
+</div>
+
+<!-- Modal Konfirmasi Hapus Acara -->
+<div id="deleteModal" class="custom-modal" style="display: none;">
+    <div class="custom-modal-content">
+        <div class="warning-icon">
+            <i class="ti ti-alert-triangle"></i>
+        </div>
+        
+        <h2>Yakin Hapus Acara?</h2>
+        
+        <p class="modal-message" id="deleteMessage">
+            Apakah Anda yakin ingin menghapus acara ini?
+        </p>
+        
+        <div class="modal-actions">
+            <button onclick="closeDeleteModal()" class="btn-secondary-modal">
+                Batal
+            </button>
+            <button onclick="confirmDelete()" class="btn-danger-modal">
+                <i class="ti ti-trash"></i> Hapus
+            </button>
+        </div>
+    </div>
 </div>
 
 @endsection

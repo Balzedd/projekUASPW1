@@ -67,23 +67,25 @@
                     </td>
 
                     <td class="text-end text-nowrap">
-                        <a href="{{ route('tikets.edit', $t->id) }}"
-                           class="btn btn-warning btn-sm me-1">
-                            <i class="ti ti-edit"></i> Edit
-                        </a>
+    <a href="{{ route('tikets.edit', $t->id) }}"
+       class="btn btn-warning btn-sm me-1">
+        <i class="ti ti-edit"></i> Edit
+    </a>
 
-                        <form action="{{ route('tikets.destroy', $t->id) }}"
-                              method="POST"
-                              class="d-inline-block">
-                            @csrf
-                            @method('DELETE')
+    <button type="button" 
+            onclick="showDeleteModal({{ $t->id }}, '{{ addslashes($t->nama_tiket) }}')"
+            class="btn btn-danger btn-sm">
+        <i class="ti ti-trash"></i> Hapus
+    </button>
 
-                            <button onclick="return confirm('Yakin hapus data?')"
-                                    class="btn btn-danger btn-sm">
-                                <i class="ti ti-trash"></i> Hapus
-                            </button>
-                        </form>
-                    </td>
+    <form id="delete-form-{{ $t->id }}" 
+          action="{{ route('tikets.destroy', $t->id) }}" 
+          method="POST" 
+          style="display: none;">
+        @csrf
+        @method('DELETE')
+    </form>
+</td>
                 </tr>
 
             @endforeach
@@ -100,6 +102,30 @@
         </div>
         @endif
 
+    </div>
+</div>
+
+<!-- Modal Konfirmasi Hapus Tiket -->
+<div id="deleteModal" class="custom-modal" style="display: none;">
+    <div class="custom-modal-content">
+        <div class="warning-icon">
+            <i class="ti ti-alert-triangle"></i>
+        </div>
+        
+        <h2>Yakin Hapus Tiket?</h2>
+        
+        <p class="modal-message" id="deleteMessage">
+            Apakah Anda yakin ingin menghapus tiket ini?
+        </p>
+        
+        <div class="modal-actions">
+            <button onclick="closeDeleteModal()" class="btn-secondary-modal">
+                Batal
+            </button>
+            <button onclick="confirmDelete()" class="btn-danger-modal">
+                <i class="ti ti-trash"></i> Hapus
+            </button>
+        </div>
     </div>
 </div>
 

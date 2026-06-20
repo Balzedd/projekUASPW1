@@ -1,44 +1,39 @@
 @extends('layout.admin')
 
-
 @section('content')
 
 <div class="content-top mb-4">
 
-```
-<div>
+    <div>
 
-    <h1>Edit Acara</h1>
+        <h1>Edit Acara</h1>
 
-    <p class="subtitle">
-        Kelola dan perbarui data acara
-    </p>
+        <p class="subtitle">
+            Kelola dan perbarui data acara
+        </p>
 
-</div>
-```
+    </div>
+
+    <a href="{{ route('acara.index') }}"
+       class="btn btn-warning">
+
+        <i class="ti ti-arrow-left"></i>
+        Kembali
+
+    </a>
 
 </div>
 
 <div class="card">
 
-```
-<div class="card-header">
+    <div class="card-header">
+        <h3 class="mb-0">
+            Form Edit Acara
+        </h3>
+    </div>
 
-    <h3 class="mb-0">
-        Form Edit Acara
-    </h3>
+    <div class="card-body">
 
-</div>
-
-<div class="card-body">
-
-    <form action="{{ route('acara.update', $acara->id) }}"
-          method="POST">
-
-        @csrf
-        @method('PUT')
-
-<<<<<<< HEAD
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul class="mb-0 ps-3">
@@ -50,87 +45,100 @@
         @endif
 
         <form action="{{ route('acara.update', $acara->id) }}"
-              method="POST">
-=======
-        <div class="row">
->>>>>>> b2c1da3af79d3212981d6e4df00060c69f0f052e
+              method="POST"
+              enctype="multipart/form-data">
 
-            <div class="col-md-6 mb-3">
+            @csrf
+            @method('PUT')
 
-                <label class="form-label">
-                    Nama Acara
-                </label>
+            <div class="row g-3">
 
-                <input type="text"
-                       name="nama_acara"
-                       class="form-control"
-                       value="{{ $acara->nama_acara }}">
+                <div class="col-md-6">
+                    <label class="form-label">Nama Acara</label>
+                    <input type="text"
+                           name="nama_acara"
+                           class="form-control form-control-dark @error('nama_acara') is-invalid @enderror"
+                           value="{{ old('nama_acara', $acara->nama_acara) }}">
+                    @error('nama_acara')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+               <select name="kategori"
+        class="form-control-dark @error('kategori') is-invalid @enderror">
+
+    <option value="Musik" {{ $acara->kategori == 'Esport' ? 'selected' : '' }}>Esport</option>
+    <option value="Olahraga" {{ $acara->kategori == 'Olahraga' ? 'selected' : '' }}>Olahraga</option>
+    <option value="Seminar" {{ $acara->kategori == 'Seminar' ? 'selected' : '' }}>Seminar</option>
+    <option value="Festival" {{ $acara->kategori == 'Festival' ? 'selected' : '' }}>Festival</option>
+    <option value="Workshop" {{ $acara->kategori == 'Konser' ? 'selected' : '' }}>Konser</option>
+
+</select>
+
+                <div class="col-md-6">
+                    <label class="form-label">Tanggal</label>
+                    <input type="date"
+                           name="tanggal"
+                           class="form-control form-control-dark @error('tanggal') is-invalid @enderror"
+                           value="{{ old('tanggal', $acara->tanggal) }}">
+                    @error('tanggal')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Lokasi</label>
+                    <input type="text"
+                           name="lokasi"
+                           class="form-control form-control-dark @error('lokasi') is-invalid @enderror"
+                           value="{{ old('lokasi', $acara->lokasi) }}">
+                    @error('lokasi')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="col-md-12">
+                    <label class="form-label">Deskripsi</label>
+                    <textarea name="deskripsi"
+                              rows="5"
+                              class="form-control form-control-dark @error('deskripsi') is-invalid @enderror">{{ old('deskripsi', $acara->deskripsi) }}</textarea>
+                    @error('deskripsi')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="col-md-12">
+                    <label class="form-label">Poster Acara</label>
+
+                    <div class="current-poster">
+                        <img src="{{ asset('gambar_acara/' . $acara->gambar) }}"
+                             alt="{{ $acara->nama_acara }}">
+                        <span class="cell-muted">Poster saat ini</span>
+                    </div>
+
+                    <input type="file"
+                           name="gambar"
+                           accept="image/*"
+                           class="form-control form-control-dark @error('gambar') is-invalid @enderror">
+                    <small class="form-hint">Kosongkan jika tidak ingin mengganti poster.</small>
+                    @error('gambar')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
 
             </div>
 
-            <div class="col-md-6 mb-3">
-
-                <label class="form-label">
-                    Lokasi
-                </label>
-
-                <input type="text"
-                       name="lokasi"
-                       class="form-control"
-                       value="{{ $acara->lokasi }}">
-
+            <div class="form-actions">
+                <a href="{{ route('acara.index') }}" class="btn btn-secondary-dark">Batal</a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="ti ti-device-floppy"></i>
+                    Update Acara
+                </button>
             </div>
 
-        </div>
+        </form>
 
-        <div class="mb-3">
-
-            <label class="form-label">
-                Tanggal
-            </label>
-
-            <input type="date"
-                   name="tanggal"
-                   class="form-control"
-                   value="{{ $acara->tanggal }}">
-
-        </div>
-
-        <div class="mb-4">
-
-            <label class="form-label">
-                Deskripsi
-            </label>
-
-            <textarea name="deskripsi"
-                      rows="5"
-                      class="form-control">{{ $acara->deskripsi }}</textarea>
-
-        </div>
-
-        <div class="d-flex gap-2">
-
-            <button type="submit"
-                    class="btn btn-warning">
-
-                <i class="ti ti-device-floppy"></i>
-                Update
-
-            </button>
-
-            <a href="{{ route('acara.index') }}"
-               class="btn btn-secondary">
-
-                Kembali
-
-            </a>
-
-        </div>
-
-    </form>
-
-</div>
-```
+    </div>
 
 </div>
 

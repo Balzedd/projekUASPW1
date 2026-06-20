@@ -1,19 +1,20 @@
 @php
-$featured = $acaras->get(1);
 if (!$featured) {
     $featured = (object)[
         'nama_acara' => 'Tidak ada event',
-        'gambar'     => '',
-        'kategori'   => '',
-        'tanggal'    => now(),
-        'lokasi'     => '-',
-        'deskripsi'  => ''
+        'gambar' => '',
+        'kategori' => '',
+        'tanggal' => now(),
+        'lokasi' => '-',
+        'deskripsi' => '',
     ];
 }
-preg_match('/Waktu:\s*(.+)/i',    $featured->deskripsi ?? '', $mWaktu);
+
+preg_match('/Waktu:\s*(.+)/i', $featured->deskripsi ?? '', $mWaktu);
 preg_match('/Kapasitas:\s*(.+)/i', $featured->deskripsi ?? '', $mKap);
-$waktu     = trim($mWaktu[1]  ?? '-');
-$kapasitas = trim($mKap[1]    ?? '-');
+
+$waktu = trim($mWaktu[1] ?? '-');
+$kapasitas = trim($mKap[1] ?? '-');
 @endphp
 
 <!DOCTYPE html>
@@ -86,9 +87,9 @@ $kapasitas = trim($mKap[1]    ?? '-');
           <div class="profile-menu" id="profileMenu">
             <a href="{{ route('profile.user') }}"><i class="fas fa-user"></i>Profile</a>
             <a href="{{ route('tiket-saya') }}">
-        <i class="fas fa-ticket-alt"></i>
-        Tiket Saya
-    </a>
+                <i class="fas fa-ticket-alt"></i>
+                Tiket Saya
+            </a>
              <hr>
             <form method="POST" action="{{ route('logout') }}">
               @csrf
@@ -156,9 +157,9 @@ $kapasitas = trim($mKap[1]    ?? '-');
             <div class="hstat-lbl">Kepuasan Pembeli</div>
           </div>
           <div class="hstat">
-            <div class="hstat-num">{{ \App\Models\Acara::count() }}<span>+</span></div>
-            <div class="hstat-lbl">Event Aktif</div>
-          </div>
+    <div class="hstat-num">{{ $acaras->count() }}<span>+</span></div>
+    <div class="hstat-lbl">Event Aktif</div>
+</div>
           <div class="hstat">
             <div class="hstat-num">50<span>+</span></div>
             <div class="hstat-lbl">Kota di Indonesia</div>
@@ -235,7 +236,7 @@ $kapasitas = trim($mKap[1]    ?? '-');
       <div class="catcard active" onclick="filterEvents('all',this)" data-aos="zoom-in" data-aos-delay="0">
         <span class="cat-icon">🎫</span>
         <div class="cat-name">Semua Event</div>
-        <div class="cat-count">{{ \App\Models\Acara::count() }} event</div>
+        <div class="cat-count">{{ $acaras->count() }} event</div>
       </div>
       <div class="catcard" onclick="filterEvents('esports',this)" data-aos="zoom-in" data-aos-delay="60">
         <span class="cat-icon">🎮</span>
@@ -267,7 +268,7 @@ $kapasitas = trim($mKap[1]    ?? '-');
 </section>
 
 {{-- ══════════════════════════════════════
-     EVENTS
+     EVENTS — MENGGUNAKAN $acaras DARI CONTROLLER
      ══════════════════════════════════════ --}}
 <section id="events">
   <div class="container">
@@ -286,7 +287,7 @@ $kapasitas = trim($mKap[1]    ?? '-');
       <button class="filtbtn" onclick="filterEv('seminar',this)">Seminar</button>
     </div>
     <div class="events-grid" id="events-grid">
-      @foreach($acaras as $i => $acara)
+      @forelse($acaras as $i => $acara)
       <div class="ecard" data-cat="{{ strtolower($acara->kategori) }}"
            data-aos="fade-up" data-aos-delay="{{ ($i % 4) * 80 }}" data-aos-duration="600">
         <div class="ecard-body">
@@ -301,19 +302,23 @@ $kapasitas = trim($mKap[1]    ?? '-');
               <small>Mulai dari</small>
               Rp {{ number_format($acara->tikets->min('harga') ?? 0, 0, ',', '.') }}
             </div>
-          <a href="{{ route('pesan', $acara->id) }}" class="btn-primary">
-    Beli Tiket
-</a>
+            <a href="{{ route('pesan', $acara->id) }}" class="btn-primary">
+              Beli Tiket
+            </a>
           </div>
         </div>
       </div>
-      @endforeach
+      @empty
+      <div class="col-12 text-center" style="padding: 40px 0;">
+        <p style="color: var(--muted);">Belum ada event yang tersedia</p>
+      </div>
+      @endforelse
     </div>
   </div>
 </section>
 
 {{-- ══════════════════════════════════════
-     SPOTLIGHT — parallax image
+     SPOTLIGHT
      ══════════════════════════════════════ --}}
 <section id="spotlight">
   <div class="section-px-bg spotlight-px-bg" data-px-speed="0.25" data-px-dir="down"></div>
@@ -327,7 +332,7 @@ $kapasitas = trim($mKap[1]    ?? '-');
                class="px-spotlight-img" id="pxSpotlightImg">
         </div>
       </div>
-
+ 
       <div>
         <div class="spotlight-tag" data-aos="fade-down" data-aos-delay="100">
           <i class="fas fa-star"></i>Event Pilihan Mingguan
@@ -338,7 +343,7 @@ $kapasitas = trim($mKap[1]    ?? '-');
         </h2>
         <div class="sec-line left" data-aos="fade-right" data-aos-delay="250"></div>
         <p class="sec-desc" data-aos="fade-up" data-aos-delay="300">{{ $featured->deskripsi }}</p>
-
+ 
         <div class="spotlight-info" data-aos="fade-up" data-aos-delay="350">
           <div class="si-row">
             <span class="si-label"><i class="fas fa-calendar-alt" style="color:var(--gold)"></i>Tanggal</span>
@@ -357,34 +362,37 @@ $kapasitas = trim($mKap[1]    ?? '-');
             <span class="si-val">{{ $kapasitas }}</span>
           </div>
         </div>
-
+ 
         <div style="font-size:.72rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px;font-weight:700;"
              data-aos="fade-up" data-aos-delay="400">Pilih Kategori Tiket</div>
+ 
         <div class="ticket-types" data-aos="fade-up" data-aos-delay="450">
-          <div class="ttype selected">
-            <div class="ttype-name">Festival</div>
-            <div class="ttype-price">Rp 150K</div>
-            <div class="ttype-avail">Tersisa 342 tiket</div>
-          </div>
-          <div class="ttype">
-            <div class="ttype-name">VIP</div>
-            <div class="ttype-price">Rp 350K</div>
-            <div class="ttype-avail">Tersisa 98 tiket</div>
-          </div>
-          <div class="ttype">
-            <div class="ttype-name">VVIP Tribun</div>
-            <div class="ttype-price">Rp 650K</div>
-            <div class="ttype-avail">Tersisa 55 tiket</div>
-          </div>
-          <div class="ttype">
-            <div class="ttype-name">Platinum Pit</div>
-            <div class="ttype-price">Rp 1.200K</div>
-            <div class="ttype-avail">Tersisa 20 tiket</div>
-          </div>
+ 
+          @forelse($featured->tikets as $tiket)
+            <div class="ttype {{ $loop->first ? 'selected' : '' }} {{ $tiket->stok <= 0 ? 'sold-out' : '' }}"
+                 data-tiket-id="{{ $tiket->id }}"
+                 data-harga="{{ $tiket->harga }}">
+              <div class="ttype-name">{{ $tiket->nama_tiket }}</div>
+              <div class="ttype-price">Rp {{ number_format($tiket->harga, 0, ',', '.') }}</div>
+              <div class="ttype-avail">
+                @if($tiket->stok > 0)
+                  Tersisa {{ $tiket->stok }} tiket
+                @else
+                  Tiket habis
+                @endif
+              </div>
+            </div>
+          @empty
+            <p style="color:var(--muted);font-size:.84rem;">Belum ada kategori tiket untuk acara ini.</p>
+          @endforelse
+ 
         </div>
+ 
         <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;" data-aos="fade-up" data-aos-delay="500">
-          <button class="btn-primary btn-lg"><i class="fas fa-shopping-cart"></i>Pesan Sekarang</button>
-          <button class="btn-outline"><i class="fas fa-share-alt"></i>Bagikan</button>
+          <a href="{{ route('pesan', $featured->id) }}" class="btn-primary btn-lg" id="pesanBtn">
+            <i class="fas fa-shopping-cart"></i>Pesan Sekarang
+          </a>
+          <button class="btn-outline" type="button"><i class="fas fa-share-alt"></i>Bagikan</button>
         </div>
       </div>
     </div>
@@ -392,7 +400,7 @@ $kapasitas = trim($mKap[1]    ?? '-');
 </section>
 
 {{-- ══════════════════════════════════════
-     COUNTDOWN — parallax orb background
+     COUNTDOWN
      ══════════════════════════════════════ --}}
 <section id="countdown">
   <div class="cd-px-layer" id="pxCountdown"></div>
@@ -466,7 +474,7 @@ $kapasitas = trim($mKap[1]    ?? '-');
     <div class="contact-grid">
       <div class="cinfo" data-aos="fade-right" data-aos-duration="800">
         <div class="cinfo-title">Informasi Kontak</div>
-        <div class="cinfo-sub">Tim kami siap membantu 7 hari seminggu.</div>
+        <div class="cinfo-sub">Tim kami siap membantu 24/7.</div>
         <div class="ci-item"><div class="ci-icon"><i class="fas fa-map-marker-alt"></i></div><div><span class="ci-lbl">Alamat</span><span class="ci-val">Jl. Sudirman No. 88, Jakarta Pusat 10220</span></div></div>
         <div class="ci-item"><div class="ci-icon"><i class="fas fa-phone-alt"></i></div><div><span class="ci-lbl">Telepon</span><span class="ci-val">+62 21 8888-9999</span></div></div>
         <div class="ci-item"><div class="ci-icon"><i class="fas fa-envelope"></i></div><div><span class="ci-lbl">Email</span><span class="ci-val">support@ticketin.id</span></div></div>
@@ -565,12 +573,12 @@ $kapasitas = trim($mKap[1]    ?? '-');
       <div>
         <div class="foot-title">Bantuan</div>
         <ul class="foot-links">
-          <li><a href="#"><i class="fas fa-chevron-right"></i>Pusat Bantuan</a></li>
-          <li><a href="#"><i class="fas fa-chevron-right"></i>Cara Pembelian</a></li>
-          <li><a href="#"><i class="fas fa-chevron-right"></i>Kebijakan Refund</a></li>
-          <li><a href="#"><i class="fas fa-chevron-right"></i>Syarat & Ketentuan</a></li>
-          <li><a href="#"><i class="fas fa-chevron-right"></i>Kebijakan Privasi</a></li>
-          <li><a href="#"><i class="fas fa-chevron-right"></i>Daftar sebagai EO</a></li>
+          <li><a href="#contact"><i class="fas fa-chevron-right"></i>Pusat Bantuan</a></li>
+          <li><a href="#how"><i class="fas fa-chevron-right"></i>Cara Pembelian</a></li>
+          <li><a href="#contact"><i class="fas fa-chevron-right"></i>Kebijakan Refund</a></li>
+          <li><a href="#contact"><i class="fas fa-chevron-right"></i>Syarat & Ketentuan</a></li>
+          <li><a href="#contact"><i class="fas fa-chevron-right"></i>Kebijakan Privasi</a></li>
+          <li><a href="#contact"><i class="fas fa-chevron-right"></i>Daftar sebagai EO</a></li>
         </ul>
       </div>
     </div>
@@ -598,5 +606,27 @@ $kapasitas = trim($mKap[1]    ?? '-');
 <script src="{{ asset('assets/main.js') }}"></script>
 
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+<script>
+  // Pilih kategori tiket — highlight kartu yang aktif
+  document.addEventListener('DOMContentLoaded', function () {
+    const types = document.querySelectorAll('.ticket-types .ttype:not(.sold-out)');
+    const pesanBtn = document.getElementById('pesanBtn');
+    const baseUrl = pesanBtn ? pesanBtn.getAttribute('href') : null;
+ 
+    types.forEach(function (el) {
+      el.addEventListener('click', function () {
+        types.forEach(t => t.classList.remove('selected'));
+        el.classList.add('selected');
+ 
+        if (pesanBtn && baseUrl) {
+          const tiketId = el.getAttribute('data-tiket-id');
+          pesanBtn.setAttribute('href', baseUrl + '?tiket_id=' + tiketId);
+        }
+      });
+    });
+  });
+</script>
+
 </body>
 </html>

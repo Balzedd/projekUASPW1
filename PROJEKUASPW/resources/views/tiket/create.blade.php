@@ -1,136 +1,141 @@
 @extends('layout.admin')
 
-
 @section('content')
 
-<style>
-    .main
-    {
-        width: 100%;
-    }
-</style>
-
 <div class="content-top mb-4">
+
     <div>
         <h1>Tambah Tiket</h1>
         <p class="subtitle">Isi data tiket baru untuk acara</p>
     </div>
+
+    <a href="{{ route('tikets.index') }}" class="btn btn-warning">
+        <i class="ti ti-arrow-left"></i>
+        Kembali
+    </a>
+
 </div>
 
 <div class="card">
-  <div class="card-header">
-    <h3 class="mb-0">Form Tiket</h3>
-  </div>
 
-<div class="card-body">
+    <div class="card-header">
+        <h3 class="mb-0">Form Tiket</h3>
+    </div>
 
-<form action="{{ route('tikets.store') }}"
-      method="POST">
+    <div class="card-body">
 
-@csrf
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0 ps-3">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-<div class="mb-3">
+        <form action="{{ route('tikets.store') }}" method="POST">
 
-<label>Acara</label>
+            @csrf
 
-<select name="acara_id"
-        class="form-control">
+            <div class="row g-3">
 
-@foreach($acaras as $acara)
+                <div class="col-md-6">
+                    <label class="form-label">Acara</label>
 
-<option value="{{ $acara->id }}">
-{{ $acara->nama_acara ?? 'Acara #' . $acara->id }}
-</option>
+                    <select name="acara_id" class="form-control form-control-dark @error('acara_id') is-invalid @enderror">
+                        <option value="">Pilih Acara</option>
+                        @foreach($acaras as $acara)
+                            <option value="{{ $acara->id }}" {{ old('acara_id') == $acara->id ? 'selected' : '' }}>
+                                {{ $acara->nama_acara ?? 'Acara #' . $acara->id }}
+                            </option>
+                        @endforeach
+                    </select>
 
-@endforeach
+                    @error('acara_id')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
 
-</select>
+                <div class="col-md-6">
+                    <label class="form-label">Nama Tiket</label>
 
-</div>
+                    <input type="text"
+                           name="nama_tiket"
+                           class="form-control form-control-dark @error('nama_tiket') is-invalid @enderror"
+                           value="{{ old('nama_tiket') }}">
 
-<div class="mb-3">
+                    @error('nama_tiket')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
 
-<label>Nama Tiket</label>
+                <div class="col-md-6">
+                    <label class="form-label">Harga</label>
 
-<input type="text"
-       name="nama_tiket"
-  class="form-control"
-  value="{{ old('nama_tiket') }}">
-@error('nama_tiket')
-<div class="text-danger small">{{ $message }}</div>
-@enderror
+                    <input type="number"
+                           name="harga"
+                           class="form-control form-control-dark @error('harga') is-invalid @enderror"
+                           value="{{ old('harga') }}">
 
-</div>
+                    @error('harga')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
 
-<div class="mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">Stok</label>
 
-<label>Harga</label>
+                    <input type="number"
+                           name="stok"
+                           class="form-control form-control-dark @error('stok') is-invalid @enderror"
+                           value="{{ old('stok') }}">
 
-<input type="number"
-       name="harga"
-  class="form-control"
-  value="{{ old('harga') }}">
-@error('harga')
-<div class="text-danger small">{{ $message }}</div>
-@enderror
+                    @error('stok')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
 
-</div>
+                <div class="col-md-6">
+                    <label class="form-label">Jenis Tiket</label>
 
-<div class="mb-3">
+                    <select name="jenis_tiket" class="form-control form-control-dark @error('jenis_tiket') is-invalid @enderror">
+                        <option value="Regular" {{ old('jenis_tiket') == 'Regular' ? 'selected' : '' }}>Regular</option>
+                        <option value="VIP" {{ old('jenis_tiket') == 'VIP' ? 'selected' : '' }}>VIP</option>
+                        <option value="VVIP" {{ old('jenis_tiket') == 'VVIP' ? 'selected' : '' }}>VVIP</option>
+                    </select>
 
-<label>Stok</label>
+                    @error('jenis_tiket')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
 
-<input type="number"
-       name="stok"
-  class="form-control"
-  value="{{ old('stok') }}">
-@error('stok')
-<div class="text-danger small">{{ $message }}</div>
-@enderror
+                <div class="col-md-12">
+                    <label class="form-label">Deskripsi</label>
 
-</div>
+                    <textarea name="deskripsi"
+                              rows="4"
+                              class="form-control form-control-dark @error('deskripsi') is-invalid @enderror">{{ old('deskripsi') }}</textarea>
 
-<div class="mb-3">
+                    @error('deskripsi')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
 
-<label>Jenis Tiket</label>
+            </div>
 
-<select name="jenis_tiket"
-        class="form-control">
+            <div class="form-actions">
+                <a href="{{ route('tikets.index') }}" class="btn btn-secondary-dark">Batal</a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="ti ti-device-floppy"></i>
+                    Simpan Tiket
+                </button>
+            </div>
 
-<option value="Regular" {{ old('jenis_tiket') == 'Regular' ? 'selected' : '' }}>Regular</option>
-<option value="VIP" {{ old('jenis_tiket') == 'VIP' ? 'selected' : '' }}>VIP</option>
-<option value="VVIP" {{ old('jenis_tiket') == 'VVIP' ? 'selected' : '' }}>VVIP</option>
+        </form>
 
-@error('jenis_tiket')
-<div class="text-danger small">{{ $message }}</div>
-@enderror
+    </div>
 
-</select>
-
-</div>
-
-<div class="mb-3">
-
-<label>Deskripsi</label>
-
-<textarea
-name="deskripsi"
-class="form-control"></textarea>
-@error('deskripsi')
-<div class="text-danger small">{{ $message }}</div>
-@enderror
-
-</div>
-
-<div class="d-flex justify-content-end mt-3">
-    <a href="{{ route('tikets.index') }}" class="btn btn-secondary me-2">Batal</a>
-    <button type="submit" class="btn btn-success">Simpan</button>
-</div>
-
-</form>
-
-</div>
-</div>
 </div>
 
 @endsection

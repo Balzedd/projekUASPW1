@@ -15,9 +15,9 @@
   --bg:       #050A1F;
   --bg2:      #0A1232;
   --bg3:      #0E1740;
-  --violet:   #6C2FF2;
-  --violet2:  #8A52F5;
-  --cyan:     #00F5FF;
+  --violet:    #d4af37;
+  --violet2:  #f0d060;
+  --cyan:     #f0d060;
   --gold:     #FFD700;
   --rose:     #FF3A6E;
   --white:    #F0F0F5;
@@ -99,11 +99,9 @@ label{
 }
 
 .btn-login{
-    background: linear-gradient(
-        135deg,
-        var(--violet),
-        var(--violet2)
-    );
+   
+    background: linear-gradient(135deg,  var(--violet),
+        var(--violet2));
     color: var(--white);
     border-radius: var(--radius);
     padding: 10px;
@@ -118,8 +116,8 @@ label{
         var(--violet2),
         var(--violet)
     );
-    transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(108,47,242,0.4);
+     transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 32px rgba(212,175,55,.4);
 }
 
 .input-group .btn{

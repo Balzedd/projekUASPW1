@@ -3,15 +3,12 @@
 
 @section('content')
 
- <div class="content-top">
-          <div>
-            <h1>Dashboard Pelanggan</h1>
-            <p class="subtitle">Ringkasan aktivitas pelanggan hari ini, 15 Juni 2026</p>
-          </div>
-          <button class="btn-primary">
-            <i class="ti ti-plus"></i> Pelanggan baru
-          </button>
-        </div>
+ <div class="content-top mb-4">
+    <div>
+        <h1>Data Pelanggan</h1>
+        <p class="subtitle">Kelola Pelanggan</p>
+    </div>
+</div>
 
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
@@ -43,24 +40,25 @@
                         <td class="cell-muted">{{ $p->email }}</td>
                         <td class="cell-muted">{{ $p->created_at->format('d-m-Y') }}</td>
                         <td class="text-end text-nowrap">
-                            <a href="{{ route('pelanggan.edit', $p->id) }}"
-                               class="btn btn-warning btn-sm me-1">
-                                <i class="ti ti-edit"></i> Edit
-                            </a>
+    <a href="{{ route('pelanggan.edit', $p->id) }}"
+       class="btn btn-warning btn-sm me-1">
+        <i class="ti ti-edit"></i> Edit
+    </a>
 
-                            <form action="{{ route('pelanggan.destroy', $p->id) }}"
-                                  method="POST"
-                                  style="display:inline;">
-                                @csrf
-                                @method('DELETE')
+    <button type="button" 
+            onclick="showDeleteModal({{ $p->id }}, '{{ addslashes($p->name) }}')"
+            class="btn btn-danger btn-sm">
+        <i class="ti ti-trash"></i> Hapus
+    </button>
 
-                                <button type="submit"
-                                        class="btn btn-danger btn-sm"
-                                        onclick="return confirm('Yakin ingin menghapus pelanggan ini?')">
-                                    <i class="ti ti-trash"></i> Hapus
-                                </button>
-                            </form>
-                        </td>
+    <form id="delete-form-{{ $p->id }}" 
+          action="{{ route('pelanggan.destroy', $p->id) }}" 
+          method="POST" 
+          style="display: none;">
+        @csrf
+        @method('DELETE')
+    </form>
+</td>
                     </tr>
                     @endforeach
                     </tbody>
@@ -75,4 +73,29 @@
 
             </div>
         </div>
+
+      <!-- Modal Konfirmasi Hapus Pelanggan -->
+<div id="deleteModal" class="custom-modal" style="display: none;">
+    <div class="custom-modal-content">
+        <div class="warning-icon">
+            <i class="ti ti-alert-triangle"></i>
+        </div>
+        
+        <h2>Yakin Hapus Pelanggan?</h2>
+        
+        <p class="modal-message" id="deleteMessage">
+            Apakah Anda yakin ingin menghapus pelanggan ini?
+        </p>
+        
+        <div class="modal-actions">
+            <button onclick="closeDeleteModal()" class="btn-secondary-modal">
+                Batal
+            </button>
+            <button onclick="confirmDelete()" class="btn-danger-modal">
+                <i class="ti ti-trash"></i> Hapus
+            </button>
+        </div>
+    </div>
+</div>
+
 @endsection

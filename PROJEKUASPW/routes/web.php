@@ -14,8 +14,33 @@ use App\Models\Acara;
 Route::resource('tikets', TiketController::class);
 
 Route::get('/', function () {
-    return view('welcome');
+     $acara = Acara::where('kategori', 'Esports')
+                  ->latest()
+                  ->first();
+
+    $acaras = Acara::with('tikets')
+                   ->latest()
+                   ->get();
+
+    $featured = Acara::withSum(
+        ['transaksis' => function ($q) {
+            $q->where('status', 'lunas');
+        }],
+        'jumlah'
+    )
+    ->orderByDesc('transaksis_sum_jumlah')
+    ->first();
+
+    return view('welcome', compact(
+        'acara',
+        'acaras',
+        'featured'
+    ));
 });
+
+
+
+   
 
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->name('logout');
@@ -72,9 +97,19 @@ Route::get('/user/dashboard', function () {
                    ->latest()
                    ->get();
 
+    $featured = Acara::withSum(
+        ['transaksis' => function ($q) {
+            $q->where('status', 'lunas');
+        }],
+        'jumlah'
+    )
+    ->orderByDesc('transaksis_sum_jumlah')
+    ->first();
+
     return view('dashboard', compact(
         'acara',
-        'acaras'
+        'acaras',
+        'featured'
     ));
 
 })->middleware(['auth', 'checkRole:U'])
@@ -122,8 +157,18 @@ Route::middleware('auth')->group(function () {
 
 Route::post('/pesanan/{id}/accept', [PesanController::class, 'accept'])
     ->name('pesanan.accept');
-
-    Route::get('/admin/pesanan', [PesanController::class, 'daftarPesanan'])
+ 
+// Daftar pesanan yang perlu di-accept admin (folder: pesanan)
+Route::get('/admin/pesanan', [PesanController::class, 'daftarPesanan'])
+    ->middleware(['auth', 'checkRole:A'])
+    ->name('pesanan.index');
+ 
+// Riwayat transaksi yang sudah lunas — menu navbar baru, sumber data chart dashboard
+Route::get('/admin/transaksi', [PesanController::class, 'riwayatTransaksi'])
+    ->middleware(['auth', 'checkRole:A'])
     ->name('transaksi.index');
+ 
 
+    Route::delete('/transaksi/{id}', [PesanController::class, 'riwayatTransaksiDestroy'])
+    ->name('transaksi.destroy');
 require __DIR__.'/auth.php';

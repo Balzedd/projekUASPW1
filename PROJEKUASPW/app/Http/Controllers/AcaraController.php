@@ -14,7 +14,14 @@ class AcaraController extends Controller
     public function index()
     {
         $acaras = Acara::all();
-        $featured = Acara::latest()->first();
+      $featured = Acara::withSum(
+    ['transaksis' => function ($q) {
+        $q->where('status', 'lunas');
+    }],
+    'jumlah'
+)
+->orderByDesc('transaksis_sum_jumlah')
+->first();
 
         return view('acara.index', compact('acaras','featured'));
     }
@@ -34,6 +41,7 @@ class AcaraController extends Controller
     {
         $validated = $request->validate([
             'nama_acara' => ['required', 'string', 'max:255'],
+              'kategori' => ['required', 'string', 'max:100'],
             'deskripsi' => ['nullable', 'string'],
             'tanggal' => ['required', 'date'],
             'lokasi' => ['required', 'string', 'max:255'],
@@ -52,15 +60,14 @@ class AcaraController extends Controller
 
         }
 
-        Acara::create([
-
-            'nama_acara' => $validated['nama_acara'],
-            'deskripsi' => $validated['deskripsi'] ?? null,
-            'tanggal' => $validated['tanggal'],
-            'lokasi' => $validated['lokasi'],
-            'gambar' => $gambar
-
-        ]);
+       Acara::create([
+    'nama_acara' => $validated['nama_acara'],
+    'kategori' => $validated['kategori'],
+    'deskripsi' => $validated['deskripsi'] ?? null,
+    'tanggal' => $validated['tanggal'],
+    'lokasi' => $validated['lokasi'],
+    'gambar' => $gambar
+]);
 
         return redirect('/acara')->with('success', 'Acara berhasil ditambahkan.');
     }
@@ -104,6 +111,7 @@ class AcaraController extends Controller
 
         $validated = $request->validate([
             'nama_acara' => ['required', 'string', 'max:255'],
+            'kategori' => ['required', 'string', 'max:100'],
             'deskripsi' => ['nullable', 'string'],
             'tanggal' => ['required', 'date'],
             'lokasi' => ['required', 'string', 'max:255'],
@@ -122,14 +130,13 @@ class AcaraController extends Controller
         }
 
         $acara->update([
-
-            'nama_acara' => $validated['nama_acara'],
-            'deskripsi' => $validated['deskripsi'] ?? null,
-            'tanggal' => $validated['tanggal'],
-            'lokasi' => $validated['lokasi'],
-            'gambar' => $gambar,
-
-        ]);
+    'nama_acara' => $validated['nama_acara'],
+    'kategori' => $validated['kategori'],
+    'deskripsi' => $validated['deskripsi'] ?? null,
+    'tanggal' => $validated['tanggal'],
+    'lokasi' => $validated['lokasi'],
+    'gambar' => $gambar,
+]);
 
         return redirect('/acara')->with('success', 'Acara berhasil diperbarui.');
     }
