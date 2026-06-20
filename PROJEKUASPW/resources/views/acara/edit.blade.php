@@ -38,7 +38,22 @@
         @csrf
         @method('PUT')
 
+<<<<<<< HEAD
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0 ps-3">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <form action="{{ route('acara.update', $acara->id) }}"
+              method="POST">
+=======
         <div class="row">
+>>>>>>> b2c1da3af79d3212981d6e4df00060c69f0f052e
 
             <div class="col-md-6 mb-3">
 

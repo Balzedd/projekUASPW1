@@ -18,7 +18,6 @@ class TiketController extends Controller
     public function create()
     {
         $acaras = Acara::all();
-
         return view('tiket.create', compact('acaras'));
     }
 
@@ -50,6 +49,14 @@ class TiketController extends Controller
     public function update(Request $request, $id)
     {
         $tiket = Tiket::findOrFail($id);
+
+        $request->validate([
+            'acara_id'=>'required',
+            'nama_tiket'=>'required',
+            'harga'=>'required',
+            'stok'=>'required',
+            'jenis_tiket'=>'required'
+        ]);
 
         $tiket->update($request->all());
 
