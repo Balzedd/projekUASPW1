@@ -64,24 +64,40 @@
                     @enderror
                 </div>
 
-                <div class="col-md-6">
+              <div class="col-md-6">
     <label class="form-label">Kategori</label>
 
     <select name="kategori"
-            class="form-control-dark @error('kategori') is-invalid @enderror">
+            class="form-control form-control-dark @error('kategori') is-invalid @enderror">
+
         <option value="">Pilih Kategori</option>
-        <option value="Musik" {{ old('kategori') == 'Esport' ? 'selected' : '' }}>Esport</option>
-        <option value="Olahraga" {{ old('kategori') == 'Olahraga' ? 'selected' : '' }}>Olahraga</option>
-        <option value="Seminar" {{ old('kategori') == 'Seminar' ? 'selected' : '' }}>Seminar</option>
-        <option value="Festival" {{ old('kategori') == 'Festival' ? 'selected' : '' }}>Festival</option>
-        <option value="Workshop" {{ old('kategori') == 'Konser' ? 'selected' : '' }}>Konser</option>
+
+        <option value="Esport" {{ old('kategori') == 'Esport' ? 'selected' : '' }}>
+            Esport
+        </option>
+
+        <option value="Olahraga" {{ old('kategori') == 'Olahraga' ? 'selected' : '' }}>
+            Olahraga
+        </option>
+
+        <option value="Seminar" {{ old('kategori') == 'Seminar' ? 'selected' : '' }}>
+            Seminar
+        </option>
+
+        <option value="Festival" {{ old('kategori') == 'Festival' ? 'selected' : '' }}>
+            Festival
+        </option>
+
+        <option value="Konser" {{ old('kategori') == 'Konser' ? 'selected' : '' }}>
+            Konser
+        </option>
+
     </select>
 
     @error('kategori')
         <div class="invalid-feedback">{{ $message }}</div>
     @enderror
 </div>
-
                 <div class="col-md-6">
                     <label class="form-label">Tanggal</label>
                     <input type="date"

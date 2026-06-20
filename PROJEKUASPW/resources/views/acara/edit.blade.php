@@ -63,17 +63,21 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-
+   <div class="col-md-12">
                <select name="kategori"
         class="form-control-dark @error('kategori') is-invalid @enderror">
 
-    <option value="Musik" {{ $acara->kategori == 'Esport' ? 'selected' : '' }}>Esport</option>
-    <option value="Olahraga" {{ $acara->kategori == 'Olahraga' ? 'selected' : '' }}>Olahraga</option>
-    <option value="Seminar" {{ $acara->kategori == 'Seminar' ? 'selected' : '' }}>Seminar</option>
-    <option value="Festival" {{ $acara->kategori == 'Festival' ? 'selected' : '' }}>Festival</option>
-    <option value="Workshop" {{ $acara->kategori == 'Konser' ? 'selected' : '' }}>Konser</option>
+    <option value="Esport" {{ $acara->kategori == 'Esport' ? 'selected' : '' }}>Esport</option>
+<option value="Olahraga" {{ $acara->kategori == 'Olahraga' ? 'selected' : '' }}>Olahraga</option>
+<option value="Seminar" {{ $acara->kategori == 'Seminar' ? 'selected' : '' }}>Seminar</option>
+<option value="Festival" {{ $acara->kategori == 'Festival' ? 'selected' : '' }}>Festival</option>
+<option value="Konser" {{ $acara->kategori == 'Konser' ? 'selected' : '' }}>Konser</option>
 
 </select>
+@error('kategori')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+</div>
 
                 <div class="col-md-6">
                     <label class="form-label">Tanggal</label>

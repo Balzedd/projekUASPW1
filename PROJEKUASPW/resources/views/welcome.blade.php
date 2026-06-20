@@ -155,7 +155,7 @@ $kapasitas = trim($mKap[1] ?? '-');
       <div class="hero-right" data-aos="fade-left" data-aos-delay="200" data-aos-duration="900">
         <div class="fbadge">
           <i class="fas fa-fire"></i>
-          <span><strong>Hot</strong> — {{ $featured->nama_acara }} — Tiket Hampir Habis!</span>
+          <span><strong>Hot</strong> — {{ $featured->nama_acara }} — Buruan!</span>
         </div>
         <div class="hero-card" id="heroCard">
           <div class="hero-card-img">
@@ -216,38 +216,43 @@ $kapasitas = trim($mKap[1] ?? '-');
       <h2 class="sec-title">Kategori <span>Event</span></h2>
       <div class="sec-line"></div>
     </div>
-    <div class="cat-grid">
-      <div class="catcard active" onclick="filterEvents('all',this)" data-aos="zoom-in" data-aos-delay="0">
-        <span class="cat-icon">🎫</span>
-        <div class="cat-name">Semua Event</div>
-        <div class="cat-count">{{ $acaras->count() }} event</div>
-      </div>
-      <div class="catcard" onclick="filterEvents('esports',this)" data-aos="zoom-in" data-aos-delay="60">
-        <span class="cat-icon">🎮</span>
-        <div class="cat-name">Esports</div>
-        <div class="cat-count">{{ \App\Models\Acara::where('kategori','Esports')->count() }} event</div>
-      </div>
-      <div class="catcard" onclick="filterEvents('concert',this)" data-aos="zoom-in" data-aos-delay="120">
-        <span class="cat-icon">🎵</span>
-        <div class="cat-name">Konser</div>
-        <div class="cat-count">{{ \App\Models\Acara::where('kategori','Konser')->count() }} event</div>
-      </div>
-      <div class="catcard" onclick="filterEvents('festival',this)" data-aos="zoom-in" data-aos-delay="180">
-        <span class="cat-icon">🎸</span>
-        <div class="cat-name">Festival</div>
-        <div class="cat-count">{{ \App\Models\Acara::where('kategori','Festival')->count() }} event</div>
-      </div>
-      <div class="catcard" onclick="filterEvents('sport',this)" data-aos="zoom-in" data-aos-delay="240">
-        <span class="cat-icon">⚽</span>
-        <div class="cat-name">Olahraga</div>
-        <div class="cat-count">{{ \App\Models\Acara::where('kategori','Olahraga')->count() }} event</div>
-      </div>
-      <div class="catcard" onclick="filterEvents('seminar',this)" data-aos="zoom-in" data-aos-delay="300">
-        <span class="cat-icon">🎤</span>
-        <div class="cat-name">Seminar</div>
-        <div class="cat-count">{{ \App\Models\Acara::where('kategori','Seminar')->count() }} event</div>
-      </div>
-    </div>
+  <div class="cat-grid">
+  <div class="catcard active" onclick="filterEvents('all',this)">
+    <span class="cat-icon">🎫</span>
+    <div class="cat-name">Semua Event</div>
+    <div class="cat-count">{{ $acaras->count() }} event</div>
+  </div>
+
+  <div class="catcard" onclick="filterEvents('esport',this)">
+    <span class="cat-icon">🎮</span>
+    <div class="cat-name">Esport</div>
+    <div class="cat-count">{{ \App\Models\Acara::where('kategori','Esport')->count() }} event</div>
+  </div>
+
+  <div class="catcard" onclick="filterEvents('konser',this)">
+    <span class="cat-icon">🎵</span>
+    <div class="cat-name">Konser</div>
+    <div class="cat-count">{{ \App\Models\Acara::where('kategori','Konser')->count() }} event</div>
+  </div>
+
+  <div class="catcard" onclick="filterEvents('festival',this)">
+    <span class="cat-icon">🎸</span>
+    <div class="cat-name">Festival</div>
+    <div class="cat-count">{{ \App\Models\Acara::where('kategori','Festival')->count() }} event</div>
+  </div>
+
+  <div class="catcard" onclick="filterEvents('olahraga',this)">
+    <span class="cat-icon">⚽</span>
+    <div class="cat-name">Olahraga</div>
+    <div class="cat-count">{{ \App\Models\Acara::where('kategori','Olahraga')->count() }} event</div>
+  </div>
+
+  <div class="catcard" onclick="filterEvents('seminar',this)">
+    <span class="cat-icon">🎤</span>
+    <div class="cat-name">Seminar</div>
+    <div class="cat-count">{{ \App\Models\Acara::where('kategori','Seminar')->count() }} event</div>
+  </div>
+</div>
   </div>
 </section>
 
@@ -262,14 +267,14 @@ $kapasitas = trim($mKap[1] ?? '-');
         <h2 class="sec-title" style="margin-bottom:0;">Event <span>Mendatang</span></h2>
       </div>
     </div>
-    <div class="filter-row" data-aos="fade-up" data-aos-delay="80">
-      <button class="filtbtn active" onclick="filterEv('all',this)">Semua</button>
-      <button class="filtbtn" onclick="filterEv('esports',this)">Esports</button>
-      <button class="filtbtn" onclick="filterEv('concert',this)">Konser</button>
-      <button class="filtbtn" onclick="filterEv('festival',this)">Festival</button>
-      <button class="filtbtn" onclick="filterEv('sport',this)">Olahraga</button>
-      <button class="filtbtn" onclick="filterEv('seminar',this)">Seminar</button>
-    </div>
+  <div class="filter-row" data-aos="fade-up" data-aos-delay="80">
+  <button class="filtbtn active" onclick="filterEv('all',this)">Semua</button>
+  <button class="filtbtn" onclick="filterEv('esport',this)">Esport</button>
+  <button class="filtbtn" onclick="filterEv('konser',this)">Konser</button>
+  <button class="filtbtn" onclick="filterEv('festival',this)">Festival</button>
+  <button class="filtbtn" onclick="filterEv('olahraga',this)">Olahraga</button>
+  <button class="filtbtn" onclick="filterEv('seminar',this)">Seminar</button>
+</div>
     <div class="events-grid" id="events-grid">
       @forelse($acaras as $i => $acara)
       <div class="ecard" data-cat="{{ strtolower($acara->kategori) }}"
@@ -383,24 +388,56 @@ $kapasitas = trim($mKap[1] ?? '-');
   </div>
 </section>
 
-{{-- ══════════════════════════════════════
-     COUNTDOWN
-     ══════════════════════════════════════ --}}
 <section id="countdown">
   <div class="cd-px-layer" id="pxCountdown"></div>
+
   <div class="container">
-    <span class="sec-label" data-aos="fade-down">Jangan Sampai Ketinggalan</span>
-    <div class="cd-event-name" data-aos="zoom-in" data-aos-delay="100">🎫 {{ $featured->nama_acara }}</div>
-    <div class="cd-sub" data-aos="fade-up" data-aos-delay="150">Dimulai dalam:</div>
-    <div class="cd-wrap" data-aos="zoom-in" data-aos-delay="200">
-      <div class="cd-box"><span class="cd-num" id="cdD">00</span><div class="cd-lbl">Hari</div></div>
-      <div class="cd-box"><span class="cd-num" id="cdH">00</span><div class="cd-lbl">Jam</div></div>
-      <div class="cd-box"><span class="cd-num" id="cdM">00</span><div class="cd-lbl">Menit</div></div>
-      <div class="cd-box"><span class="cd-num" id="cdS">00</span><div class="cd-lbl">Detik</div></div>
+    <span class="sec-label" data-aos="fade-down">
+      Jangan Sampai Ketinggalan
+    </span>
+
+    <div class="cd-event-name" data-aos="zoom-in" data-aos-delay="100">
+      🎫 {{ $featured->nama_acara ?? 'Belum Ada Event' }}
     </div>
-    <input type="hidden" id="eventDate" value="{{ \Carbon\Carbon::parse($featured->tanggal)->format('Y-m-d') }}">
-    <a href="{{ route('login') }}" class="btn-primary btn-lg" data-aos="fade-up" data-aos-delay="300">
-      <i class="fas fa-ticket-alt"></i>Dapatkan Tiket Sekarang
+
+    <div class="cd-sub" data-aos="fade-up" data-aos-delay="150">
+      Dimulai dalam:
+    </div>
+
+    <div class="cd-wrap" data-aos="zoom-in" data-aos-delay="200">
+      <div class="cd-box">
+        <span class="cd-num" id="cdD">00</span>
+        <div class="cd-lbl">Hari</div>
+      </div>
+
+      <div class="cd-box">
+        <span class="cd-num" id="cdH">00</span>
+        <div class="cd-lbl">Jam</div>
+      </div>
+
+      <div class="cd-box">
+        <span class="cd-num" id="cdM">00</span>
+        <div class="cd-lbl">Menit</div>
+      </div>
+
+      <div class="cd-box">
+        <span class="cd-num" id="cdS">00</span>
+        <div class="cd-lbl">Detik</div>
+      </div>
+    </div>
+
+    <input
+      type="hidden"
+      id="eventDate"
+      value="{{ $featured ? \Carbon\Carbon::parse($featured->tanggal)->format('Y-m-d') : now()->format('Y-m-d') }}"
+    >
+
+    <a href="{{ route('login') }}"
+       class="btn-primary btn-lg"
+       data-aos="fade-up"
+       data-aos-delay="300">
+      <i class="fas fa-ticket-alt"></i>
+      Dapatkan Tiket Sekarang
     </a>
   </div>
 </section>
