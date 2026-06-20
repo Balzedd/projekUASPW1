@@ -21,4 +21,9 @@ class Acara extends Model
 {
     return $this->hasMany(Tiket::class);
 }
+
+public function pesanans()
+{
+    return $this->hasMany(Pesanan::class);
+}
 }

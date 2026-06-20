@@ -21,4 +21,9 @@ class Tiket extends Model
     {
         return $this->belongsTo(Acara::class);
     }
+
+    public function pesanans()
+{
+    return $this->hasMany(Pesanan::class);
+}
 }

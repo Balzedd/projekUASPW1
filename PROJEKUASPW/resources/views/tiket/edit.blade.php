@@ -1,4 +1,5 @@
-@extends('tiket.admin')
+@extends('layout.admin')
+
 
 @section('content')
 

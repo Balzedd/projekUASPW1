@@ -19,16 +19,23 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ───────────────────────────────────────
      2. NAVBAR scroll state + active links
   ─────────────────────────────────────── */
-  const nav = document.getElementById('nav');
-  const btt = document.getElementById('btt');
+ const nav = document.getElementById('nav');
+const btt = document.getElementById('btt');
 
-  window.addEventListener('scroll', () => {
+window.addEventListener('scroll', () => {
     const y = window.scrollY;
-    nav.classList.toggle('scrolled', y > 60);
-    btt.classList.toggle('visible', y > 400);
+
+    if (nav) {
+        nav.classList.toggle('scrolled', y > 60);
+    }
+
+    if (btt) {
+        btt.classList.toggle('visible', y > 400);
+    }
+
     updateActiveNav(y);
     handleParallax(y);
-  }, { passive: true });
+}, { passive: true });
 
   function updateActiveNav(y) {
     document.querySelectorAll('section[id]').forEach(sec => {
@@ -304,12 +311,15 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ───────────────────────────────────────
      12. MOBILE NAV links close on click
   ─────────────────────────────────────── */
-  document.querySelectorAll('#mobile-nav a').forEach(a => {
-    a.addEventListener('click', () => {
-      document.getElementById('mobile-nav').classList.remove('open');
-    });
-  });
+  const mobileNav = document.getElementById('mobile-nav');
 
+if (mobileNav) {
+    mobileNav.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+            mobileNav.classList.remove('open');
+        });
+    });
+}
   /* ───────────────────────────────────────
      13. STATS number count-up animation
   ─────────────────────────────────────── */
@@ -349,3 +359,11 @@ document.addEventListener('DOMContentLoaded', () => {
   handleParallax(window.scrollY);
 
 });
+
+window.toggleProfileMenu = function() {
+    const menu = document.getElementById('profileMenu');
+
+    if(menu){
+        menu.classList.toggle('open');
+    }
+};

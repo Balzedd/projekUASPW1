@@ -85,7 +85,11 @@ $kapasitas = trim($mKap[1]    ?? '-');
           </button>
           <div class="profile-menu" id="profileMenu">
             <a href="{{ route('profile.user') }}"><i class="fas fa-user"></i>Profile</a>
-            <hr>
+            <a href="{{ route('tiket-saya') }}">
+        <i class="fas fa-ticket-alt"></i>
+        Tiket Saya
+    </a>
+             <hr>
             <form method="POST" action="{{ route('logout') }}">
               @csrf
               <button type="submit"><i class="fas fa-sign-out-alt"></i>Sign Out</button>
@@ -170,7 +174,9 @@ $kapasitas = trim($mKap[1]    ?? '-');
         </div>
         <div class="hero-card" id="heroCard">
           <div class="hero-card-img">
-            <div class="event-label">🔴 LIVE SOON</div>
+            
+            <div class="event-label" >🔴 LIVE SOON</div>
+            
             <img src="{{ asset('gambar_acara/' . $featured->gambar) }}" alt="{{ $featured->nama_acara }}" class="px-card-img" id="pxCardImg">
           </div>
           <div class="hero-card-body">
@@ -196,7 +202,7 @@ $kapasitas = trim($mKap[1]    ?? '-');
 
   {{-- Scroll indicator --}}
   <div class="scroll-hint" data-aos="fade-up" data-aos-delay="900">
-    <span>Scroll</span>
+    
     <div class="scroll-line"></div>
   </div>
 </section>
@@ -295,7 +301,9 @@ $kapasitas = trim($mKap[1]    ?? '-');
               <small>Mulai dari</small>
               Rp {{ number_format($acara->tikets->min('harga') ?? 0, 0, ',', '.') }}
             </div>
-            <button class="btn-primary btn-sm">Beli Tiket</button>
+          <a href="{{ route('pesan', $acara->id) }}" class="btn-primary">
+    Beli Tiket
+</a>
           </div>
         </div>
       </div>

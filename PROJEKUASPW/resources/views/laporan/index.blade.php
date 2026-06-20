@@ -1,4 +1,5 @@
-@extends('laporan.admin')
+@extends('layout.admin')
+
 
 @section('content')
 

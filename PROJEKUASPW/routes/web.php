@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\TiketController;
 use App\Http\Controllers\AcaraController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\PesanController;
 use App\Models\Acara;
 
 Route::resource('tikets', TiketController::class);
@@ -14,6 +16,9 @@ Route::resource('tikets', TiketController::class);
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->name('logout');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
@@ -87,8 +92,6 @@ Route::put('/pelanggan/{id}', [PelangganController::class, 'update'])
     ->name('pelanggan.update');
 
 
-
-
 Route::post('/laporan', [LaporanController::class, 'store'])
     ->name('laporan.store');
 
@@ -97,5 +100,30 @@ Route::post('/laporan', [LaporanController::class, 'store'])
 
 Route::delete('/laporan/{id}', [LaporanController::class, 'destroy'])
     ->name('laporan.destroy');
+
+Route::get('/tiket-saya', [PesanController::class, 'tiketSaya'])
+    ->name('tiket-saya');
+
+Route::middleware('auth')->group(function () {
+
+    Route::get('/pesan/{id}', [PesanController::class, 'index'])
+        ->name('pesan');
+
+    Route::post('/pesan', [PesanController::class, 'store'])
+        ->name('pesan.store');
+
+   Route::get('/tiket-saya', [PesanController::class, 'tiketSaya'])
+    ->middleware('auth')
+    ->name('tiket-saya');
+
+    Route::get('/detail-pesanan/{id}', [PesanController::class, 'show'])
+        ->name('detail-pesanan');
+});
+
+Route::post('/pesanan/{id}/accept', [PesanController::class, 'accept'])
+    ->name('pesanan.accept');
+
+    Route::get('/admin/pesanan', [PesanController::class, 'daftarPesanan'])
+    ->name('transaksi.index');
 
 require __DIR__.'/auth.php';

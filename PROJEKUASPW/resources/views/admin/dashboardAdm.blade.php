@@ -4,10 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard Admin Penjualan Tiket</title>
- <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
-  <link rel="stylesheet" href="{{ asset('assets3/style.css') }}">
- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+  <!-- Theme baru: dark gold, ganti dari assets3/style.css -->
+  <link rel="stylesheet" href="{{ asset('assets/admin.css') }}">
 </head>
 <body>
   <div class="layout">
@@ -34,7 +37,6 @@
         <a href="{{ route('tikets.index') }}" class="nav-item" data-page="tiket">
           <i class="ti ti-ticket"></i>
           <span class="nav-label">Tiket</span>
-        
         </a>
         <a href="{{ route('acara.index') }}" class="nav-item" data-page="acara">
           <i class="ti ti-calendar-event"></i>
@@ -43,83 +45,63 @@
         <a href="{{ route('pelanggan.index') }}" class="nav-item" data-page="pelanggan">
           <i class="ti ti-users"></i>
           <span class="nav-label">Pelanggan</span>
-        
         </a>
-        <a href="#" class="nav-item" data-page="transaksi">
+        <a href="{{ route('transaksi.index') }}" class="nav-item" data-page="transaksi">
           <i class="ti ti-receipt"></i>
           <span class="nav-label">Transaksi</span>
         </a>
-        <a href="#" class="nav-item" data-page="laporan">
+        <a href="{{ route('laporan.index') }}" class="nav-item" data-page="laporan">
           <i class="ti ti-chart-bar"></i>
           <span class="nav-label">Laporan</span>
         </a>
 
-      
-
       </nav>
     </aside>
 
-    
     <!-- Main content -->
     <div class="main">
 
       <!-- Header / Navbar atas -->
-     <header class="header">
-    <div class="search-box ">
+      <header class="header">
+        <div class="search-box">
+          <input type="text" placeholder="Cari transaksi, acara, pelanggan...">
+        </div>
 
-    </div>
+        <div class="header-right">
 
-    <div class="header-right">
-
-        <button class="icon-btn" aria-label="Notifikasi">
+          <button class="icon-btn" aria-label="Notifikasi">
             <i class="ti ti-bell"></i>
             <span class="notif-dot"></span>
-        </button>
+          </button>
 
-        <div class="dropdown">
+          <div class="dropdown">
             <button class="profile-button dropdown-toggle d-flex align-items-center border-0 bg-transparent"
                     type="button"
                     data-bs-toggle="dropdown"
                     aria-expanded="false">
 
-                <div class="avatar"> {{ strtoupper(substr(Auth::user()->name, 0, 3)) }}</div>
+              <div class="avatar">{{ strtoupper(substr(Auth::user()->name, 0, 3)) }}</div>
 
-                <div class="profile-info ms-2">
-                    <p class="profile-name mb-0">
-                        {{ Auth::user()->name }}
-                    </p>
-                    <p class="profile-role mb-0">
-                        Admin 
-                    </p>
-                </div>
+              <div class="profile-info ms-2">
+                <p class="profile-name mb-0">{{ Auth::user()->name }}</p>
+                <p class="profile-role mb-0">Admin</p>
+              </div>
             </button>
 
             <ul class="dropdown-menu dropdown-menu-end">
-                <li>
-                    <a class="dropdown-item" href="#">
-                        Profile
-                    </a>
-                </li>
 
-      
-
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-
-                <li>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="dropdown-item">
-                            Sign Out
-                        </button>
-                    </form>
-                </li>
+              <li>
+                <form method="POST" action="{{ route('logout') }}">
+                  @csrf
+                  <button type="submit" class="dropdown-item">Sign Out</button>
+                </form>
+              </li>
             </ul>
-        </div>
+          </div>
 
-    </div>
-</header>
+        </div>
+      </header>
+
       <!-- Content -->
       <main class="content">
         <div class="content-top">
@@ -157,19 +139,16 @@
             <p class="stat-value">{{ \App\Models\Acara::count() }}</p>
             <p class="stat-sub">{{ \App\Models\Acara::count() }} acara minggu ini</p>
           </div>
-          
 
-         <!-- Pelanggan baru -->
-<!-- Sesudah (benar) -->
-<div class="stat-card stat-neutral">
-    <div class="stat-top">
-        <p>Pelanggan baru</p>
-        <i class="ti ti-users"></i>
-    </div>
-    <p class="stat-value">{{ $pelangganBaru }}</p>
-    <p class="stat-sub">{{ $totalPelanggan }} total pelanggan</p>
-</div>
-  </div>
+          <div class="stat-card stat-neutral">
+            <div class="stat-top">
+              <p>Pelanggan baru</p>
+              <i class="ti ti-users"></i>
+            </div>
+            <p class="stat-value">{{ $pelangganBaru }}</p>
+            <p class="stat-sub">{{ $totalPelanggan }} total pelanggan</p>
+          </div>
+        </div>
 
         <!-- Bottom grid -->
         <div class="bottom-grid">

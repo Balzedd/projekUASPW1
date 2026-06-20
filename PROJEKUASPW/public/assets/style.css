@@ -274,7 +274,7 @@ body::before {
   box-shadow: 0 20px 60px rgba(0,0,0,.6);
   display: none;
   animation: menuDrop .2s var(--ease-spring);
-  z-index: 200;
+  z-index: 99999;
 }
 .profile-menu.open { display: block; }
 @keyframes menuDrop {

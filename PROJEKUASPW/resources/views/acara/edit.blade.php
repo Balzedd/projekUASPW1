@@ -1,4 +1,5 @@
-@extends('acara.admin')
+@extends('layout.admin')
+
 
 @section('content')
 
