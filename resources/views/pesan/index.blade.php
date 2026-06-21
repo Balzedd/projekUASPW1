@@ -79,7 +79,7 @@
                 {{-- Ringkasan Acara --}}
                 <div class="card" data-aos="fade-up" data-aos-duration="800">
                     <div class="event-summary-img">
-                        <img src="{{ $acara->gambar ? asset('gambar_acara/'.$acara->gambar) : 'https://via.placeholder.com/600x400' }}"
+                       <img src="{{ $acara->gambar ?: 'https://via.placeholder.com/600x400' }}"
      alt="{{ $acara->nama_acara }}">
                     </div>
                     <span class="hero-card-tag">{{ strtoupper($acara->kategori) }}</span>
