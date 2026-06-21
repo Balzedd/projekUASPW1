@@ -89,10 +89,6 @@ Route::get('/admin/dashboard', [DashboardController::class, 'index'])
 
 Route::get('/user/dashboard', function () {
 
-    $acara = Acara::where('kategori', 'Esports')
-                  ->latest()
-                  ->first();
-
     $acaras = Acara::with('tikets')
                    ->latest()
                    ->get();
