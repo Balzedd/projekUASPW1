@@ -58,12 +58,8 @@ class AcaraController extends Controller
     ]
 );
 
-dd($response->status(), $response->json());
-
     if ($response->successful()) {
     $gambar = $response->json()['secure_url'];
-} else {
-    dd($response->json());
 }
 }
 Acara::create([
@@ -83,7 +79,7 @@ Acara::create([
      */
     public function show(Acara $acara)
     {
-          $deskripsi = $acara->deskripsi;
+    $deskripsi = $acara->deskripsi;
 
     preg_match('/Waktu:\s*(.+)/i', $deskripsi, $waktu);
     preg_match('/Kapasitas:\s*(.+)/i', $deskripsi, $kapasitas);

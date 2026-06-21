@@ -13,7 +13,7 @@ class PelangganController extends Controller
      */
     public function index()
     {
- $pelanggan = User::where('role', 'U')->get();
+    $pelanggan = User::where('role', 'U')->get();
     return view('pelanggan.index', compact('pelanggan'));
     }
 

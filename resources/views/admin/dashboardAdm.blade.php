@@ -91,10 +91,10 @@
 
 </div>
 
-<!-- Bottom grid -->
+
 <div class="bottom-grid">
 
-  <!-- Transaksi terbaru -->
+
 <div class="card transaksi-card">
     <div class="card-header">
       <h3>Transaksi terbaru (LUNAS)</h3>
@@ -149,7 +149,6 @@
 (function () {
     'use strict';
 
-    // Tunggu sampai DOM dan semua resource siap
     if (document.readyState === 'complete') {
         initCharts();
     } else {
@@ -168,7 +167,7 @@
             crimson: '#e8405a',
         };
 
-        // Cek apakah Highcharts tersedia
+    
         if (typeof Highcharts === 'undefined') {
             console.error('Highcharts not loaded!');
             return;

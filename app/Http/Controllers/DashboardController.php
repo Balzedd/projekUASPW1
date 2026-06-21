@@ -26,7 +26,6 @@ class DashboardController extends Controller
 
             $hasTransaksi = Schema::hasTable('transaksis');
 
-            // ── Statistik kartu atas ──
             if ($hasTransaksi) {
                 $tiketTerjual = Transaksi::where('status', 'lunas')->sum('jumlah');
                 $totalPendapatan = Transaksi::where('status', 'lunas')->sum('total_harga');
@@ -47,7 +46,7 @@ class DashboardController extends Controller
             $totalAcara = Acara::count();
             $totalTiket = Tiket::count();
 
-            // ── Line chart: tren tiket terjual 7 hari terakhir ──
+        
             $trenHarian = [];
             for ($i = 6; $i >= 0; $i--) {
                 $tanggal = Carbon::now()->subDays($i);
@@ -64,7 +63,7 @@ class DashboardController extends Controller
                 ];
             }
 
-            // ── Bar chart: tiket terjual per acara (top 5) ──
+            
             if ($hasTransaksi) {
                 $acaraPopuler = Acara::withSum(['transaksis as tiket_terjual' => function ($q) {
                         $q->where('status', 'lunas');
@@ -84,13 +83,13 @@ class DashboardController extends Controller
                     });
             }
 
-            // ── Donut chart: proporsi status transaksi (Lunas vs Pending) ──
+            
             $statusCount = [
                 'lunas'   => $hasTransaksi ? Transaksi::where('status', 'lunas')->count() : 0,
                 'pending' => Pesanan::where('status', 'pending')->count(),
             ];
 
-            // ── Tabel transaksi terbaru ──
+            
             $transaksiTerbaru = $hasTransaksi
                 ? Transaksi::with(['user', 'acara'])->latest()->take(5)->get()
                 : collect();

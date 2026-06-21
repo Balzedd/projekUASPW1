@@ -29,7 +29,6 @@ class PesanController extends Controller
 
         $tiket = Tiket::findOrFail($request->tiket_id);
 
-        // ── Validasi stok sebelum pesanan dibuat ──
         if ($request->jumlah > $tiket->stok) {
             return redirect()->back()
                 ->withInput()
@@ -59,7 +58,7 @@ class PesanController extends Controller
 
         DB::transaction(function () use ($pesanan) {
 
-            // ── Kunci baris tiket supaya aman dari race condition ──
+        
             $tiket = Tiket::lockForUpdate()->findOrFail($pesanan->tiket_id);
 
             if ($pesanan->jumlah > $tiket->stok) {
