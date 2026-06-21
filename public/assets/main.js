@@ -1,24 +1,18 @@
-/* ═══════════════════════════════════════
-   TICKETIN — MAIN JS
-   AOS + Parallax + Luxury interactions
-   ═══════════════════════════════════════ */
-
 document.addEventListener('DOMContentLoaded', () => {
+ 
+  //1. AOS INIT
 
-  /* ───────────────────────────────────────
-     1. AOS INIT
-  ─────────────────────────────────────── */
   AOS.init({
     duration: 700,
     easing: 'ease-out-cubic',
-    once: true,          // animate once (performance)
-    offset: 80,          // trigger 80px before entering viewport
-    disable: 'mobile',   // disable on small screens for perf
+    once: true,          
+    offset: 80,         
+    disable: 'mobile',   
   });
 
-  /* ───────────────────────────────────────
-     2. NAVBAR scroll state + active links
-  ─────────────────────────────────────── */
+  
+    // 2. NAVBAR scroll state + active links
+  
  const nav = document.getElementById('nav');
 const btt = document.getElementById('btt');
 
@@ -46,10 +40,10 @@ window.addEventListener('scroll', () => {
     });
   }
 
-  /* ───────────────────────────────────────
-     3. PARALLAX ENGINE
-     Multiple layers at different speeds
-  ─────────────────────────────────────── */
+  
+     //3. PARALLAX ENGINE
+    // Multiple layers at different speeds
+
   const pxOrb1       = document.getElementById('pxOrb1');
   const pxOrb2       = document.getElementById('pxOrb2');
   const pxOrb3       = document.getElementById('pxOrb3');
@@ -338,7 +332,7 @@ if (mobileNav) {
     requestAnimationFrame(update);
   }
 
-  // Trigger count-up when hero stats enter view
+  // Trigger 
   const statsObs = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
@@ -355,7 +349,7 @@ if (mobileNav) {
   const heroStats = document.querySelector('.hero-stats');
   if (heroStats) statsObs.observe(heroStats);
 
-  // Initial parallax call
+  //  parallax call
   handleParallax(window.scrollY);
 
 });

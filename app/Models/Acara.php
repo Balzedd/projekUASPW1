@@ -8,7 +8,7 @@ class Acara extends Model
 {
     protected $fillable = [
 
-        'nama_acara',
+    'nama_acara',
     'kategori',
     'deskripsi',
     'tanggal',
@@ -18,17 +18,17 @@ class Acara extends Model
     ];
 
     public function tikets()
-{
-    return $this->hasMany(Tiket::class);
-}
+    {
+        return $this->hasMany(Tiket::class);
+    }
 
-public function pesanans()
-{
-    return $this->hasMany(Pesanan::class);
-}
+    public function pesanans()
+    {
+        return $this->hasMany(Pesanan::class);
+    }
 
-public function transaksis()
-{
-    return $this->hasMany(Transaksi::class);
-}
+    public function transaksis()
+    {
+        return $this->hasMany(Transaksi::class);
+    }
 }

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Acara;
-use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class AcaraController extends Controller
 {
@@ -13,15 +13,10 @@ class AcaraController extends Controller
      */
     public function index()
     {
-        $acaras = Acara::all();
-      $featured = Acara::withSum(
-    ['transaksis' => function ($q) {
-        $q->where('status', 'lunas');
-    }],
-    'jumlah'
-)
-->orderByDesc('transaksis_sum_jumlah')
-->first();
+      $acaras = Acara::all();
+      $featured = Acara::withSum(['transaksis' => function ($q) {$q->where('status', 'lunas');}],'jumlah')
+      ->orderByDesc('transaksis_sum_jumlah')
+      ->first();
 
         return view('acara.index', compact('acaras','featured'));
     }
@@ -50,23 +45,34 @@ class AcaraController extends Controller
 
         $gambar = null;
 
-        if($request->hasFile('gambar')){
+    if ($request->hasFile('gambar')) {
 
-            File::ensureDirectoryExists(public_path('gambar_acara'));
+    $response = Http::attach(
+    'file',
+    file_get_contents($request->file('gambar')->getRealPath()),
+    $request->file('gambar')->getClientOriginalName()
+)->post(
+    'https://api.cloudinary.com/v1_1/' . env('CLOUDINARY_CLOUD_NAME') . '/image/upload',
+    [
+        'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET'),
+    ]
+);
 
-            $gambar = time().'.'.$request->gambar->extension();
+dd($response->status(), $response->json());
 
-            $request->gambar->move(public_path('gambar_acara'), $gambar);
-
-        }
-
-       Acara::create([
+    if ($response->successful()) {
+    $gambar = $response->json()['secure_url'];
+} else {
+    dd($response->json());
+}
+}
+Acara::create([
     'nama_acara' => $validated['nama_acara'],
     'kategori' => $validated['kategori'],
     'deskripsi' => $validated['deskripsi'] ?? null,
     'tanggal' => $validated['tanggal'],
     'lokasi' => $validated['lokasi'],
-    'gambar' => $gambar
+    'gambar' => $gambar,
 ]);
 
         return redirect('/acara')->with('success', 'Acara berhasil ditambahkan.');
@@ -122,13 +128,21 @@ class AcaraController extends Controller
 
         if ($request->hasFile('gambar')) {
 
-            File::ensureDirectoryExists(public_path('gambar_acara'));
+    $response = Http::attach(
+        'file',
+        file_get_contents($request->file('gambar')->getRealPath()),
+        $request->file('gambar')->getClientOriginalName()
+    )->post(
+        'https://api.cloudinary.com/v1_1/' . env('CLOUDINARY_CLOUD_NAME') . '/image/upload',
+        [
+            'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET'),
+        ]
+    );
 
-            $gambar = time().'.'.$request->gambar->extension();
-
-            $request->gambar->move(public_path('gambar_acara'), $gambar);
-        }
-
+    if ($response->successful()) {
+        $gambar = $response->json()['secure_url'];
+    }
+}
         $acara->update([
     'nama_acara' => $validated['nama_acara'],
     'kategori' => $validated['kategori'],

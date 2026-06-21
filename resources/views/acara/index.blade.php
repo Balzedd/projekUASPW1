@@ -75,10 +75,10 @@
 
                     <td>
 
-                        <img src="{{ asset('gambar_acara/' . $acara->gambar) }}"
-                             width="80"
-                             height="56"
-                             style="object-fit:cover; border-radius:8px; border:1px solid var(--border-color);">
+                       <img src="{{ $acara->gambar }}"
+     width="80"
+     height="56"
+     style="object-fit:cover; border-radius:8px; border:1px solid var(--border-color);">
 
                     </td>
 

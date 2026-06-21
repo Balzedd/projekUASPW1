@@ -162,8 +162,9 @@ $kapasitas = trim($mKap[1] ?? '-');
 
             <div class="event-label" >🔴 LIVE SOON</div>
 
-            <img src="{{ asset('gambar_acara/' . $featured->gambar) }}" alt="{{ $featured->nama_acara }}" class="px-card-img" id="pxCardImg">
-          </div>
+<img src="{{ $featured->gambar }}"
+     alt="{{ $featured->nama_acara }}"
+     class="px-card-img" id="pxCardImg">          </div>
           <div class="hero-card-body">
             <div class="hero-card-tag">{{ $featured->kategori }}</div>
             <div class="hero-card-title">{{ $featured->nama_acara }}</div>
@@ -316,9 +317,9 @@ $kapasitas = trim($mKap[1] ?? '-');
       {{-- Image with inner parallax --}}
       <div data-aos="fade-right" data-aos-duration="900">
         <div class="spotlight-img">
-          <img src="{{ asset('gambar_acara/' . $featured->gambar) }}"
-               alt="{{ $featured->nama_acara }}"
-               class="px-spotlight-img" id="pxSpotlightImg">
+          <img src="{{ $featured->gambar }}"
+     alt="{{ $featured->nama_acara }}"
+     class="px-spotlight-img" id="pxSpotlightImg">
         </div>
       </div>
 

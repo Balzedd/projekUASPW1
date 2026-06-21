@@ -117,10 +117,10 @@ Route::get('/user/dashboard', function () {
 Route::get('/pelanggan', [PelangganController::class, 'index'])
     ->name('pelanggan.index');
 
-Route::get('/pelanggan/{id}/edit', [PelangganController::class, 'edit'])
+Route::get('/pelanggan/{id}', [PelangganController::class, 'edit'])
     ->name('pelanggan.edit');
 
-Route::get('/pelanggan/{id}/delete', [PelangganController::class, 'destroy'])
+Route::delete('/pelanggan/{id}', [PelangganController::class, 'destroy'])
     ->name('pelanggan.destroy');
 
 Route::put('/pelanggan/{id}', [PelangganController::class, 'update'])
@@ -141,34 +141,33 @@ Route::get('/tiket-saya', [PesanController::class, 'tiketSaya'])
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/pesan/{id}', [PesanController::class, 'index'])
+Route::get('/pesan/{id}', [PesanController::class, 'index'])
         ->name('pesan');
 
-    Route::post('/pesan', [PesanController::class, 'store'])
+Route::post('/pesan', [PesanController::class, 'store'])
         ->name('pesan.store');
 
-   Route::get('/tiket-saya', [PesanController::class, 'tiketSaya'])
+Route::get('/tiket-saya', [PesanController::class, 'tiketSaya'])
     ->middleware('auth')
     ->name('tiket-saya');
 
-    Route::get('/detail-pesanan/{id}', [PesanController::class, 'show'])
+Route::get('/detail-pesanan/{id}', [PesanController::class, 'show'])
         ->name('detail-pesanan');
 });
 
 Route::post('/pesanan/{id}/accept', [PesanController::class, 'accept'])
     ->name('pesanan.accept');
- 
-// Daftar pesanan yang perlu di-accept admin (folder: pesanan)
+
 Route::get('/admin/pesanan', [PesanController::class, 'daftarPesanan'])
     ->middleware(['auth', 'checkRole:A'])
     ->name('pesanan.index');
- 
-// Riwayat transaksi yang sudah lunas — menu navbar baru, sumber data chart dashboard
+
 Route::get('/admin/transaksi', [PesanController::class, 'riwayatTransaksi'])
     ->middleware(['auth', 'checkRole:A'])
     ->name('transaksi.index');
  
 
-    Route::delete('/transaksi/{id}', [PesanController::class, 'riwayatTransaksiDestroy'])
+Route::delete('/transaksi/{id}', [PesanController::class, 'riwayatTransaksiDestroy'])
     ->name('transaksi.destroy');
+
 require __DIR__.'/auth.php';

@@ -115,8 +115,8 @@
                     <label class="form-label">Poster Acara</label>
 
                     <div class="current-poster">
-                        <img src="{{ asset('gambar_acara/' . $acara->gambar) }}"
-                             alt="{{ $acara->nama_acara }}">
+                       <img src="{{ $acara->gambar }}"
+     alt="{{ $acara->nama_acara }}">
                         <span class="cell-muted">Poster saat ini</span>
                     </div>
 
